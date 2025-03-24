@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Reserva tu mesa en Lavendish Bar - Asegura tu espacio para disfrutar de la mejor experiencia nocturna en Lleida.">
+    <meta name="keywords" content="reservas Lavendish Bar, reservar mesa, reservas online">
+    <meta name="author" content="Lavendish Bar">
+    <meta property="og:title" content="Reservas - Lavendish Bar">
+    <meta property="og:description" content="Reserva tu mesa y asegura tu espacio en Lavendish Bar.">
+    <meta property="og:image" content="../images/reservations-bg.jpg">
+    <meta property="og:url" content="https://lavendishbar.com/pages/reservas.html">
+    <title>Reservas - Lavendish Bar</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/responsive.css">
+    <link rel="stylesheet" href="../css/pages.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="../images/favicon.ico">
+</head>
+<body>
+    <header>
+        <nav class="navbar" role="navigation" aria-label="Navegación principal">
+            <div class="logo">
+                <a href="../index.html" aria-label="Lavendish Bar Inicio">
+                    <img src="../images/logo.png" alt="Logo Lavendish Bar" width="150" height="50">
+                </a>
+            </div>
+            <ul class="nav-links" role="menubar">
+                <li role="none"><a href="../index.html" role="menuitem">Inicio</a></li>
+                <li role="none"><a href="menu.html" role="menuitem">Menú</a></li>
+                <li role="none"><a href="eventos.html" role="menuitem">Eventos</a></li>
+                <li role="none"><a href="reservas.html" class="active" role="menuitem" aria-current="page">Reservas</a></li>
+                <li role="none"><a href="contacto.html" role="menuitem">Contacto</a></li>
+            </ul>
+            <button class="burger" aria-label="Alternar menú de navegación" aria-expanded="false">
+                <div class="line1"></div>
+                <div class="line2"></div>
+                <div class="line3"></div>
+            </button>
+        </nav>
+    </header>
+
+    <main>
+        <section class="reservations-section" aria-labelledby="reservations-title">
+            <h1 id="reservations-title">Reserva tu Mesa</h1>
+
+            <div class="reservations-container">
+                <div class="reservation-info">
+                    <h2>Información de Reserva</h2>
+                    <p>Para asegurar tu espacio en Lavendish Bar, completa el formulario de reserva. Te confirmaremos la disponibilidad lo antes posible.</p>
+                    
+                    <div class="reservation-details">
+                        <h3>Detalles Importantes</h3>
+                        <ul>
+                            <li>Las reservas son para grupos de 2 o más personas</li>
+                            <li>La reserva se mantiene durante 15 minutos después de la hora indicada</li>
+                            <li>Para grupos grandes (más de 8 personas), contacta directamente con nosotros</li>
+                            <li>Las reservas para eventos especiales deben hacerse con al menos 24 horas de antelación</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="reservation-form">
+                    <h2>Formulario de Reserva</h2>
+                    <form action="#" method="POST" aria-label="Formulario de reserva">
+                        <div class="form-group">
+                            <label for="name">Nombre *</label>
+                            <input type="text" id="name" name="name" required aria-required="true">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email *</label>
+                            <input type="email" id="email" name="email" required aria-required="true">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Teléfono *</label>
+                            <input type="tel" id="phone" name="phone" required aria-required="true">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="date">Fecha *</label>
+                            <input type="date" id="date" name="date" required aria-required="true" min="">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="time">Hora *</label>
+                            <select id="time" name="time" required aria-required="true">
+                                <option value="">Selecciona una hora</option>
+                                <option value="18:00">18:00</option>
+                                <option value="19:00">19:00</option>
+                                <option value="20:00">20:00</option>
+                                <option value="21:00">21:00</option>
+                                <option value="22:00">22:00</option>
+                                <option value="23:00">23:00</option>
+                                <option value="00:00">00:00</option>
+                                <option value="01:00">01:00</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="guests">Número de Personas *</label>
+                            <select id="guests" name="guests" required aria-required="true">
+                                <option value="">Selecciona el número de personas</option>
+                                <option value="2">2 personas</option>
+                                <option value="3">3 personas</option>
+                                <option value="4">4 personas</option>
+                                <option value="5">5 personas</option>
+                                <option value="6">6 personas</option>
+                                <option value="7">7 personas</option>
+                                <option value="8">8 personas</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="special-requests">Peticiones Especiales</label>
+                            <textarea id="special-requests" name="special-requests" rows="3"></textarea>
+                        </div>
+
+                        <button type="submit" class="submit-button">Reservar Mesa</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer role="contentinfo">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Contacto</h3>
+                <address>
+                    <p><i class="fas fa-phone" aria-hidden="true"></i> <a href="tel:+34642988594">+34 642 98 85 94</a></p>
+                    <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:Info@lavendish.es">Info@lavendish.es</a></p>
+                    <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Avinguda de Balmes, 21, 25006 Lleida</p>
+                </address>
+            </div>
+            <div class="footer-section">
+                <h3>Horario de Apertura</h3>
+                <p>Lunes - Viernes: 18:00 - 02:00</p>
+                <p>Sábado - Domingo: 16:00 - 03:00</p>
+            </div>
+            <div class="footer-section">
+                <h3>Síguenos</h3>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter" aria-hidden="true"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Lavendish Bar. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="../js/main.js" defer></script>
+</body>
+</html> 

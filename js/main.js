@@ -334,4 +334,119 @@ style.textContent = `
     }
 `;
 
-document.head.appendChild(style); 
+document.head.appendChild(style);
+
+// Funcionalidad del menú móvil
+document.addEventListener('DOMContentLoaded', () => {
+    const burger = document.querySelector('.burger');
+    const nav = document.querySelector('.nav-links');
+    const navLinks = document.querySelectorAll('.nav-links li');
+
+    // Toggle Navigation
+    burger.addEventListener('click', () => {
+        // Toggle Nav
+        nav.classList.toggle('nav-active');
+
+        // Animate Links
+        navLinks.forEach((link, index) => {
+            if (link.style.animation) {
+                link.style.animation = '';
+            } else {
+                link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
+            }
+        });
+
+        // Burger Animation
+        burger.classList.toggle('toggle');
+    });
+
+    // Cerrar menú al hacer clic en un enlace
+    navLinks.forEach(link => {
+        link.addEventListener('click', () => {
+            nav.classList.remove('nav-active');
+            burger.classList.remove('toggle');
+        });
+    });
+
+    // Validación de formularios
+    const forms = document.querySelectorAll('form');
+    forms.forEach(form => {
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Validar campos requeridos
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.classList.add('error');
+                } else {
+                    field.classList.remove('error');
+                }
+            });
+
+            // Validar email si existe
+            const emailField = form.querySelector('input[type="email"]');
+            if (emailField) {
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(emailField.value)) {
+                    isValid = false;
+                    emailField.classList.add('error');
+                }
+            }
+
+            // Validar teléfono si existe
+            const phoneField = form.querySelector('input[type="tel"]');
+            if (phoneField) {
+                const phoneRegex = /^[0-9+\s-()]{9,}$/;
+                if (!phoneRegex.test(phoneField.value)) {
+                    isValid = false;
+                    phoneField.classList.add('error');
+                }
+            }
+
+            if (isValid) {
+                // Aquí iría la lógica para enviar el formulario
+                console.log('Formulario válido, enviando...');
+                // Simular envío exitoso
+                showNotification('¡Mensaje enviado con éxito!', 'success');
+                form.reset();
+            } else {
+                showNotification('Por favor, completa todos los campos requeridos correctamente.', 'error');
+            }
+        });
+    });
+
+    // Scroll suave para enlaces internos
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+
+    // Animación de elementos al hacer scroll
+    const animateOnScroll = () => {
+        const elements = document.querySelectorAll('.animate-on-scroll');
+        elements.forEach(element => {
+            const elementTop = element.getBoundingClientRect().top;
+            const elementBottom = element.getBoundingClientRect().bottom;
+            const isVisible = (elementTop < window.innerHeight) && (elementBottom >= 0);
+            
+            if (isVisible) {
+                element.classList.add('visible');
+            }
+        });
+    };
+
+    window.addEventListener('scroll', animateOnScroll);
+    animateOnScroll(); // Ejecutar una vez al cargar la página
+}); 
