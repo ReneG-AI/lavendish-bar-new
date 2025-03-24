@@ -1,133 +1,110 @@
-# Lavendish Bar Website
+# Lavendish Bar - Sitio Web
 
-Este es el sitio web oficial de Lavendish Bar, un lugar de entretenimiento y diversión que ofrece bebidas premium, música en vivo y eventos especiales.
+Este es el sitio web oficial de Lavendish Bar, un establecimiento ubicado en Lleida que ofrece una experiencia única de entretenimiento nocturno.
 
 ## Características
 
 - Diseño moderno y responsivo
-- Navegación intuitiva
-- Sección de menú interactiva
-- Sistema de reservas
-- Galería de imágenes
+- Interfaz en español con código en inglés
+- Galería de imágenes con filtros por categoría
+- Sistema de reservas online
 - Formulario de contacto
 - Integración con redes sociales
+- Soporte para modo oscuro
+- Optimizado para dispositivos móviles
 
 ## Tecnologías Utilizadas
 
 - HTML5
-- CSS3 (con Flexbox y Grid)
+- CSS3 (con variables CSS y Flexbox/Grid)
 - JavaScript (Vanilla)
 - Font Awesome para iconos
-- Google Fonts para tipografía
+- Google Fonts (Poppins y Playfair Display)
 
 ## Estructura del Proyecto
 
 ```
-lavendish-bar/
-├── index.html
+lavendish-bar-new/
 ├── css/
 │   ├── style.css
 │   ├── responsive.css
 │   └── pages.css
 ├── js/
-│   └── main.js
+│   ├── main.js
+│   └── gallery.js
 ├── images/
-│   ├── logo.png
+│   ├── gallery/
 │   ├── hero-bg.jpg
-│   └── gallery/
+│   ├── logo.png
+│   └── favicon.ico
 ├── pages/
 │   ├── menu.html
 │   ├── eventos.html
+│   ├── galeria.html
 │   ├── reservas.html
 │   └── contacto.html
-└── README.md
+└── index.html
 ```
-
-## Requisitos
-
-- Navegador web moderno con soporte para:
-  - CSS Grid y Flexbox
-  - JavaScript ES6+
-  - Intersection Observer API
 
 ## Instalación
 
 1. Clona el repositorio:
 ```bash
-git clone https://github.com/tu-usuario/lavendish-bar.git
+git clone https://github.com/tu-usuario/lavendish-bar-new.git
 ```
 
 2. Navega al directorio del proyecto:
 ```bash
-cd lavendish-bar
+cd lavendish-bar-new
 ```
 
-3. Abre `index.html` en tu navegador web.
+3. Abre el archivo `index.html` en tu navegador o utiliza un servidor local.
 
 ## Desarrollo
 
 Para contribuir al proyecto:
 
-1. Haz un fork del repositorio
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
+1. Crea una rama para tu feature:
+```bash
+git checkout -b feature/nueva-caracteristica
+```
 
-## Características Principales
+2. Realiza tus cambios y haz commit:
+```bash
+git commit -m 'Añade nueva característica'
+```
 
-### Diseño Responsivo
-- Se adapta a todos los tamaños de pantalla
-- Menú móvil optimizado
-- Imágenes optimizadas para diferentes dispositivos
+3. Push a la rama:
+```bash
+git push origin feature/nueva-caracteristica
+```
 
-### Rendimiento
-- Carga lazy de imágenes
-- Minificación de archivos CSS y JavaScript
-- Optimización de recursos
+4. Crea un Pull Request
 
-### Accesibilidad
+## Características de Accesibilidad
+
 - Estructura HTML semántica
+- Atributos ARIA para mejorar la accesibilidad
 - Soporte para lectores de pantalla
 - Navegación por teclado
+- Contraste de colores adecuado
+- Soporte para preferencias de reducción de movimiento
 
-### SEO
-- Meta tags optimizados
-- Estructura de encabezados jerárquica
-- URLs amigables
+## Optimización
 
-## Mantenimiento
-
-Para mantener el sitio web actualizado:
-
-1. Actualiza el contenido regularmente
-2. Revisa y actualiza las dependencias
-3. Optimiza las imágenes nuevas
-4. Prueba en diferentes navegadores y dispositivos
-
-## Soporte
-
-Para reportar problemas o solicitar nuevas características, por favor:
-
-1. Revisa los issues existentes
-2. Crea un nuevo issue con una descripción detallada
-3. Incluye pasos para reproducir el problema
-4. Adjunta capturas de pantalla si es necesario
+- Imágenes optimizadas y lazy loading
+- CSS y JavaScript minificados
+- Soporte para dispositivos de alta densidad de píxeles
+- Estilos de impresión optimizados
+- Caché del navegador configurado
 
 ## Licencia
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## Contacto
 
-Para cualquier consulta o sugerencia, contacta a:
-- Email: info@lavendishbar.com
-- Teléfono: +1234567890
-- Dirección: [Dirección del Bar]
-
-## Créditos
-
-- Diseño y desarrollo: [Tu Nombre]
-- Imágenes: [Fuente de las imágenes]
-- Iconos: [Font Awesome](https://fontawesome.com/)
-- Fuentes: [Google Fonts](https://fonts.google.com/) 
+Para cualquier consulta o sugerencia, contacta con:
+- Email: Info@lavendish.es
+- Teléfono: +34 642 98 85 94
+- Dirección: Avinguda de Balmes, 21, 25006 Lleida 
