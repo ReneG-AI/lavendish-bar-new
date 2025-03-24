@@ -1,0 +1,129 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Build files
+dist/
+build/
+*.min.js
+*.min.css
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Cache
+.cache/
+.temp/
+.tmp/
+
+# System Files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Archivos de editores y IDEs
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# Archivos de dependencias
+node_modules/
+bower_components/
+
+# Archivos de compilación
+dist/
+build/
+*.min.js
+*.min.css
+
+# Archivos de logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Archivos de entorno
+.env
+.env.local
+.env.*.local
+
+# Archivos de caché
+.cache/
+.temp/
+.tmp/
+
+# Archivos de respaldo
+*.bak
+*.backup
+*.old
+
+# Archivos de base de datos
+*.sqlite
+*.db
+
+# Archivos de certificados
+*.pem
+*.key
+*.crt
+
+# Archivos de configuración local
+config.local.js
+config.local.json
+config.local.yaml
+
+# Archivos de compresión
+*.zip
+*.tar.gz
+*.rar
+
+# Archivos de fuentes
+*.ttf
+*.woff
+*.woff2
+*.eot
+
+# Archivos de imágenes grandes
+*.psd
+*.ai
+*.sketch
+
+# Archivos de documentación generados
+docs/_build/
+site/
+
+# Archivos de pruebas
+coverage/
+.nyc_output/
+
+# Archivos de despliegue
+deploy/
+dist/
+build/
+
+# Archivos temporales
+tmp/
+temp/
+.temp/
+.tmp/ 
