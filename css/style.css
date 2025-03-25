@@ -10,6 +10,9 @@
     --font-primary: 'Poppins', sans-serif;
     --font-secondary: 'Playfair Display', serif;
     --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    --transition-fast: all 0.3s ease;
+    --transition-medium: all 0.5s ease;
+    --transition-slow: all 0.8s ease;
 }
 
 /* Reset y estilos base */
@@ -37,6 +40,16 @@ img {
     display: block;
 }
 
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.section {
+    padding: 80px 0;
+}
+
 /* Tipografía */
 h1, h2, h3, h4, h5, h6 {
     font-weight: 700;
@@ -47,11 +60,52 @@ h1, h2, h3, h4, h5, h6 {
 a {
     text-decoration: none;
     color: var(--accent-color);
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
 }
 
 a:hover {
-    color: darken(var(--accent-color), 10%);
+    color: #ff5252;
+}
+
+/* Botones */
+.btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 30px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    text-align: center;
+    transition: var(--transition-fast);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-size: 14px;
+}
+
+.btn-primary {
+    background-color: var(--accent-color);
+    color: white;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+}
+
+.btn-primary:hover {
+    background-color: #ff5252;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+    color: white;
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 2px solid var(--accent-color);
+}
+
+.btn-secondary:hover {
+    background-color: var(--accent-color);
+    color: white;
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.3);
 }
 
 /* Navegación */
@@ -66,7 +120,7 @@ a:hover {
     top: 0;
     z-index: 1000;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
 }
 
 .navbar.scrolled {
@@ -78,6 +132,11 @@ a:hover {
 .logo img {
     height: auto;
     max-width: 150px;
+    transition: var(--transition-fast);
+}
+
+.logo img:hover {
+    transform: scale(1.05);
 }
 
 .nav-links {
@@ -95,7 +154,7 @@ a:hover {
     font-weight: 500;
     padding: 8px 15px;
     border-radius: 30px;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
 }
 
 .nav-links a:hover, .nav-links a.active {
@@ -121,13 +180,13 @@ a:hover {
     height: 3px;
     background-color: white;
     margin: 5px;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
 }
 
 /* Hero Section */
 .hero {
     height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/hero-bg.png') no-repeat center center/cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/Lavendish-hero.png') no-repeat center center/cover;
     color: white;
     display: flex;
     align-items: center;
@@ -139,6 +198,7 @@ a:hover {
     max-width: 800px;
     margin: 0 auto;
     padding: 0 20px;
+    animation: fadeInUp 1s ease;
 }
 
 .hero h1 {
@@ -197,7 +257,7 @@ a:hover {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: var(--box-shadow);
-    transition: all 0.3s ease;
+    transition: var(--transition-medium);
 }
 
 .feature-card:hover {
@@ -213,6 +273,11 @@ a:hover {
     color: var(--accent-color);
     font-size: 2.5rem;
     margin-top: 20px;
+    transition: var(--transition-fast);
+}
+
+.feature-card:hover .feature-icon {
+    transform: scale(1.1);
 }
 
 .feature-content {
@@ -248,6 +313,12 @@ a:hover {
     height: auto;
     border-radius: 10px;
     box-shadow: var(--box-shadow);
+    transition: var(--transition-medium);
+}
+
+.about-image img:hover {
+    transform: scale(1.02);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
 .about-content h2 {
@@ -271,6 +342,12 @@ a:hover {
     margin-bottom: 10px;
     padding-left: 30px;
     position: relative;
+    transition: var(--transition-fast);
+}
+
+.about-content li:hover {
+    transform: translateX(5px);
+    color: var(--accent-color);
 }
 
 .about-content li:before {
@@ -284,7 +361,7 @@ a:hover {
 
 /* CTA section */
 .cta {
-    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../images/cta-bg.jpg') no-repeat center center/cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../images/Lavendish-hero.png') no-repeat center center/cover;
     padding: 100px 0;
     color: white;
     text-align: center;
@@ -334,6 +411,11 @@ footer {
     width: 50px;
     height: 2px;
     background-color: var(--accent-color);
+    transition: var(--transition-medium);
+}
+
+.footer-section:hover h3:after {
+    width: 70px;
 }
 
 .footer-section p {
@@ -342,6 +424,7 @@ footer {
 
 .footer-section a {
     color: white;
+    transition: var(--transition-fast);
 }
 
 .footer-section a:hover {
@@ -362,7 +445,7 @@ footer {
     border-radius: 50%;
     background-color: rgba(255, 255, 255, 0.1);
     color: white;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
 }
 
 .social-links a:hover {
@@ -395,7 +478,7 @@ footer {
     z-index: 99;
     opacity: 0;
     visibility: hidden;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
 }
 
 .scroll-top.show {
@@ -419,12 +502,12 @@ footer {
     border-radius: 50%;
     background-color: var(--accent-color);
     color: white;
-    transition: all 0.3s ease;
+    transition: var(--transition-fast);
 }
 
 .social-icons a:hover {
     background-color: var(--primary-color);
-    transform: translateY(-3px);
+    transform: translateY(-3px) rotate(360deg);
 }
 
 /* Map section */
@@ -445,18 +528,60 @@ footer {
     border-radius: 10px;
     overflow: hidden;
     box-shadow: var(--box-shadow);
+    transition: var(--transition-medium);
+}
+
+.map-container:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
 /* Animaciones */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInRight {
+    from {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
 .animate-on-scroll {
     opacity: 0;
     transform: translateY(30px);
-    transition: all 0.6s ease;
+    transition: var(--transition-slow);
 }
 
 .animate-on-scroll.visible {
     opacity: 1;
     transform: translateY(0);
+}
+
+/* Page Transitions */
+.page-transition {
+    transition: var(--transition-medium);
 }
 
 /* Responsive */
