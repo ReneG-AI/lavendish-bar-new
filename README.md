@@ -1,22 +1,22 @@
 # Lavendish Bar - Sitio Web
 
-Este es el sitio web oficial de Lavendish Bar, un establecimiento ubicado en Lleida que ofrece una experiencia única de entretenimiento nocturno.
+Este es el sitio web oficial de Lavendish Bar, un bar juvenil ubicado en Lleida con ambiente moderno y desenfadado.
 
 ## Características
 
-- Diseño moderno y responsivo
-- Interfaz en español con código en inglés
-- Galería de imágenes con filtros por categoría
-- Sistema de reservas online
-- Formulario de contacto
+- Diseño moderno, juvenil y responsivo
+- Interfaz en español con código en inglés 
+- Galería de imágenes integrada en la página principal
+- Menú completo con categorías (bebidas, cócteles, tapas)
+- Formulario de contacto para eventos
 - Integración con redes sociales
 - Soporte para modo oscuro
-- Optimizado para dispositivos móviles
+- Optimizado para todo tipo de dispositivos
 
 ## Tecnologías Utilizadas
 
 - HTML5
-- CSS3 (con variables CSS y Flexbox/Grid)
+- CSS3 (con variables CSS, Flexbox y Grid)
 - JavaScript (Vanilla)
 - Font Awesome para iconos
 - Google Fonts (Poppins y Playfair Display)
@@ -26,24 +26,34 @@ Este es el sitio web oficial de Lavendish Bar, un establecimiento ubicado en Lle
 ```
 lavendish-bar-new/
 ├── css/
-│   ├── style.css
-│   ├── responsive.css
-│   └── pages.css
+│   ├── style.css          # Estilos principales
+│   ├── responsive.css     # Media queries para responsividad
+│   └── pages.css          # Estilos específicos de páginas
 ├── js/
-│   ├── main.js
-│   └── gallery.js
+│   ├── main.js            # JavaScript principal
+│   └── gallery.js         # Funcionalidad de la galería
 ├── images/
-│   ├── gallery/
-│   ├── hero-bg.jpg
-│   ├── logo.png
-│   └── favicon.ico
+│   ├── gallery/           # Imágenes para la galería (12 imágenes)
+│   │   ├── ambiente-1.jpg
+│   │   ├── ambiente-2.jpg
+│   │   ├── ambiente-3.jpg
+│   │   ├── ambiente-4.jpg
+│   │   ├── bebidas-1.jpg
+│   │   ├── bebidas-2.jpg
+│   │   ├── bebidas-3.jpg
+│   │   ├── bebidas-4.jpg
+│   │   ├── tapas-1.jpg
+│   │   ├── tapas-2.jpg
+│   │   ├── tapas-3.jpg
+│   │   └── tapas-4.jpg
+│   ├── hero-bg.jpg        # Imagen de fondo para el hero
+│   ├── cta-bg.jpg         # Imagen para sección CTA
+│   ├── logo.png           # Logo del bar
+│   └── favicon.ico        # Favicon
 ├── pages/
-│   ├── menu.html
-│   ├── eventos.html
-│   ├── galeria.html
-│   ├── reservas.html
-│   └── contacto.html
-└── index.html
+│   ├── menu.html          # Página de menú
+│   └── contacto.html      # Página de contacto y eventos
+└── index.html             # Página principal
 ```
 
 ## Instalación
@@ -60,26 +70,20 @@ cd lavendish-bar-new
 
 3. Abre el archivo `index.html` en tu navegador o utiliza un servidor local.
 
-## Desarrollo
+## Personalización
 
-Para contribuir al proyecto:
+### Imágenes de la Galería
 
-1. Crea una rama para tu feature:
-```bash
-git checkout -b feature/nueva-caracteristica
-```
+El sitio está configurado para mostrar 12 imágenes en la galería principal, organizadas en 3 categorías:
+- **Ambiente**: 4 imágenes (ambiente-1.jpg, ambiente-2.jpg, ambiente-3.jpg, ambiente-4.jpg)
+- **Bebidas**: 4 imágenes (bebidas-1.jpg, bebidas-2.jpg, bebidas-3.jpg, bebidas-4.jpg)
+- **Tapas**: 4 imágenes (tapas-1.jpg, tapas-2.jpg, tapas-3.jpg, tapas-4.jpg)
 
-2. Realiza tus cambios y haz commit:
-```bash
-git commit -m 'Añade nueva característica'
-```
+Para reemplazar estas imágenes, simplemente coloca tus propias imágenes en la carpeta `images/gallery/` manteniendo los mismos nombres.
 
-3. Push a la rama:
-```bash
-git push origin feature/nueva-caracteristica
-```
+### Colores y Estilos
 
-4. Crea un Pull Request
+Los colores principales están definidos como variables CSS en el archivo `css/style.css`. Puedes modificarlos fácilmente cambiando los valores en la sección `:root`.
 
 ## Características de Accesibilidad
 
@@ -93,14 +97,9 @@ git push origin feature/nueva-caracteristica
 ## Optimización
 
 - Imágenes optimizadas y lazy loading
-- CSS y JavaScript minificados
+- CSS y JavaScript eficientes
 - Soporte para dispositivos de alta densidad de píxeles
 - Estilos de impresión optimizados
-- Caché del navegador configurado
-
-## Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## Contacto
 
