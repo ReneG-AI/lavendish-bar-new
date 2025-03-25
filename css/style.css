@@ -186,7 +186,7 @@ a:hover {
 /* Hero Section */
 .hero {
     height: 100vh;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/hero-bg.png') no-repeat center center/cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/Lavendish-hero.png') no-repeat center center/cover;
     color: white;
     display: flex;
     align-items: center;
@@ -361,7 +361,7 @@ a:hover {
 
 /* CTA section */
 .cta {
-    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('images/cta-bg.jpg') no-repeat center center/cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('../images/Lavendish-hero.png') no-repeat center center/cover;
     padding: 100px 0;
     color: white;
     text-align: center;

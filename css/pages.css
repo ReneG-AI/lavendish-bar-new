@@ -921,7 +921,7 @@
 /* ===== ESTILOS DE MENÚ ===== */
 .menu-banner {
     height: 400px;
-    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/menu-bg.jpg') no-repeat center center/cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/Lavendish-hero.png') no-repeat center center/cover;
     color: white;
     display: flex;
     align-items: center;

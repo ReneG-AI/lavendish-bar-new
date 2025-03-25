@@ -516,7 +516,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('img').forEach(img => {
         img.addEventListener('error', function() {
             // Check if image is logo or hero background
-            if (this.src.includes('logo.png')) {
+            if (this.src.includes('Logo Lavendish sin fondo.png')) {
                 console.log('Error loading logo image, trying alternate');
                 this.src = 'images/logo-alt.png'; // Fallback logo
             }
@@ -555,9 +555,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     // Verify critical background images
-    verifyBackgroundImage('.hero', 'images/hero-bg.png');
-    verifyBackgroundImage('.cta', 'images/cta-bg.jpg');
-    verifyBackgroundImage('.menu-banner', '../images/menu-bg.jpg');
+    verifyBackgroundImage('.hero', 'images/Lavendish-hero.png');
+    verifyBackgroundImage('.cta', 'images/Lavendish-hero.png');
+    verifyBackgroundImage('.menu-banner', '../images/Lavendish-hero.png');
     
     // Initialize animations for page load
     setTimeout(() => {
