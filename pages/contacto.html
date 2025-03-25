@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Contacta con Lavendish Bar - Reservas, consultas y ubicación en Lleida.">
-    <meta name="keywords" content="contacto Lavendish Bar, reservas, ubicación, Lleida">
+    <meta name="description" content="Contacta con Lavendish Bar para organizar tus eventos privados o corporativos en Lleida.">
+    <meta name="keywords" content="contacto Lavendish Bar, eventos privados, fiestas Lleida, organizar evento">
     <meta name="author" content="Lavendish Bar">
     <meta property="og:title" content="Contacto - Lavendish Bar">
-    <meta property="og:description" content="Contacta con nosotros para reservas y consultas.">
+    <meta property="og:description" content="Contacta con nosotros para organizar tu evento perfecto.">
     <meta property="og:image" content="../images/contact-bg.jpg">
     <meta property="og:url" content="https://lavendishbar.com/pages/contacto.html">
     <title>Contacto - Lavendish Bar</title>
@@ -29,8 +29,6 @@
             <ul class="nav-links" role="menubar">
                 <li role="none"><a href="../index.html" role="menuitem">Inicio</a></li>
                 <li role="none"><a href="menu.html" role="menuitem">Menú</a></li>
-                <li role="none"><a href="eventos.html" role="menuitem">Eventos</a></li>
-                <li role="none"><a href="reservas.html" role="menuitem">Reservas</a></li>
                 <li role="none"><a href="contacto.html" class="active" role="menuitem" aria-current="page">Contacto</a></li>
             </ul>
             <button class="burger" aria-label="Alternar menú de navegación" aria-expanded="false">
@@ -43,75 +41,107 @@
 
     <main>
         <section class="contact-section" aria-labelledby="contact-title">
-            <h1 id="contact-title">Contacto</h1>
+            <div class="container">
+                <h1 id="contact-title">Contacto</h1>
 
-            <div class="contact-container">
-                <div class="contact-info">
-                    <h2>Información de Contacto</h2>
-                    <address>
-                        <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Avinguda de Balmes, 21, 25006 Lleida</p>
-                        <p><i class="fas fa-phone" aria-hidden="true"></i> <a href="tel:+34642988594">+34 642 98 85 94</a></p>
-                        <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:Info@lavendish.es">Info@lavendish.es</a></p>
-                    </address>
+                <div class="contact-container">
+                    <div class="contact-info">
+                        <h2>Información de Contacto</h2>
+                        <address>
+                            <p><i class="fas fa-map-marker-alt" aria-hidden="true"></i> Avinguda de Balmes, 21, 25006 Lleida</p>
+                            <p><i class="fas fa-phone" aria-hidden="true"></i> <a href="tel:+34642988594">+34 642 98 85 94</a></p>
+                            <p><i class="fas fa-envelope" aria-hidden="true"></i> <a href="mailto:Info@lavendish.es">Info@lavendish.es</a></p>
+                        </address>
 
-                    <div class="opening-hours">
-                        <h3>Horario de Apertura</h3>
-                        <p>Lunes - Viernes: 18:00 - 02:00</p>
-                        <p>Sábado - Domingo: 16:00 - 03:00</p>
+                        <div class="opening-hours">
+                            <h3>Horario de Apertura</h3>
+                            <p>Lunes - Viernes: 18:00 - 02:00</p>
+                            <p>Sábado - Domingo: 16:00 - 03:00</p>
+                        </div>
+                        
+                        <div class="events-info">
+                            <h3>Organiza tu Evento</h3>
+                            <p>¿Buscas un lugar único para tu celebración? Lavendish Bar es el espacio perfecto para:</p>
+                            <ul>
+                                <li>Fiestas de cumpleaños</li>
+                                <li>Despedidas de soltero/a</li>
+                                <li>Eventos corporativos</li>
+                                <li>Presentaciones y afterworks</li>
+                                <li>Fiestas temáticas privadas</li>
+                            </ul>
+                            <p>Contáctanos y haremos de tu evento una experiencia inolvidable.</p>
+                        </div>
+                    </div>
+
+                    <div class="contact-form">
+                        <h2>Envíanos un Mensaje</h2>
+                        <form action="#" method="POST" aria-label="Formulario de contacto">
+                            <div class="form-group">
+                                <label for="name">Nombre *</label>
+                                <input type="text" id="name" name="name" required aria-required="true">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="email">Email *</label>
+                                <input type="email" id="email" name="email" required aria-required="true">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Teléfono *</label>
+                                <input type="tel" id="phone" name="phone" required aria-required="true">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="event-type">Tipo de Evento *</label>
+                                <select id="event-type" name="event-type" required aria-required="true">
+                                    <option value="">Selecciona el tipo de evento</option>
+                                    <option value="cumpleanos">Cumpleaños</option>
+                                    <option value="despedida">Despedida de soltero/a</option>
+                                    <option value="corporativo">Evento corporativo</option>
+                                    <option value="fiesta-tematica">Fiesta temática</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="date">Fecha Preferida *</label>
+                                <input type="date" id="date" name="date" required aria-required="true">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="guests">Número Aproximado de Invitados *</label>
+                                <select id="guests" name="guests" required aria-required="true">
+                                    <option value="">Selecciona el número de invitados</option>
+                                    <option value="1-15">1-15 personas</option>
+                                    <option value="16-30">16-30 personas</option>
+                                    <option value="31-50">31-50 personas</option>
+                                    <option value="51+">Más de 50 personas</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="message">Mensaje *</label>
+                                <textarea id="message" name="message" rows="5" required aria-required="true" placeholder="Cuéntanos más sobre tu evento y tus necesidades..."></textarea>
+                            </div>
+
+                            <button type="submit" class="submit-button">Enviar Mensaje</button>
+                        </form>
                     </div>
                 </div>
 
-                <div class="contact-form">
-                    <h2>Envíanos un Mensaje</h2>
-                    <form action="#" method="POST" aria-label="Formulario de contacto">
-                        <div class="form-group">
-                            <label for="name">Nombre *</label>
-                            <input type="text" id="name" name="name" required aria-required="true">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="email">Email *</label>
-                            <input type="email" id="email" name="email" required aria-required="true">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="phone">Teléfono</label>
-                            <input type="tel" id="phone" name="phone">
-                        </div>
-
-                        <div class="form-group">
-                            <label for="subject">Asunto *</label>
-                            <select id="subject" name="subject" required aria-required="true">
-                                <option value="">Selecciona un asunto</option>
-                                <option value="reserva">Reserva de Mesa</option>
-                                <option value="evento">Consulta sobre Eventos</option>
-                                <option value="otro">Otro</option>
-                            </select>
-                        </div>
-
-                        <div class="form-group">
-                            <label for="message">Mensaje *</label>
-                            <textarea id="message" name="message" rows="5" required aria-required="true"></textarea>
-                        </div>
-
-                        <button type="submit" class="submit-button">Enviar Mensaje</button>
-                    </form>
-                </div>
-            </div>
-
-            <div class="map-container">
-                <h2>Ubicación</h2>
-                <div class="map">
-                    <!-- Aquí irá el mapa de Google Maps -->
-                    <iframe 
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3017.650456456123!2d0.6200000!3d41.6200000!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDHCsDM3JzEyLjAiTiAwwrAzNyczNi4wIlc!5e0!3m2!1ses!2ses!4v1234567890!5m2!1ses!2ses"
-                        width="100%" 
-                        height="450" 
-                        style="border:0;" 
-                        allowfullscreen="" 
-                        loading="lazy" 
-                        referrerpolicy="no-referrer-when-downgrade">
-                    </iframe>
+                <div class="map-container">
+                    <h2>Ubicación</h2>
+                    <div class="map">
+                        <iframe 
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2993.6462168287154!2d0.618864!3d41.617866!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12a6e05b48b7c22d%3A0x15147fd6cc784cbe!2sAvinguda%20de%20Balmes%2C%2021%2C%2025006%20Lleida!5e0!3m2!1ses!2ses!4v1718203761906!5m2!1ses!2ses"
+                            width="100%" 
+                            height="450" 
+                            style="border:0;" 
+                            allowfullscreen="" 
+                            loading="lazy" 
+                            referrerpolicy="no-referrer-when-downgrade">
+                        </iframe>
+                    </div>
                 </div>
             </div>
         </section>

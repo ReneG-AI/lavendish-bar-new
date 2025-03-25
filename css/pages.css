@@ -467,23 +467,27 @@
 }
 
 /* Estilos generales para todas las páginas */
-.pages-section {
-    padding: 80px 20px;
+.container {
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px;
 }
 
-.pages-section h1 {
+.section-title {
     text-align: center;
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    color: #333;
     margin-bottom: 40px;
+}
+
+.section-title h2 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
 }
 
 /* Estilos para la galería */
 .gallery-section {
-    padding: 80px 20px;
+    padding: 80px 0;
+    background-color: var(--light-gray);
 }
 
 .gallery-filters {
@@ -496,10 +500,10 @@
 
 .filter-button {
     padding: 10px 20px;
-    border: 2px solid #333;
+    border: 2px solid var(--primary-color);
     background: transparent;
-    color: #333;
-    font-family: 'Poppins', sans-serif;
+    color: var(--primary-color);
+    font-family: var(--font-primary);
     font-size: 1rem;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -508,15 +512,14 @@
 
 .filter-button:hover,
 .filter-button.active {
-    background: #333;
+    background: var(--primary-color);
     color: #fff;
 }
 
 .gallery-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 20px;
-    padding: 20px;
 }
 
 .gallery-item {
@@ -525,6 +528,7 @@
     border-radius: 8px;
     cursor: pointer;
     transition: transform 0.3s ease;
+    aspect-ratio: 1 / 1;
 }
 
 .gallery-item:hover {
@@ -533,9 +537,35 @@
 
 .gallery-item img {
     width: 100%;
-    height: 300px;
+    height: 100%;
     object-fit: cover;
     display: block;
+    transition: transform 0.5s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.1);
+}
+
+.gallery-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(transparent, rgba(0,0,0,0.7));
+    padding: 20px;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.gallery-item:hover .gallery-overlay {
+    opacity: 1;
+}
+
+.gallery-caption {
+    font-size: 0.9rem;
+    font-weight: 500;
 }
 
 /* Modal de la galería */
@@ -565,7 +595,7 @@
     color: #fff;
     text-align: center;
     padding: 10px;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-primary);
     font-size: 1.1rem;
     margin-top: 20px;
 }
@@ -607,64 +637,69 @@
     right: 20px;
 }
 
-/* Estilos para la página de reservas */
-.reservations-section {
-    padding: 80px 20px;
+/* Estilos para la página de contacto */
+.contact-section {
+    padding: 80px 0;
 }
 
-.reservations-container {
+.contact-container {
     display: grid;
-    grid-template-columns: 1fr 2fr;
+    grid-template-columns: 1fr 1fr;
     gap: 40px;
-    max-width: 1200px;
-    margin: 0 auto;
+    margin-bottom: 60px;
 }
 
-.reservation-info {
-    background: #f9f9f9;
+.contact-info {
+    background: var(--light-gray);
     padding: 30px;
     border-radius: 8px;
 }
 
-.reservation-info h2 {
-    color: #333;
+.contact-info h2 {
+    color: var(--primary-color);
     margin-bottom: 20px;
-    font-family: 'Playfair Display', serif;
+    font-family: var(--font-secondary);
 }
 
-.reservation-details {
-    margin-top: 30px;
+.contact-info h3 {
+    color: var(--primary-color);
+    margin: 30px 0 15px;
+    font-family: var(--font-secondary);
 }
 
-.reservation-details h3 {
-    color: #333;
+.contact-info address {
+    font-style: normal;
+}
+
+.contact-info p {
     margin-bottom: 15px;
-    font-family: 'Playfair Display', serif;
 }
 
-.reservation-details ul {
-    list-style: none;
-    padding: 0;
+.contact-info i {
+    margin-right: 10px;
+    color: var(--accent-color);
 }
 
-.reservation-details li {
-    margin-bottom: 10px;
-    padding-left: 25px;
-    position: relative;
+.events-info ul {
+    margin-left: 20px;
+    margin-bottom: 20px;
 }
 
-.reservation-details li::before {
-    content: "•";
-    color: #333;
-    position: absolute;
-    left: 0;
+.events-info li {
+    margin-bottom: 8px;
 }
 
-.reservation-form {
+.contact-form {
     background: #fff;
     padding: 30px;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.contact-form h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-family: var(--font-secondary);
 }
 
 .form-group {
@@ -674,8 +709,8 @@
 .form-group label {
     display: block;
     margin-bottom: 5px;
-    color: #333;
-    font-family: 'Poppins', sans-serif;
+    color: var(--primary-color);
+    font-family: var(--font-primary);
 }
 
 .form-group input,
@@ -683,9 +718,9 @@
 .form-group textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--border-color);
     border-radius: 4px;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-primary);
 }
 
 .form-group textarea {
@@ -694,57 +729,191 @@
 }
 
 .submit-button {
-    background: #333;
+    background: var(--accent-color);
     color: #fff;
     padding: 12px 30px;
     border: none;
     border-radius: 25px;
     cursor: pointer;
-    font-family: 'Poppins', sans-serif;
+    font-family: var(--font-primary);
     font-size: 1rem;
     transition: background 0.3s ease;
 }
 
 .submit-button:hover {
-    background: #555;
+    background: #7b1fa2;
+}
+
+.map-container {
+    margin-top: 40px;
+}
+
+.map-container h2 {
+    margin-bottom: 20px;
+    color: var(--primary-color);
+    font-family: var(--font-secondary);
+}
+
+/* Estilos para la sección CTA */
+.cta-section {
+    padding: 80px 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('../images/cta-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    color: #fff;
+    text-align: center;
+}
+
+.cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.cta-content h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.cta-content p {
+    margin-bottom: 30px;
+    font-size: 1.1rem;
+}
+
+/* Estilos para la página de menú */
+.menu-section {
+    padding: 80px 0;
+}
+
+.menu-tabs {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 40px;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.menu-tab {
+    padding: 10px 20px;
+    border: 2px solid var(--primary-color);
+    background: transparent;
+    color: var(--primary-color);
+    font-family: var(--font-primary);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    border-radius: 25px;
+}
+
+.menu-tab:hover,
+.menu-tab.active {
+    background: var(--primary-color);
+    color: #fff;
+}
+
+.menu-category {
+    display: none;
+}
+
+.menu-category.active {
+    display: block;
+}
+
+.menu-category h2 {
+    color: var(--primary-color);
+    margin: 40px 0 20px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--accent-color);
+    display: flex;
+    align-items: center;
+}
+
+.menu-category h2 i {
+    margin-right: 10px;
+    color: var(--accent-color);
+}
+
+.menu-items {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+.menu-item h3 {
+    margin-bottom: 15px;
+    color: var(--accent-color);
+}
+
+.menu-item ul {
+    list-style: none;
+}
+
+.menu-item ul li {
+    padding: 8px 0;
+    border-bottom: 1px dashed var(--border-color);
+}
+
+.menu-note {
+    font-style: italic;
+    margin-bottom: 15px;
+    color: var(--secondary-color);
 }
 
 /* Responsive */
-@media (max-width: 768px) {
-    .reservations-container {
+@media (max-width: 992px) {
+    .menu-items {
         grid-template-columns: 1fr;
     }
-
+    
     .gallery-grid {
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
     }
+}
 
+@media (max-width: 768px) {
+    .contact-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .gallery-grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 15px;
+    }
+    
     .gallery-filters {
         gap: 10px;
     }
-
+    
     .filter-button {
         padding: 8px 16px;
         font-size: 0.9rem;
     }
-
+    
     .modal-prev,
     .modal-next {
         padding: 10px;
         font-size: 16px;
     }
+    
+    .menu-tabs {
+        gap: 10px;
+    }
+    
+    .menu-tab {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
 }
 
 @media (max-width: 480px) {
-    .pages-section h1 {
+    .section-title h2 {
         font-size: 2rem;
     }
-
+    
     .gallery-grid {
         grid-template-columns: 1fr;
     }
-
-    .gallery-item img {
-        height: 250px;
+    
+    .cta-content h2 {
+        font-size: 2rem;
     }
 } 

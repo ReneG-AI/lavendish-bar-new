@@ -389,7 +389,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Validar email si existe
             const emailField = form.querySelector('input[type="email"]');
-            if (emailField) {
+            if (emailField && emailField.value.trim()) {
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(emailField.value)) {
                     isValid = false;
@@ -399,7 +399,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             // Validar teléfono si existe
             const phoneField = form.querySelector('input[type="tel"]');
-            if (phoneField) {
+            if (phoneField && phoneField.value.trim()) {
                 const phoneRegex = /^[0-9+\s-()]{9,}$/;
                 if (!phoneRegex.test(phoneField.value)) {
                     isValid = false;
@@ -433,13 +433,26 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
+    // Cambiar navbar al hacer scroll
+    if (navbar) {
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.style.background = 'rgba(41, 41, 41, 0.95)';
+                navbar.style.padding = '0.8rem 2rem';
+            } else {
+                navbar.style.background = 'rgba(41, 41, 41, 0.8)';
+                navbar.style.padding = '1rem 2rem';
+            }
+        });
+    }
+
     // Animación de elementos al hacer scroll
     const animateOnScroll = () => {
         const elements = document.querySelectorAll('.animate-on-scroll');
         elements.forEach(element => {
             const elementTop = element.getBoundingClientRect().top;
             const elementBottom = element.getBoundingClientRect().bottom;
-            const isVisible = (elementTop < window.innerHeight) && (elementBottom >= 0);
+            const isVisible = (elementTop < window.innerHeight - 100) && (elementBottom >= 0);
             
             if (isVisible) {
                 element.classList.add('visible');
@@ -447,6 +460,16 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    window.addEventListener('scroll', animateOnScroll);
-    animateOnScroll(); // Ejecutar una vez al cargar la página
+    // Inicializar animaciones
+    if (document.querySelectorAll('.animate-on-scroll').length > 0) {
+        window.addEventListener('scroll', animateOnScroll);
+        window.addEventListener('resize', animateOnScroll);
+        window.addEventListener('load', animateOnScroll);
+        animateOnScroll(); // Ejecutar una vez al cargar la página
+    }
+    
+    // Añadir clase .animate-on-scroll a elementos que queremos animar
+    document.querySelectorAll('.feature-card, .about-content, .gallery-item, .cta-content').forEach(element => {
+        element.classList.add('animate-on-scroll');
+    });
 }); 
