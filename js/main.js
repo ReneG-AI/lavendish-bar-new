@@ -336,22 +336,35 @@ style.textContent = `
 
 document.head.appendChild(style);
 
-// Funcionalidad del menú móvil
-document.addEventListener('DOMContentLoaded', () => {
-    // Mobile Menu Toggle
+// Esperar a que todo el DOM se cargue
+document.addEventListener('DOMContentLoaded', function() {
+    // Variables globales
+    const navbar = document.querySelector('.navbar');
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
-
+    const scrollTopBtn = document.createElement('a');
+    
+    // Configurar botón de scroll top
+    scrollTopBtn.classList.add('scroll-top');
+    scrollTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    scrollTopBtn.setAttribute('aria-label', 'Volver arriba');
+    document.body.appendChild(scrollTopBtn);
+    
+    // Mobile menu toggle
     if (burger) {
         burger.addEventListener('click', () => {
-            // Toggle Nav
+            // Toggle nav
             nav.classList.toggle('nav-active');
             
-            // Burger Animation
+            // Toggle burger animation
             burger.classList.toggle('toggle');
             
-            // Animate Links
+            // Toggle aria-expanded
+            const expanded = burger.getAttribute('aria-expanded') === 'true' || false;
+            burger.setAttribute('aria-expanded', !expanded);
+            
+            // Animate links
             navLinks.forEach((link, index) => {
                 if (link.style.animation) {
                     link.style.animation = '';
@@ -361,172 +374,205 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
-
-    // Form Validation
+    
+    // Form validation
     const forms = document.querySelectorAll('form');
     
     forms.forEach(form => {
         form.addEventListener('submit', function(e) {
             e.preventDefault();
-            let valid = true;
+            
+            let isValid = true;
             const requiredFields = form.querySelectorAll('[required]');
             
-            // Reset validation messages
+            // Reset previous error messages
             const errorMessages = form.querySelectorAll('.error-message');
-            errorMessages.forEach(msg => msg.remove());
+            errorMessages.forEach(error => error.remove());
             
-            // Validate required fields
+            // Check required fields
             requiredFields.forEach(field => {
                 field.classList.remove('error');
                 
                 if (!field.value.trim()) {
-                    valid = false;
-                    field.classList.add('error');
-                    showErrorMessage(field, 'Este campo es obligatorio');
-                } else if (field.type === 'email' && field.value.trim()) {
-                    // Validate email format
-                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                    if (!emailPattern.test(field.value.trim())) {
-                        valid = false;
-                        field.classList.add('error');
-                        showErrorMessage(field, 'Por favor, introduce un email válido');
+                    isValid = false;
+                    addErrorTo(field, 'Este campo es obligatorio');
+                } else {
+                    // Email validation
+                    if (field.type === 'email' && !isValidEmail(field.value)) {
+                        isValid = false;
+                        addErrorTo(field, 'Por favor, introduce un email válido');
                     }
-                } else if (field.id === 'phone' && field.value.trim()) {
-                    // Validate phone format
-                    const phonePattern = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
-                    if (!phonePattern.test(field.value.trim())) {
-                        valid = false;
-                        field.classList.add('error');
-                        showErrorMessage(field, 'Por favor, introduce un teléfono válido');
+                    
+                    // Phone validation
+                    if (field.id === 'phone' && !isValidPhone(field.value)) {
+                        isValid = false;
+                        addErrorTo(field, 'Por favor, introduce un número de teléfono válido');
                     }
                 }
             });
             
-            if (valid) {
-                // Show success notification
-                showNotification('¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.', 'success');
+            // If the form is valid, show notification and reset
+            if (isValid) {
+                showNotification('Mensaje enviado correctamente. Nos pondremos en contacto contigo pronto.');
                 form.reset();
             }
         });
     });
     
-    function showErrorMessage(field, message) {
-        const errorMsg = document.createElement('span');
-        errorMsg.className = 'error-message';
-        errorMsg.innerText = message;
-        field.parentNode.appendChild(errorMsg);
+    // Helper functions for validation
+    function addErrorTo(field, message) {
+        field.classList.add('error');
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'error-message';
+        errorDiv.innerText = message;
+        field.parentNode.appendChild(errorDiv);
     }
     
-    function showNotification(message, type) {
+    function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+    
+    function isValidPhone(phone) {
+        const phoneRegex = /^[0-9\s+().-]{9,15}$/;
+        return phoneRegex.test(phone);
+    }
+    
+    function showNotification(message) {
         const notification = document.createElement('div');
-        notification.className = `notification ${type}`;
+        notification.className = 'notification';
         notification.innerText = message;
-        
         document.body.appendChild(notification);
         
-        // Show notification
+        // Add visible class after a small delay to trigger transition
         setTimeout(() => {
-            notification.classList.add('show');
+            notification.classList.add('visible');
         }, 10);
         
-        // Hide and remove notification
+        // Remove notification after 5 seconds
         setTimeout(() => {
-            notification.classList.remove('show');
+            notification.classList.remove('visible');
             setTimeout(() => {
-                document.body.removeChild(notification);
+                notification.remove();
             }, 300);
         }, 5000);
     }
-
-    // Navbar background change on scroll
-    const navbar = document.querySelector('.navbar');
     
-    if (navbar) {
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-    }
-
-    // Smooth scroll for anchor links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            if (this.getAttribute('href') !== '#') {
-                e.preventDefault();
-                
-                const targetId = this.getAttribute('href');
-                const targetElement = document.querySelector(targetId);
-                
-                if (targetElement) {
-                    const offsetTop = targetElement.offsetTop - 80;
-                    
-                    window.scrollTo({
-                        top: offsetTop,
-                        behavior: 'smooth'
-                    });
-                    
-                    // Close mobile menu if open
-                    if (nav && nav.classList.contains('nav-active')) {
-                        nav.classList.remove('nav-active');
-                        burger.classList.remove('toggle');
-                    }
-                }
+    // Background navbar change on scroll
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            navbar.classList.add('scrolled');
+            scrollTopBtn.classList.add('show');
+        } else {
+            navbar.classList.remove('scrolled');
+            scrollTopBtn.classList.remove('show');
+        }
+        
+        // Activate animation when element is in viewport
+        const animatedElements = document.querySelectorAll('.animate-on-scroll');
+        animatedElements.forEach(el => {
+            const elementTop = el.getBoundingClientRect().top;
+            const elementVisible = 150;
+            
+            if (elementTop < window.innerHeight - elementVisible) {
+                el.classList.add('visible');
             }
         });
     });
-
-    // Scroll to top button
-    const scrollToTopBtn = document.createElement('button');
-    scrollToTopBtn.className = 'scroll-top';
-    scrollToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
-    scrollToTopBtn.setAttribute('aria-label', 'Volver arriba');
-    document.body.appendChild(scrollToTopBtn);
     
-    scrollToTopBtn.addEventListener('click', () => {
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const targetId = this.getAttribute('href');
+            
+            // Only apply for anchors that point to an element on the page
+            if (targetId !== '#' && document.querySelector(targetId)) {
+                e.preventDefault();
+                
+                const targetPosition = document.querySelector(targetId).offsetTop - 100;
+                
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+            }
+        });
+    });
+    
+    // Scroll to top button
+    scrollTopBtn.addEventListener('click', () => {
         window.scrollTo({
             top: 0,
             behavior: 'smooth'
         });
     });
     
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 300) {
-            scrollToTopBtn.classList.add('show');
-        } else {
-            scrollToTopBtn.classList.remove('show');
-        }
+    // Add animation classes to elements
+    document.querySelectorAll('.feature-card, .about-content, .hero-content').forEach(el => {
+        el.classList.add('animate-on-scroll');
     });
-
-    // Animation on scroll
-    const animateElements = document.querySelectorAll('.animate-on-scroll');
     
-    function checkIfInView() {
-        const windowHeight = window.innerHeight;
-        const windowTopPosition = window.scrollY;
-        const windowBottomPosition = windowTopPosition + windowHeight;
-        
-        animateElements.forEach(element => {
-            const elementHeight = element.offsetHeight;
-            const elementTopPosition = element.offsetTop;
-            const elementBottomPosition = elementTopPosition + elementHeight;
-            
-            // Check if element is in viewport
-            if (
-                elementTopPosition < windowBottomPosition - 50 && 
-                elementBottomPosition > windowTopPosition + 50
-            ) {
-                element.classList.add('visible');
+    // Check for image loading errors and provide fallbacks
+    document.querySelectorAll('img').forEach(img => {
+        img.addEventListener('error', function() {
+            // Check if image is logo or hero background
+            if (this.src.includes('logo.png')) {
+                console.log('Error loading logo image, trying alternate');
+                this.src = 'images/logo-alt.png'; // Fallback logo
             }
+            
+            // Log the error for debugging
+            console.warn('Failed to load image:', this.src);
         });
+    });
+    
+    // Verify background images are loading
+    function verifyBackgroundImage(selector, fallbackUrl) {
+        const element = document.querySelector(selector);
+        if (!element) return;
+        
+        // Create an image element to test if the background image can load
+        const img = new Image();
+        const computedStyle = window.getComputedStyle(element);
+        let bgImage = computedStyle.backgroundImage;
+        
+        // Extract URL from the background-image property
+        const imgUrl = bgImage.replace(/url\(['"]?(.*?)['"]?\)/i, '$1');
+        
+        img.onload = function() {
+            console.log('Background image loaded successfully:', imgUrl);
+        };
+        
+        img.onerror = function() {
+            console.warn('Failed to load background image:', imgUrl);
+            console.log('Applying fallback background');
+            element.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('${fallbackUrl}')`;
+        };
+        
+        if (imgUrl && imgUrl !== 'none') {
+            img.src = imgUrl;
+        }
     }
     
-    // Initialize animations
-    checkIfInView();
-    window.addEventListener('scroll', checkIfInView);
-    window.addEventListener('resize', checkIfInView);
+    // Verify critical background images
+    verifyBackgroundImage('.hero', 'images/hero-bg.png');
+    verifyBackgroundImage('.cta', 'images/cta-bg.jpg');
+    verifyBackgroundImage('.menu-banner', '../images/menu-bg.jpg');
+    
+    // Initialize animations for page load
+    setTimeout(() => {
+        document.querySelectorAll('.animate-on-scroll').forEach(el => {
+            const elementTop = el.getBoundingClientRect().top;
+            const elementVisible = 150;
+            
+            if (elementTop < window.innerHeight - elementVisible) {
+                el.classList.add('visible');
+            }
+        });
+    }, 100);
+    
+    // Add page transition effect
+    document.body.classList.add('page-transition');
 });
 
 // Add animation class to elements
