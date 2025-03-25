@@ -40,182 +40,536 @@
     </header>
 
     <main>
-        <section class="menu-section" aria-labelledby="menu-title">
+        <section class="menu-banner">
+            <div class="menu-banner-content">
+                <h1>Nuestro Menú</h1>
+                <p>Descubre nuestra selección de bebidas y tapas</p>
+            </div>
+        </section>
+
+        <section class="menu-navigation">
             <div class="container">
-                <h1 id="menu-title">Nuestro Menú</h1>
-                
-                <div class="menu-tabs">
-                    <button class="menu-tab active" data-target="bebidas">Bebidas</button>
-                    <button class="menu-tab" data-target="cocteles">Cócteles</button>
-                    <button class="menu-tab" data-target="tapas">Tapas</button>
+                <nav class="menu-nav">
+                    <ul>
+                        <li><a href="#bebidas" class="menu-nav-link active">Bebidas</a></li>
+                        <li><a href="#cocteles" class="menu-nav-link">Cócteles</a></li>
+                        <li><a href="#tapas" class="menu-nav-link">Tapas</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </section>
+
+        <section id="bebidas" class="menu-section">
+            <div class="container">
+                <div class="menu-header">
+                    <h2>Bebidas</h2>
+                    <div class="menu-decoration">
+                        <span></span>
+                        <i class="fas fa-wine-glass-alt"></i>
+                        <span></span>
+                    </div>
                 </div>
-                
-                <div class="menu-content">
-                    <div class="menu-category active" id="bebidas">
-                        <h2><i class="fas fa-coffee"></i> Café y Infusiones</h2>
-                        <div class="menu-items">
-                            <div class="menu-item">
-                                <h3>Cafés</h3>
-                                <ul>
-                                    <li>Café Solo – €1,40</li>
-                                    <li>Café Cortado – €1,50</li>
-                                    <li>Café con Leche – €1,70</li>
-                                    <li>Café Americano – €1,60</li>
-                                    <li>Capuccino – €2,00</li>
-                                    <li>Descafeinado – €1,50</li>
-                                </ul>
-                            </div>
-                            <div class="menu-item">
-                                <h3>Infusiones</h3>
-                                <ul>
-                                    <li>Té Negro – €1,50</li>
-                                    <li>Té Verde – €1,50</li>
-                                    <li>Infusión de Frutas – €1,50</li>
-                                    <li>Manzanilla – €1,50</li>
-                                    <li>Menta Poleo – €1,50</li>
-                                </ul>
+
+                <div class="menu-category">
+                    <h3><i class="fas fa-coffee"></i> Café y Infusiones</h3>
+                    <div class="menu-grid">
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Café Solo</h4>
+                                <span class="price">€1,40</span>
                             </div>
                         </div>
-
-                        <h2><i class="fas fa-glass-water"></i> Refrescos</h2>
-                        <div class="menu-items">
-                            <ul>
-                                <li>Coca-Cola – €2,00</li>
-                                <li>Coca-Cola Zero – €2,00</li>
-                                <li>Fanta Naranja / Limón – €2,00</li>
-                                <li>Sprite – €2,00</li>
-                                <li>Nestea – €2,00</li>
-                                <li>Aquarius Limón / Naranja – €2,00</li>
-                                <li>Tónica – €2,00</li>
-                                <li>Bitter Kas – €2,00</li>
-                                <li>Zumo de Piña / Melocotón / Naranja – €2,00</li>
-                                <li>Agua – €1,50</li>
-                                <li>Agua con Gas – €2,00</li>
-                            </ul>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Café Cortado</h4>
+                                <span class="price">€1,50</span>
+                            </div>
                         </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Café con Leche</h4>
+                                <span class="price">€1,70</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Café Americano</h4>
+                                <span class="price">€1,60</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Capuccino</h4>
+                                <span class="price">€2,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Descafeinado</h4>
+                                <span class="price">€1,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Té Negro</h4>
+                                <span class="price">€1,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Té Verde</h4>
+                                <span class="price">€1,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Infusión de Frutas</h4>
+                                <span class="price">€1,50</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-                        <h2><i class="fas fa-beer"></i> Cervezas</h2>
-                        <div class="menu-items">
+                <div class="menu-category">
+                    <h3><i class="fas fa-glass-water"></i> Refrescos</h3>
+                    <div class="menu-grid">
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Coca-Cola</h4>
+                                <span class="price">€2,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Coca-Cola Zero</h4>
+                                <span class="price">€2,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Fanta Naranja / Limón</h4>
+                                <span class="price">€2,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Sprite</h4>
+                                <span class="price">€2,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Nestea</h4>
+                                <span class="price">€2,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Aquarius</h4>
+                                <span class="price">€2,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Tónica</h4>
+                                <span class="price">€2,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Bitter Kas</h4>
+                                <span class="price">€2,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Zumos</h4>
+                                <span class="price">€2,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Agua</h4>
+                                <span class="price">€1,50</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-category">
+                    <h3><i class="fas fa-beer"></i> Cervezas</h3>
+                    <div class="menu-grid">
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Estrella Damm</h4>
+                                <span class="price">€2,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Voll-Damm</h4>
+                                <span class="price">€2,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Free Damm</h4>
+                                <span class="price">€2,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Heineken</h4>
+                                <span class="price">€2,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Corona</h4>
+                                <span class="price">€2,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Caña</h4>
+                                <span class="price">€1,60</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Jarra</h4>
+                                <span class="price">€3,00</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="cocteles" class="menu-section">
+            <div class="container">
+                <div class="menu-header">
+                    <h2>Cócteles</h2>
+                    <div class="menu-decoration">
+                        <span></span>
+                        <i class="fas fa-cocktail"></i>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="menu-category">
+                    <h3><i class="fas fa-glass-martini-alt"></i> Mojitos y Cócteles</h3>
+                    <div class="menu-grid">
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Mojito Clásico</h4>
+                                <span class="price">€5,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Mojito Fresa</h4>
+                                <span class="price">€5,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Mojito Frutas del Bosque</h4>
+                                <span class="price">€5,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Caipirinha</h4>
+                                <span class="price">€5,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Caipiroska</h4>
+                                <span class="price">€5,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Margarita</h4>
+                                <span class="price">€5,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Piña Colada</h4>
+                                <span class="price">€5,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>San Francisco</h4>
+                                <span class="price">€4,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Daiquiri de Fresa</h4>
+                                <span class="price">€5,50</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-category">
+                    <h3><i class="fas fa-glass-whiskey"></i> Cubatas</h3>
+                    <div class="category-group">
+                        <div class="group-header">
+                            <h4>Ginebra</h4>
+                        </div>
+                        <div class="menu-grid">
                             <div class="menu-item">
-                                <h3>Botellas</h3>
-                                <ul>
-                                    <li>Estrella Damm – €2,00</li>
-                                    <li>Voll-Damm – €2,50</li>
-                                    <li>Free Damm – €2,00</li>
-                                    <li>Free Damm Limón – €2,00</li>
-                                    <li>Heineken – €2,50</li>
-                                    <li>Desperados – €2,50</li>
-                                    <li>Amstel Oro – €2,50</li>
-                                    <li>Corona – €2,50</li>
-                                    <li>Budweiser – €2,50</li>
-                                </ul>
+                                <div class="menu-item-content">
+                                    <h4>Beefeater</h4>
+                                    <span class="price">€5,00</span>
+                                </div>
                             </div>
                             <div class="menu-item">
-                                <h3>De Barril</h3>
-                                <ul>
-                                    <li>Caña – €1,60</li>
-                                    <li>Jarra – €3,00</li>
-                                </ul>
+                                <div class="menu-item-content">
+                                    <h4>Tanqueray</h4>
+                                    <span class="price">€5,50</span>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <h4>Bombay Sapphire</h4>
+                                    <span class="price">€5,50</span>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <h4>Seagram's</h4>
+                                    <span class="price">€5,50</span>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <h4>Larios</h4>
+                                    <span class="price">€4,50</span>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <h4>Puerto de Indias</h4>
+                                    <span class="price">€5,50</span>
+                                </div>
                             </div>
                         </div>
                     </div>
 
-                    <div class="menu-category" id="tapas">
-                        <h2><i class="fas fa-utensils"></i> Tapas</h2>
-                        <div class="menu-items">
-                            <ul>
-                                <li>Patatas Bravas – €3,50</li>
-                                <li>Patatas Alioli – €3,50</li>
-                                <li>Croquetas – €4,00</li>
-                                <li>Nuggets – €3,50</li>
-                                <li>Fingers de Pollo – €4,00</li>
-                                <li>Nachos con Queso – €4,00</li>
-                                <li>Nachos Especiales – €6,00</li>
-                                <li>Calamares a la Romana – €5,00</li>
-                                <li>Alitas de Pollo – €4,50</li>
-                                <li>Mejillones – €4,00</li>
-                                <li>Aceitunas – €1,50</li>
-                                <li>Mix de Tapas (para compartir) – €8,50</li>
-                            </ul>
+                    <div class="category-group">
+                        <div class="group-header">
+                            <h4>Ron</h4>
                         </div>
-
-                        <h2><i class="fas fa-bread-slice"></i> Bocadillos</h2>
-                        <div class="menu-items">
-                            <p class="menu-note">(Pan normal o pan de chapata)</p>
-                            <ul>
-                                <li>Lomo con Queso – €4,50</li>
-                                <li>Bacon con Queso – €4,50</li>
-                                <li>Frankfurt – €3,50</li>
-                                <li>Frankfurt Completo – €4,50</li>
-                                <li>Hamburguesa – €4,00</li>
-                                <li>Hamburguesa Completa – €5,00</li>
-                                <li>Bocadillo Vegetal – €3,50</li>
-                                <li>Tortilla – €3,50</li>
-                                <li>Bikini (mixto) – €3,00</li>
-                            </ul>
+                        <div class="menu-grid">
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <h4>Brugal</h4>
+                                    <span class="price">€4,50</span>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <h4>Cacique</h4>
+                                    <span class="price">€4,50</span>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <h4>Habana Club 3</h4>
+                                    <span class="price">€3,50</span>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <h4>Habana Club 7</h4>
+                                    <span class="price">€6,50</span>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <h4>Bacardi</h4>
+                                    <span class="price">€4,50</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
-                    <div class="menu-category" id="cocteles">
-                        <h2><i class="fas fa-glass-martini-alt"></i> Mojitos y Cócteles</h2>
-                        <div class="menu-items">
-                            <ul>
-                                <li>Mojito Clásico – €5,00</li>
-                                <li>Mojito Fresa – €5,50</li>
-                                <li>Mojito Frutas del Bosque – €5,50</li>
-                                <li>Caipirinha – €5,00</li>
-                                <li>Caipiroska – €5,00</li>
-                                <li>Margarita – €5,00</li>
-                                <li>Piña Colada – €5,00</li>
-                                <li>San Francisco – €4,00</li>
-                                <li>Daiquiri de Fresa – €5,50</li>
-                                <li>Daiquiri de Mango – €5,50</li>
-                            </ul>
+                    <div class="category-group">
+                        <div class="group-header">
+                            <h4>Whisky</h4>
                         </div>
+                        <div class="menu-grid">
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <h4>Jack Daniel's</h4>
+                                    <span class="price">€6,00</span>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <h4>J.B</h4>
+                                    <span class="price">€3,50</span>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <h4>Ballantine's</h4>
+                                    <span class="price">€4,50</span>
+                                </div>
+                            </div>
+                            <div class="menu-item">
+                                <div class="menu-item-content">
+                                    <h4>Johnnie Walker</h4>
+                                    <span class="price">€4,50</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-                        <h2><i class="fas fa-glass-whiskey"></i> Cubatas</h2>
-                        <div class="menu-items">
-                            <div class="menu-item">
-                                <h3>Ginebra</h3>
-                                <ul>
-                                    <li>Beefeater – €5,00</li>
-                                    <li>Tanqueray – €5,50</li>
-                                    <li>Bombay Sapphire – €5,50</li>
-                                    <li>Seagram's – €5,50</li>
-                                    <li>Larios – €4,50</li>
-                                    <li>Puerto de Indias – €5,50</li>
-                                </ul>
+        <section id="tapas" class="menu-section">
+            <div class="container">
+                <div class="menu-header">
+                    <h2>Tapas y Bocadillos</h2>
+                    <div class="menu-decoration">
+                        <span></span>
+                        <i class="fas fa-utensils"></i>
+                        <span></span>
+                    </div>
+                </div>
+
+                <div class="menu-category">
+                    <h3><i class="fas fa-utensils"></i> Tapas</h3>
+                    <div class="menu-grid">
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Patatas Bravas</h4>
+                                <span class="price">€3,50</span>
                             </div>
-                            <div class="menu-item">
-                                <h3>Ron</h3>
-                                <ul>
-                                    <li>Brugal – €4,50</li>
-                                    <li>Cacique – €4,50</li>
-                                    <li>Cacique 500 – €5,50</li>
-                                    <li>Habana Club 3 – €3,50</li>
-                                    <li>Habana Club 7 – €6,50</li>
-                                    <li>Negrita – €3,50</li>
-                                    <li>Captain Morgan – €4,50</li>
-                                    <li>Bacardi – €4,50</li>
-                                    <li>Bacardi Limón – €4,50</li>
-                                    <li>Flor de Caña – €4,50</li>
-                                    <li>Barceló – €4,50</li>
-                                </ul>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Patatas Alioli</h4>
+                                <span class="price">€3,50</span>
                             </div>
-                            <div class="menu-item">
-                                <h3>Whisky</h3>
-                                <ul>
-                                    <li>Jack Daniel's – €6,00</li>
-                                    <li>J.B – €3,50</li>
-                                    <li>Ballantine's – €4,50</li>
-                                    <li>Johnnie Walker Red Label – €4,50</li>
-                                    <li>Dyc 8 – €4,50</li>
-                                    <li>Dewar's White Label – €4,50</li>
-                                    <li>Cutty Sark – €3,50</li>
-                                    <li>Grant's – €4,50</li>
-                                    <li>Dyc – €3,50</li>
-                                    <li>Four Roses – €4,50</li>
-                                </ul>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Croquetas</h4>
+                                <span class="price">€4,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Nuggets</h4>
+                                <span class="price">€3,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Fingers de Pollo</h4>
+                                <span class="price">€4,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Nachos con Queso</h4>
+                                <span class="price">€4,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Nachos Especiales</h4>
+                                <span class="price">€6,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Calamares a la Romana</h4>
+                                <span class="price">€5,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Alitas de Pollo</h4>
+                                <span class="price">€4,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Mix de Tapas</h4>
+                                <p class="description">Para compartir</p>
+                                <span class="price">€8,50</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="menu-category">
+                    <h3><i class="fas fa-bread-slice"></i> Bocadillos</h3>
+                    <p class="menu-note">Pan normal o pan de chapata</p>
+                    <div class="menu-grid">
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Lomo con Queso</h4>
+                                <span class="price">€4,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Bacon con Queso</h4>
+                                <span class="price">€4,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Frankfurt</h4>
+                                <span class="price">€3,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Frankfurt Completo</h4>
+                                <span class="price">€4,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Hamburguesa</h4>
+                                <span class="price">€4,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Hamburguesa Completa</h4>
+                                <span class="price">€5,00</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Bocadillo Vegetal</h4>
+                                <span class="price">€3,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Tortilla</h4>
+                                <span class="price">€3,50</span>
+                            </div>
+                        </div>
+                        <div class="menu-item">
+                            <div class="menu-item-content">
+                                <h4>Bikini (mixto)</h4>
+                                <span class="price">€3,00</span>
                             </div>
                         </div>
                     </div>
@@ -256,24 +610,67 @@
     <script src="../js/main.js" defer></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-            const menuTabs = document.querySelectorAll('.menu-tab');
-            const menuCategories = document.querySelectorAll('.menu-category');
+            // Scroll suave para los enlaces del menú
+            const menuLinks = document.querySelectorAll('.menu-nav-link');
             
-            menuTabs.forEach(tab => {
-                tab.addEventListener('click', () => {
-                    // Desactivar todas las pestañas
-                    menuTabs.forEach(t => t.classList.remove('active'));
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
                     
-                    // Activar la pestaña actual
-                    tab.classList.add('active');
+                    // Remover la clase active de todos los enlaces
+                    menuLinks.forEach(l => l.classList.remove('active'));
                     
-                    // Ocultar todas las categorías
-                    menuCategories.forEach(cat => cat.classList.remove('active'));
+                    // Agregar la clase active al enlace clickeado
+                    this.classList.add('active');
                     
-                    // Mostrar la categoría correspondiente
-                    const targetCategory = document.getElementById(tab.getAttribute('data-target'));
-                    targetCategory.classList.add('active');
+                    // Obtener el id de la sección a la que se quiere ir
+                    const targetId = this.getAttribute('href');
+                    
+                    // Obtener la posición de la sección
+                    const targetSection = document.querySelector(targetId);
+                    const targetPosition = targetSection.offsetTop - 100;
+                    
+                    // Ir a la sección suavemente
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
                 });
+            });
+
+            // Mostrar enlace activo según la posición de scroll
+            window.addEventListener('scroll', () => {
+                const sections = document.querySelectorAll('.menu-section');
+                const scrollPosition = window.scrollY + 150;
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionBottom = sectionTop + section.offsetHeight;
+                    
+                    if (scrollPosition >= sectionTop && scrollPosition < sectionBottom) {
+                        const sectionId = section.getAttribute('id');
+                        menuLinks.forEach(link => {
+                            link.classList.remove('active');
+                            if (link.getAttribute('href') === `#${sectionId}`) {
+                                link.classList.add('active');
+                            }
+                        });
+                    }
+                });
+            });
+
+            // Hacer que el menú de navegación sea sticky al hacer scroll
+            const menuNav = document.querySelector('.menu-navigation');
+            const menuNavOffset = menuNav.offsetTop;
+            
+            window.addEventListener('scroll', () => {
+                if (window.scrollY >= menuNavOffset) {
+                    menuNav.classList.add('sticky');
+                    document.body.style.paddingTop = menuNav.offsetHeight + 'px';
+                } else {
+                    menuNav.classList.remove('sticky');
+                    document.body.style.paddingTop = 0;
+                }
             });
         });
     </script>

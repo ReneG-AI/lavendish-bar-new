@@ -338,138 +338,202 @@ document.head.appendChild(style);
 
 // Funcionalidad del menú móvil
 document.addEventListener('DOMContentLoaded', () => {
+    // Mobile Menu Toggle
     const burger = document.querySelector('.burger');
     const nav = document.querySelector('.nav-links');
     const navLinks = document.querySelectorAll('.nav-links li');
 
-    // Toggle Navigation
-    burger.addEventListener('click', () => {
-        // Toggle Nav
-        nav.classList.toggle('nav-active');
-
-        // Animate Links
-        navLinks.forEach((link, index) => {
-            if (link.style.animation) {
-                link.style.animation = '';
-            } else {
-                link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
-            }
-        });
-
-        // Burger Animation
-        burger.classList.toggle('toggle');
-    });
-
-    // Cerrar menú al hacer clic en un enlace
-    navLinks.forEach(link => {
-        link.addEventListener('click', () => {
-            nav.classList.remove('nav-active');
-            burger.classList.remove('toggle');
-        });
-    });
-
-    // Validación de formularios
-    const forms = document.querySelectorAll('form');
-    forms.forEach(form => {
-        form.addEventListener('submit', (e) => {
-            e.preventDefault();
+    if (burger) {
+        burger.addEventListener('click', () => {
+            // Toggle Nav
+            nav.classList.toggle('nav-active');
             
-            // Validar campos requeridos
-            const requiredFields = form.querySelectorAll('[required]');
-            let isValid = true;
-
-            requiredFields.forEach(field => {
-                if (!field.value.trim()) {
-                    isValid = false;
-                    field.classList.add('error');
+            // Burger Animation
+            burger.classList.toggle('toggle');
+            
+            // Animate Links
+            navLinks.forEach((link, index) => {
+                if (link.style.animation) {
+                    link.style.animation = '';
                 } else {
-                    field.classList.remove('error');
+                    link.style.animation = `navLinkFade 0.5s ease forwards ${index / 7 + 0.3}s`;
                 }
             });
-
-            // Validar email si existe
-            const emailField = form.querySelector('input[type="email"]');
-            if (emailField && emailField.value.trim()) {
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (!emailRegex.test(emailField.value)) {
-                    isValid = false;
-                    emailField.classList.add('error');
-                }
-            }
-
-            // Validar teléfono si existe
-            const phoneField = form.querySelector('input[type="tel"]');
-            if (phoneField && phoneField.value.trim()) {
-                const phoneRegex = /^[0-9+\s-()]{9,}$/;
-                if (!phoneRegex.test(phoneField.value)) {
-                    isValid = false;
-                    phoneField.classList.add('error');
-                }
-            }
-
-            if (isValid) {
-                // Aquí iría la lógica para enviar el formulario
-                console.log('Formulario válido, enviando...');
-                // Simular envío exitoso
-                showNotification('¡Mensaje enviado con éxito!', 'success');
-                form.reset();
-            } else {
-                showNotification('Por favor, completa todos los campos requeridos correctamente.', 'error');
-            }
         });
-    });
+    }
 
-    // Scroll suave para enlaces internos
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
+    // Form Validation
+    const forms = document.querySelectorAll('form');
+    
+    forms.forEach(form => {
+        form.addEventListener('submit', function(e) {
             e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
+            let valid = true;
+            const requiredFields = form.querySelectorAll('[required]');
+            
+            // Reset validation messages
+            const errorMessages = form.querySelectorAll('.error-message');
+            errorMessages.forEach(msg => msg.remove());
+            
+            // Validate required fields
+            requiredFields.forEach(field => {
+                field.classList.remove('error');
+                
+                if (!field.value.trim()) {
+                    valid = false;
+                    field.classList.add('error');
+                    showErrorMessage(field, 'Este campo es obligatorio');
+                } else if (field.type === 'email' && field.value.trim()) {
+                    // Validate email format
+                    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                    if (!emailPattern.test(field.value.trim())) {
+                        valid = false;
+                        field.classList.add('error');
+                        showErrorMessage(field, 'Por favor, introduce un email válido');
+                    }
+                } else if (field.id === 'phone' && field.value.trim()) {
+                    // Validate phone format
+                    const phonePattern = /^[+]?[(]?[0-9]{3}[)]?[-\s.]?[0-9]{3}[-\s.]?[0-9]{4,6}$/;
+                    if (!phonePattern.test(field.value.trim())) {
+                        valid = false;
+                        field.classList.add('error');
+                        showErrorMessage(field, 'Por favor, introduce un teléfono válido');
+                    }
+                }
+            });
+            
+            if (valid) {
+                // Show success notification
+                showNotification('¡Mensaje enviado correctamente! Nos pondremos en contacto contigo pronto.', 'success');
+                form.reset();
             }
         });
     });
+    
+    function showErrorMessage(field, message) {
+        const errorMsg = document.createElement('span');
+        errorMsg.className = 'error-message';
+        errorMsg.innerText = message;
+        field.parentNode.appendChild(errorMsg);
+    }
+    
+    function showNotification(message, type) {
+        const notification = document.createElement('div');
+        notification.className = `notification ${type}`;
+        notification.innerText = message;
+        
+        document.body.appendChild(notification);
+        
+        // Show notification
+        setTimeout(() => {
+            notification.classList.add('show');
+        }, 10);
+        
+        // Hide and remove notification
+        setTimeout(() => {
+            notification.classList.remove('show');
+            setTimeout(() => {
+                document.body.removeChild(notification);
+            }, 300);
+        }, 5000);
+    }
 
-    // Cambiar navbar al hacer scroll
+    // Navbar background change on scroll
+    const navbar = document.querySelector('.navbar');
+    
     if (navbar) {
         window.addEventListener('scroll', () => {
             if (window.scrollY > 100) {
-                navbar.style.background = 'rgba(41, 41, 41, 0.95)';
-                navbar.style.padding = '0.8rem 2rem';
+                navbar.classList.add('scrolled');
             } else {
-                navbar.style.background = 'rgba(41, 41, 41, 0.8)';
-                navbar.style.padding = '1rem 2rem';
+                navbar.classList.remove('scrolled');
             }
         });
     }
 
-    // Animación de elementos al hacer scroll
-    const animateOnScroll = () => {
-        const elements = document.querySelectorAll('.animate-on-scroll');
-        elements.forEach(element => {
-            const elementTop = element.getBoundingClientRect().top;
-            const elementBottom = element.getBoundingClientRect().bottom;
-            const isVisible = (elementTop < window.innerHeight - 100) && (elementBottom >= 0);
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            if (this.getAttribute('href') !== '#') {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    const offsetTop = targetElement.offsetTop - 80;
+                    
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (nav && nav.classList.contains('nav-active')) {
+                        nav.classList.remove('nav-active');
+                        burger.classList.remove('toggle');
+                    }
+                }
+            }
+        });
+    });
+
+    // Scroll to top button
+    const scrollToTopBtn = document.createElement('button');
+    scrollToTopBtn.className = 'scroll-top';
+    scrollToTopBtn.innerHTML = '<i class="fas fa-arrow-up"></i>';
+    scrollToTopBtn.setAttribute('aria-label', 'Volver arriba');
+    document.body.appendChild(scrollToTopBtn);
+    
+    scrollToTopBtn.addEventListener('click', () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            scrollToTopBtn.classList.add('show');
+        } else {
+            scrollToTopBtn.classList.remove('show');
+        }
+    });
+
+    // Animation on scroll
+    const animateElements = document.querySelectorAll('.animate-on-scroll');
+    
+    function checkIfInView() {
+        const windowHeight = window.innerHeight;
+        const windowTopPosition = window.scrollY;
+        const windowBottomPosition = windowTopPosition + windowHeight;
+        
+        animateElements.forEach(element => {
+            const elementHeight = element.offsetHeight;
+            const elementTopPosition = element.offsetTop;
+            const elementBottomPosition = elementTopPosition + elementHeight;
             
-            if (isVisible) {
+            // Check if element is in viewport
+            if (
+                elementTopPosition < windowBottomPosition - 50 && 
+                elementBottomPosition > windowTopPosition + 50
+            ) {
                 element.classList.add('visible');
             }
         });
-    };
-
-    // Inicializar animaciones
-    if (document.querySelectorAll('.animate-on-scroll').length > 0) {
-        window.addEventListener('scroll', animateOnScroll);
-        window.addEventListener('resize', animateOnScroll);
-        window.addEventListener('load', animateOnScroll);
-        animateOnScroll(); // Ejecutar una vez al cargar la página
     }
     
-    // Añadir clase .animate-on-scroll a elementos que queremos animar
-    document.querySelectorAll('.feature-card, .about-content, .gallery-item, .cta-content').forEach(element => {
+    // Initialize animations
+    checkIfInView();
+    window.addEventListener('scroll', checkIfInView);
+    window.addEventListener('resize', checkIfInView);
+});
+
+// Add animation class to elements
+document.addEventListener('DOMContentLoaded', () => {
+    const elementsToAnimate = document.querySelectorAll('.features-card, .about-content h2, .about-content p, .cta h2, .cta p, .cta .btn');
+    
+    elementsToAnimate.forEach(element => {
         element.classList.add('animate-on-scroll');
     });
 }); 
