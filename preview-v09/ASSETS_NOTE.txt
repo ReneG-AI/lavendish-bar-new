@@ -1,1 +1,0 @@
-Assets are about to be replaced with their existing binary Git blobs.
