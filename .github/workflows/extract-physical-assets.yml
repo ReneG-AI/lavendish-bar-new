@@ -5,7 +5,7 @@ on:
     branches:
       - site-assets-install
     paths:
-      - asset-upload/part-05.txt
+      - asset-pack-final/part-11.txt
 
 permissions:
   contents: write
@@ -21,7 +21,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat asset-upload/part-*.txt | base64 -d > /tmp/lavendish-assets.tgz
+          cat asset-pack-final/part-*.txt | base64 -d > /tmp/lavendish-assets.tgz
           rm -rf assets/mojitos assets/icons
           tar -xzf /tmp/lavendish-assets.tgz -C .
           test "$(find assets/mojitos -type f -name '*.webp' | wc -l)" -eq 14
