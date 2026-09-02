@@ -1,33 +1,35 @@
 /* LAVENDISH — physical image assets. Keep drink bitmaps transparent. */
 .flavor-icon{background-repeat:no-repeat!important;background-size:contain!important;background-position:center!important}
-.chip-original .flavor-icon{background-image:url("../assets/icons/original.webp?v=20260902c")!important}
-.chip-fresa .flavor-icon{background-image:url("../assets/icons/fresa.webp?v=20260902c")!important}
-.chip-frutos-bosque .flavor-icon{background-image:url("../assets/icons/frutos-bosque.webp?v=20260902c")!important}
-.chip-pina .flavor-icon{background-image:url("../assets/icons/pina.webp?v=20260902c")!important}
-.chip-coco .flavor-icon{background-image:url("../assets/icons/coco.webp?v=20260902c")!important}
-.chip-pina-colada .flavor-icon{background-image:url("../assets/icons/pina-colada.webp?v=20260902c")!important}
-.chip-maracuya .flavor-icon{background-image:url("../assets/icons/maracuya.webp?v=20260902c")!important}
-.chip-mango .flavor-icon{background-image:url("../assets/icons/mango.webp?v=20260902c")!important}
-.chip-frambuesa .flavor-icon{background-image:url("../assets/icons/frambuesa.webp?v=20260902c")!important}
-.chip-melocoton .flavor-icon{background-image:url("../assets/icons/melocoton.webp?v=20260902c")!important}
-.chip-sandia .flavor-icon{background-image:url("../assets/icons/sandia.webp?v=20260902c")!important}
-.chip-cereza .flavor-icon{background-image:url("../assets/icons/cereza.webp?v=20260902c")!important}
-.chip-manzana-verde .flavor-icon{background-image:url("../assets/icons/manzana-verde.webp?v=20260902c")!important}
-.chip-uva .flavor-icon{background-image:url("../assets/icons/uva.webp?v=20260902c")!important}
+.chip-original .flavor-icon{background-image:url("../assets/icons/original.webp?v=20260902d")!important}
+.chip-fresa .flavor-icon{background-image:url("../assets/icons/fresa.webp?v=20260902d")!important}
+.chip-frutos-bosque .flavor-icon{background-image:url("../assets/icons/frutos-bosque.webp?v=20260902d")!important}
+.chip-pina .flavor-icon{background-image:url("../assets/icons/pina.webp?v=20260902d")!important}
+.chip-coco .flavor-icon{background-image:url("../assets/icons/coco.webp?v=20260902d")!important}
+.chip-pina-colada .flavor-icon{background-image:url("../assets/icons/pina-colada.webp?v=20260902d")!important}
+.chip-maracuya .flavor-icon{background-image:url("../assets/icons/maracuya.webp?v=20260902d")!important}
+.chip-mango .flavor-icon{background-image:url("../assets/icons/mango.webp?v=20260902d")!important}
+.chip-frambuesa .flavor-icon{background-image:url("../assets/icons/frambuesa.webp?v=20260902d")!important}
+.chip-melocoton .flavor-icon{background-image:url("../assets/icons/melocoton.webp?v=20260902d")!important}
+.chip-sandia .flavor-icon{background-image:url("../assets/icons/sandia.webp?v=20260902d")!important}
+.chip-cereza .flavor-icon{background-image:url("../assets/icons/cereza.webp?v=20260902d")!important}
+.chip-manzana-verde .flavor-icon{background-image:url("../assets/icons/manzana-verde.webp?v=20260902d")!important}
+.chip-uva .flavor-icon{background-image:url("../assets/icons/uva.webp?v=20260902d")!important}
 
-.mojito-stage,.mojito-sprite{background-color:transparent!important}
-.mojito-sprite{background-repeat:no-repeat!important;background-size:contain!important;background-position:center!important}
-.mojito-scene:has(.chip-original input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-original-stable.webp?v=20260902c")!important}
-.mojito-scene:has(.chip-fresa input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-fresa-stable.webp?v=20260902c")!important}
-.mojito-scene:has(.chip-frutos-bosque input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-frutos-bosque-stable.webp?v=20260902c")!important}
-.mojito-scene:has(.chip-pina input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-pina-stable.webp?v=20260902c")!important}
-.mojito-scene:has(.chip-coco input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-coco-stable.webp?v=20260902c")!important}
-.mojito-scene:has(.chip-pina-colada input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-pina-colada-stable.webp?v=20260902c")!important}
-.mojito-scene:has(.chip-maracuya input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-maracuya-stable.webp?v=20260902c")!important}
-.mojito-scene:has(.chip-mango input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-mango-stable.webp?v=20260902c")!important}
-.mojito-scene:has(.chip-frambuesa input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-frambuesa-stable.webp?v=20260902c")!important}
-.mojito-scene:has(.chip-melocoton input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-melocoton-stable.webp?v=20260902c")!important}
-.mojito-scene:has(.chip-sandia input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-sandia-stable.webp?v=20260902c")!important}
-.mojito-scene:has(.chip-cereza input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-cereza-stable.webp?v=20260902c")!important}
-.mojito-scene:has(.chip-manzana-verde input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-manzana-verde-stable.webp?v=20260902c")!important}
-.mojito-scene:has(.chip-uva input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-uva-stable.webp?v=20260902c")!important}
+/* Mojito bitmap layer: never paint a rectangle behind the transparent drink. */
+.mojito-stage{background:none!important;background-color:transparent!important;box-shadow:none!important;filter:none!important;-webkit-filter:none!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;border-color:transparent!important}
+.mojito-stage::before,.mojito-stage::after,.mojito-flow::before,.mojito-flow::after,.mojito-scene>.mojito-ambient,.mojito-scene .flavor-aura{display:none!important}
+.mojito-sprite{background-color:transparent!important;background-repeat:no-repeat!important;background-size:contain!important;background-position:center!important;box-shadow:none!important;filter:none!important;-webkit-filter:none!important;mix-blend-mode:normal!important}
+.mojito-scene:has(.chip-original input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-original-stable.webp?v=20260902d")!important}
+.mojito-scene:has(.chip-fresa input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-fresa-stable.webp?v=20260902d")!important}
+.mojito-scene:has(.chip-frutos-bosque input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-frutos-bosque-stable.webp?v=20260902d")!important}
+.mojito-scene:has(.chip-pina input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-pina-stable.webp?v=20260902d")!important}
+.mojito-scene:has(.chip-coco input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-coco-stable.webp?v=20260902d")!important}
+.mojito-scene:has(.chip-pina-colada input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-pina-colada-stable.webp?v=20260902d")!important}
+.mojito-scene:has(.chip-maracuya input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-maracuya-stable.webp?v=20260902d")!important}
+.mojito-scene:has(.chip-mango input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-mango-stable.webp?v=20260902d")!important}
+.mojito-scene:has(.chip-frambuesa input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-frambuesa-stable.webp?v=20260902d")!important}
+.mojito-scene:has(.chip-melocoton input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-melocoton-stable.webp?v=20260902d")!important}
+.mojito-scene:has(.chip-sandia input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-sandia-stable.webp?v=20260902d")!important}
+.mojito-scene:has(.chip-cereza input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-cereza-stable.webp?v=20260902d")!important}
+.mojito-scene:has(.chip-manzana-verde input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-manzana-verde-stable.webp?v=20260902d")!important}
+.mojito-scene:has(.chip-uva input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-uva-stable.webp?v=20260902d")!important}
