@@ -5,7 +5,7 @@ on:
     branches:
       - site-assets-install
     paths:
-      - asset-upload/part-08.txt
+      - asset-upload/part-05.txt
 
 permissions:
   contents: write
