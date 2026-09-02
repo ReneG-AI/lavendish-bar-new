@@ -1,0 +1,43 @@
+name: Validate official live site
+
+on:
+  push:
+    branches:
+      - site-assets-install
+    paths:
+      - .github/workflows/validate-live-site.yml
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - name: Validate repository images
+        shell: bash
+        run: |
+          set -euo pipefail
+          file assets/favicon.png assets/lavendish-logo.webp assets/lavendish-storefront.webp assets/pina-float.webp
+          python - <<'PY'
+          from PIL import Image
+          for f in ['assets/favicon.png','assets/lavendish-logo.webp','assets/lavendish-storefront.webp','assets/pina-float.webp']:
+              im=Image.open(f)
+              im.verify()
+              print(f, 'VALID', im.format, im.size)
+          PY
+      - name: Validate GitHub Pages responses
+        shell: bash
+        run: |
+          set -euo pipefail
+          for u in \
+            'https://reneg-ai.github.io/lavendish-bar-new/' \
+            'https://reneg-ai.github.io/lavendish-bar-new/assets/lavendish-logo.webp' \
+            'https://reneg-ai.github.io/lavendish-bar-new/assets/pina-float.webp' \
+            'https://reneg-ai.github.io/lavendish-bar-new/assets/lavendish-storefront.webp' \
+            'https://reneg-ai.github.io/lavendish-bar-new/css/style-00.css'; do
+            echo "=== $u"
+            curl -L -sS -o /tmp/body -D /tmp/headers "$u"
+            head -n 8 /tmp/headers
+            echo "bytes=$(wc -c </tmp/body)"
+          done
