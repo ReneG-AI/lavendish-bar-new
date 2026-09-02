@@ -5,7 +5,7 @@ on:
     branches:
       - site-assets-install
     paths:
-      - assets/mojitos-sprite.webp
+      - .github/workflows/extract-physical-assets.yml
 
 permissions:
   contents: write
@@ -19,12 +19,14 @@ jobs:
           fetch-depth: 0
       - name: Install Pillow
         run: python -m pip install --quiet pillow
-      - name: Split Mojito and flavor image sprites
+      - name: Extract physical WebP files from CSS sprites
         shell: bash
         run: |
           set -euo pipefail
           python - <<'PY'
           from pathlib import Path
+          from io import BytesIO
+          import base64, re
           from PIL import Image
 
           names = [
@@ -32,8 +34,18 @@ jobs:
               'mango','frambuesa','melocoton','sandia','cereza','manzana-verde','uva'
           ]
 
-          def split(src, out_dir, pattern):
-              image = Image.open(src).convert('RGBA')
+          def decode_sprite(css_path):
+              css = Path(css_path).read_text(encoding='utf-8')
+              match = re.search(r'data:image/webp;base64,([A-Za-z0-9+/=]+)', css)
+              if not match:
+                  raise RuntimeError(f'No WebP data URI found in {css_path}')
+              payload = match.group(1)
+              payload += '=' * (-len(payload) % 4)
+              raw = base64.b64decode(payload)
+              return Image.open(BytesIO(raw)).convert('RGBA')
+
+          def split(css_path, out_dir, pattern):
+              image = decode_sprite(css_path)
               cell_w = image.width // 7
               cell_h = image.height // 2
               out = Path(out_dir)
@@ -42,11 +54,11 @@ jobs:
                   x = (i % 7) * cell_w
                   y = (i // 7) * cell_h
                   crop = image.crop((x, y, x + cell_w, y + cell_h))
-                  crop.save(out / pattern.format(name=name), 'WEBP', lossless=True, method=6)
-              print(f'{src}: {image.size} -> {cell_w}x{cell_h}, {len(names)} files')
+                  crop.save(out / pattern.format(name=name), 'WEBP', quality=82, method=6, exact=True)
+              print(f'{css_path}: {image.size} -> {cell_w}x{cell_h}, {len(names)} files')
 
-          split('assets/mojitos-sprite.webp', 'assets/mojitos', 'mojito-{name}-stable.webp')
-          split('assets/icons-sprite.webp', 'assets/icons', '{name}.webp')
+          split('css/style-05.css', 'assets/mojitos', 'mojito-{name}-stable.webp')
+          split('css/style-04.css', 'assets/icons', '{name}.webp')
           PY
       - name: Commit physical image files
         shell: bash
