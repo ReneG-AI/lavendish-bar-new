@@ -1,0 +1,36 @@
+name: Unpack physical Lavendish assets
+
+on:
+  push:
+    branches:
+      - site-assets-install
+    paths:
+      - site-pack/part-05.txt
+
+permissions:
+  contents: write
+
+jobs:
+  unpack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Decode and unpack image assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat site-pack/part-*.txt | base64 -d > /tmp/lavendish-assets.tgz
+          tar -xzf /tmp/lavendish-assets.tgz -C .
+          test "$(find assets/mojitos -maxdepth 1 -type f -name '*.webp' | wc -l)" -eq 14
+          test "$(find assets/icons -maxdepth 1 -type f -name '*.webp' | wc -l)" -eq 14
+          rm -rf site-pack
+      - name: Commit physical assets
+        shell: bash
+        run: |
+          git config user.name "Lavendish Site Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Add all physical Mojito and flavor assets"
+          git push origin HEAD:site-assets-install
