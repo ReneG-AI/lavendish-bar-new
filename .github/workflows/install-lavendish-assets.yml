@@ -1,0 +1,95 @@
+name: Install Lavendish image assets
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - lavendish-assets.zip
+
+permissions:
+  contents: write
+
+jobs:
+  install-assets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+
+      - name: Install physical image assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/lavendish-assets
+          mkdir -p /tmp/lavendish-assets assets/mojitos assets/icons
+          unzip -q lavendish-assets.zip -d /tmp/lavendish-assets
+          cp -f /tmp/lavendish-assets/mojitos/*.webp assets/mojitos/
+          cp -f /tmp/lavendish-assets/icons/*.webp assets/icons/
+
+          test "$(find assets/mojitos -maxdepth 1 -type f -name '*.webp' | wc -l)" -eq 14
+          test "$(find assets/icons -maxdepth 1 -type f -name '*.webp' | wc -l)" -eq 14
+
+          cat > css/assets-physical.css <<'CSS'
+          /* LAVENDISH — physical image assets. Keep drink bitmaps transparent. */
+          .flavor-icon{background-repeat:no-repeat!important;background-size:contain!important;background-position:center!important}
+          .chip-original .flavor-icon{background-image:url("../assets/icons/original.webp?v=20260902c")!important}
+          .chip-fresa .flavor-icon{background-image:url("../assets/icons/fresa.webp?v=20260902c")!important}
+          .chip-frutos-bosque .flavor-icon{background-image:url("../assets/icons/frutos-bosque.webp?v=20260902c")!important}
+          .chip-pina .flavor-icon{background-image:url("../assets/icons/pina.webp?v=20260902c")!important}
+          .chip-coco .flavor-icon{background-image:url("../assets/icons/coco.webp?v=20260902c")!important}
+          .chip-pina-colada .flavor-icon{background-image:url("../assets/icons/pina-colada.webp?v=20260902c")!important}
+          .chip-maracuya .flavor-icon{background-image:url("../assets/icons/maracuya.webp?v=20260902c")!important}
+          .chip-mango .flavor-icon{background-image:url("../assets/icons/mango.webp?v=20260902c")!important}
+          .chip-frambuesa .flavor-icon{background-image:url("../assets/icons/frambuesa.webp?v=20260902c")!important}
+          .chip-melocoton .flavor-icon{background-image:url("../assets/icons/melocoton.webp?v=20260902c")!important}
+          .chip-sandia .flavor-icon{background-image:url("../assets/icons/sandia.webp?v=20260902c")!important}
+          .chip-cereza .flavor-icon{background-image:url("../assets/icons/cereza.webp?v=20260902c")!important}
+          .chip-manzana-verde .flavor-icon{background-image:url("../assets/icons/manzana-verde.webp?v=20260902c")!important}
+          .chip-uva .flavor-icon{background-image:url("../assets/icons/uva.webp?v=20260902c")!important}
+
+          .mojito-stage,.mojito-sprite{background-color:transparent!important}
+          .mojito-sprite{background-repeat:no-repeat!important;background-size:contain!important;background-position:center!important}
+          .mojito-scene:has(.chip-original input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-original-stable.webp?v=20260902c")!important}
+          .mojito-scene:has(.chip-fresa input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-fresa-stable.webp?v=20260902c")!important}
+          .mojito-scene:has(.chip-frutos-bosque input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-frutos-bosque-stable.webp?v=20260902c")!important}
+          .mojito-scene:has(.chip-pina input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-pina-stable.webp?v=20260902c")!important}
+          .mojito-scene:has(.chip-coco input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-coco-stable.webp?v=20260902c")!important}
+          .mojito-scene:has(.chip-pina-colada input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-pina-colada-stable.webp?v=20260902c")!important}
+          .mojito-scene:has(.chip-maracuya input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-maracuya-stable.webp?v=20260902c")!important}
+          .mojito-scene:has(.chip-mango input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-mango-stable.webp?v=20260902c")!important}
+          .mojito-scene:has(.chip-frambuesa input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-frambuesa-stable.webp?v=20260902c")!important}
+          .mojito-scene:has(.chip-melocoton input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-melocoton-stable.webp?v=20260902c")!important}
+          .mojito-scene:has(.chip-sandia input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-sandia-stable.webp?v=20260902c")!important}
+          .mojito-scene:has(.chip-cereza input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-cereza-stable.webp?v=20260902c")!important}
+          .mojito-scene:has(.chip-manzana-verde input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-manzana-verde-stable.webp?v=20260902c")!important}
+          .mojito-scene:has(.chip-uva input:checked) .mojito-sprite{background-image:url("../assets/mojitos/mojito-uva-stable.webp?v=20260902c")!important}
+          CSS
+
+          python - <<'PY'
+          from pathlib import Path
+          p=Path('index.html')
+          s=p.read_text(encoding='utf-8')
+          link='<link rel="stylesheet" href="css/assets-physical.css?v=20260902c">'
+          if link not in s:
+              needle='<link rel="stylesheet" href="css/style-05.css?v=20260902a">'
+              if needle not in s:
+                  raise SystemExit('Could not find style-05 link in index.html')
+              s=s.replace(needle, needle+'\n'+link, 1)
+          p.write_text(s, encoding='utf-8')
+          PY
+
+          rm -f lavendish-assets.zip
+
+      - name: Commit installed assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "Lavendish Site Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add -A
+          git commit -m "Install physical Mojito and flavor image assets"
+          git push origin HEAD:main
+          git push origin HEAD:master
