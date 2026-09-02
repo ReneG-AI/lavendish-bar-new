@@ -1,5 +1,22 @@
 # Changelog
 
+## 1.1.0 — 2026-09-03
+
+- Rediseñado el showcase de Mojitos con composición editorial premium inspirada en la referencia visual definitiva.
+- Nuevo titular “Tu mojito. Tu sabor.” con jerarquía, tipografía y espaciado refinados.
+- Mojito activo renderizado como `<img>` físico transparente, eliminando la dependencia del sprite/background heredado.
+- Nuevo sistema de iluminación adaptativa por sabor con glow central, bloom ambiental, streak vertical, niebla baja y partículas sutiles en capas independientes.
+- Añadidos controles anterior / siguiente junto al vaso con loop continuo.
+- Añadida navegación por teclado con `ArrowLeft` y `ArrowRight` cuando la sección está visible.
+- Rail de 14 sabores más compacto, táctil, centrado y con padding seguro para no recortar Original ni Uva.
+- Selector de sabores actualizado con estado ARIA, transición de imagen, nombre y descriptor.
+- Menú compacto rehecho con JavaScript vanilla para abrir/cerrar de forma fiable, cerrar al seleccionar, al pulsar Escape y al hacer clic fuera.
+- Refinados hero, header, tipografía, fondos y microinteracciones para coherencia visual.
+- Responsive reforzado para 320, 375, 390, 430, 768, 1024 y escritorios grandes.
+- `style-05.css` y `assets-physical.css` dejan de cargarse en producción; se conservan únicamente como legado 1.0.
+- README ampliado con arquitectura, reglas de assets y documentación de la corrección permanente del fondo cuadrado.
+- Cache-busting y metadatos actualizados a 1.1.0.
+
 ## 1.0.0 — 2026-09-03
 
 - Nueva web single-page de LAVENDISH.
