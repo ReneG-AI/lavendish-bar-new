@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://reneg-ai.github.io/lavendish-bar-new/sitemap.xml
