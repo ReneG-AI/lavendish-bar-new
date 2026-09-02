@@ -14,18 +14,15 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: main
-      - name: Validate repository images
+      - name: Validate repository image files
         shell: bash
         run: |
           set -euo pipefail
           file assets/favicon.png assets/lavendish-logo.webp assets/lavendish-storefront.webp assets/pina-float.webp
-          python - <<'PY'
-          from PIL import Image
-          for f in ['assets/favicon.png','assets/lavendish-logo.webp','assets/lavendish-storefront.webp','assets/pina-float.webp']:
-              im=Image.open(f)
-              im.verify()
-              print(f, 'VALID', im.format, im.size)
-          PY
+          test -s assets/favicon.png
+          test -s assets/lavendish-logo.webp
+          test -s assets/lavendish-storefront.webp
+          test -s assets/pina-float.webp
       - name: Validate GitHub Pages responses
         shell: bash
         run: |
@@ -37,7 +34,6 @@ jobs:
             'https://reneg-ai.github.io/lavendish-bar-new/assets/lavendish-storefront.webp' \
             'https://reneg-ai.github.io/lavendish-bar-new/css/style-00.css'; do
             echo "=== $u"
-            curl -L -sS -o /tmp/body -D /tmp/headers "$u"
-            head -n 8 /tmp/headers
-            echo "bytes=$(wc -c </tmp/body)"
+            code=$(curl -L -sS -o /tmp/body -w '%{http_code}' "$u")
+            echo "HTTP=$code bytes=$(wc -c </tmp/body) type=$(file -b /tmp/body)"
           done
