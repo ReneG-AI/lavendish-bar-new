@@ -1,0 +1,63 @@
+name: Extract physical image assets
+
+on:
+  push:
+    branches:
+      - site-assets-install
+    paths:
+      - .github/workflows/extract-physical-assets.yml
+
+permissions:
+  contents: write
+
+jobs:
+  extract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Install Pillow
+        run: python -m pip install --quiet pillow
+      - name: Extract Mojito and flavor sprites into physical files
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          from io import BytesIO
+          import base64, re
+          from PIL import Image
+
+          names = [
+              'original','fresa','frutos-bosque','pina','coco','pina-colada','maracuya',
+              'mango','frambuesa','melocoton','sandia','cereza','manzana-verde','uva'
+          ]
+
+          def extract(css_path, out_dir, filename, cols=7, rows=2):
+              css = Path(css_path).read_text(encoding='utf-8')
+              match = re.search(r'data:image/webp;base64,([A-Za-z0-9+/=]+)', css)
+              if not match:
+                  raise RuntimeError(f'No WebP data URI found in {css_path}')
+              image = Image.open(BytesIO(base64.b64decode(match.group(1)))).convert('RGBA')
+              cell_w = image.width // cols
+              cell_h = image.height // rows
+              out = Path(out_dir)
+              out.mkdir(parents=True, exist_ok=True)
+              for i, name in enumerate(names):
+                  x = (i % cols) * cell_w
+                  y = (i // cols) * cell_h
+                  crop = image.crop((x, y, x + cell_w, y + cell_h))
+                  crop.save(out / filename.format(name=name), 'WEBP', lossless=True, method=6)
+              print(css_path, image.size, '=>', cell_w, cell_h, len(names), 'files')
+
+          extract('css/style-05.css', 'assets/mojitos', 'mojito-{name}-stable.webp')
+          extract('css/style-04.css', 'assets/icons', '{name}.webp')
+          PY
+      - name: Commit extracted image files
+        shell: bash
+        run: |
+          git config user.name "Lavendish Site Bot"
+          git config user.email "actions@users.noreply.github.com"
+          git add assets/mojitos assets/icons
+          git commit -m "Add physical Mojito and flavor image assets"
+          git push origin HEAD:site-assets-install
