@@ -1,26 +1,20 @@
-/* LAVENDISH v1.1.1 — responsive stability + carta readability */
+/* LAVENDISH v1.1.2 — responsive stability + carta readability + robust menu */
 
-/* Guard against accidental horizontal viewport drift, especially on iOS Safari. */
 html,body{width:100%;max-width:100%;overflow-x:clip!important}
 main,.mojito-scene,.mojito-editorial,.mojito-showcase,.mojito-stage-v11{min-width:0!important;max-width:100%!important}
 
-/* The drink is removed from layout flow so intrinsic dimensions never move the module. */
 .mojito-showcase{width:100%!important;margin-inline:auto!important}
 .mojito-stage-v11{flex:0 0 auto!important;width:min(690px,100%)!important;max-width:690px!important;margin-inline:auto!important}
 .mojito-image{position:absolute!important;left:50%!important;top:50%!important;width:72%!important;height:88%!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:50% 50%!important;transform:translate(-50%,-50%)!important;transform-origin:center!important}
 .mojito-image.is-changing{opacity:0!important;transform:translate(-50%,calc(-50% + 8px)) scale(.98)!important}
 
-/* Reserve the same amount of copy space for every flavor so the rail never jumps. */
 .flavor-meta-v11{width:min(620px,100%)!important;min-height:102px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important}
 .flavor-meta-v11 h3{min-height:34px!important;display:flex!important;align-items:center!important;justify-content:center!important}
 .flavor-meta-v11 p{min-height:24px!important;display:flex!important;align-items:flex-start!important;justify-content:center!important}
 .flavor-meta-v11>span{min-height:19px!important}
-
-/* The rail is the only element allowed to scroll horizontally. */
 .flavor-rail{max-width:100%!important;overscroll-behavior-x:contain!important;overflow-y:hidden!important;scroll-behavior:smooth!important;contain:inline-size!important}
 .flavor-chip{scroll-snap-align:center!important}
 
-/* Carta: warm editorial surface with explicit contrast. */
 .menu-section{background:linear-gradient(180deg,#f2ebe0 0%,#e8dfd1 100%)!important;color:#241f1a!important}
 .menu-section .container{position:relative!important;z-index:2!important}
 .menu-section .eyebrow{color:#98702f!important}
@@ -35,14 +29,14 @@ main,.mojito-scene,.mojito-editorial,.mojito-showcase,.mojito-stage-v11{min-widt
 .sharing strong,.sharing h3{color:#f3eadb!important}
 .sharing span{color:rgba(243,234,219,.76)!important}
 
-/* Menu interaction safety: the header intentionally ignores pointer events except its controls.
-   The open menu layer must explicitly opt back in, otherwise Safari can inherit pointer-events:none
-   from .site-header and render a menu that looks open but cannot be interacted with. */
-.lav-nav-layer{pointer-events:auto!important;z-index:999!important}
-.lav-nav-layer[hidden]{display:none!important;pointer-events:none!important}
-.lav-nav-dismiss,.lav-nav-card,.lav-nav-card a,.lav-nav-head button{pointer-events:auto!important}
+/* MENU — use html.menu-open as the single visible-state source of truth. */
+.site-header{overflow:visible!important;z-index:1000!important}
 .lav-nav-trigger{pointer-events:auto!important;touch-action:manipulation!important}
-.lav-nav-card{isolation:isolate!important}
+.lav-nav-layer{position:fixed!important;inset:0!important;z-index:1001!important;display:none!important;visibility:hidden!important;opacity:0!important;pointer-events:none!important}
+html.menu-open .lav-nav-layer,html.menu-open .lav-nav-layer[hidden]{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+html.menu-open .lav-nav-dismiss{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important}
+html.menu-open .lav-nav-card{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;transform:none!important}
+.lav-nav-dismiss,.lav-nav-card,.lav-nav-card a,.lav-nav-head button{pointer-events:auto!important}
 
 @media (max-width:1080px){
   .mojito-stage-v11{width:min(600px,100%)!important}
@@ -63,7 +57,6 @@ main,.mojito-scene,.mojito-editorial,.mojito-showcase,.mojito-stage-v11{min-widt
   .flavor-meta-v11 p{width:100%!important;min-height:42px!important;max-width:330px!important;text-align:center!important}
   .flavor-discovery{margin-top:14px!important}
   .flavor-rail{width:100%!important;max-width:100vw!important;padding-left:max(18px,env(safe-area-inset-left))!important;padding-right:max(18px,env(safe-area-inset-right))!important;scroll-padding-left:max(18px,env(safe-area-inset-left))!important;scroll-padding-right:max(18px,env(safe-area-inset-right))!important}
-
   .menu-section{padding:68px 0 82px!important}
   .menu-section .container{width:calc(100% - 36px)!important;max-width:1120px!important}
   .menu-intro h2{font-size:clamp(3rem,14vw,4.6rem)!important}
