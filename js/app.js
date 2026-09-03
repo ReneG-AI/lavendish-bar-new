@@ -52,7 +52,7 @@
       if (!entries.some((entry) => entry.isIntersecting)) return;
       warmFlavorAssets();
       observer.disconnect();
-    }, { rootMargin: '900px 0px' });
+    }, { rootMargin: '0px' });
     preloadObserver.observe(section);
   } else {
     window.setTimeout(warmFlavorAssets, 1200);
