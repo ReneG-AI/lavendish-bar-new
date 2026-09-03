@@ -35,6 +35,15 @@ main,.mojito-scene,.mojito-editorial,.mojito-showcase,.mojito-stage-v11{min-widt
 .sharing strong,.sharing h3{color:#f3eadb!important}
 .sharing span{color:rgba(243,234,219,.76)!important}
 
+/* Menu interaction safety: the header intentionally ignores pointer events except its controls.
+   The open menu layer must explicitly opt back in, otherwise Safari can inherit pointer-events:none
+   from .site-header and render a menu that looks open but cannot be interacted with. */
+.lav-nav-layer{pointer-events:auto!important;z-index:999!important}
+.lav-nav-layer[hidden]{display:none!important;pointer-events:none!important}
+.lav-nav-dismiss,.lav-nav-card,.lav-nav-card a,.lav-nav-head button{pointer-events:auto!important}
+.lav-nav-trigger{pointer-events:auto!important;touch-action:manipulation!important}
+.lav-nav-card{isolation:isolate!important}
+
 @media (max-width:1080px){
   .mojito-stage-v11{width:min(600px,100%)!important}
   .mojito-image{width:70%!important;height:87%!important}
