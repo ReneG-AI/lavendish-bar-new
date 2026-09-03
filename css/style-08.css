@@ -1,0 +1,40 @@
+/* LAVENDISH v1.3 — premium accessibility finishing layer.
+   Intentionally isolated from the stable visual system: no layout geometry is changed here. */
+
+:where(.lav-nav-trigger,.lav-nav-head button,.lav-nav-card a,.mojito-arrow,.flavor-chip,.bottom-cta,.down-cue,.contact-primary,.footer-v1 a):focus-visible{
+  outline:2px solid #d7b86c!important;
+  outline-offset:4px!important;
+}
+
+:where(.category-nav a):focus-visible{
+  outline:2px solid #8b6428!important;
+  outline-offset:3px!important;
+}
+
+.lav-nav-trigger:focus-visible{
+  border-color:#d7b86c!important;
+  box-shadow:0 0 0 5px rgba(215,184,108,.10)!important;
+}
+
+.flavor-chip:focus-visible{
+  box-shadow:0 0 0 4px rgba(215,184,108,.10)!important;
+}
+
+/* Keep interactive controls comfortably tappable without visually enlarging the composition. */
+@media (pointer:coarse){
+  .lav-nav-head button{min-width:44px!important;min-height:44px!important}
+  .mojito-arrow{touch-action:manipulation!important}
+  .flavor-chip{touch-action:manipulation!important}
+}
+
+/* Respect users who request less motion while preserving every interaction and state change. */
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto!important}
+  *,*::before,*::after{
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+    scroll-behavior:auto!important;
+  }
+  .mojito-image.is-changing{transform:translate(-50%,-50%)!important}
+}
