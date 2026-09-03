@@ -18,6 +18,7 @@
     { id: 'uva', name: 'Uva', description: 'Aromático, suave y distinto.', rgb: '91,61,115' }
   ];
 
+  const reducedMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
   const section = document.querySelector('[data-mojito-section]');
   const image = document.querySelector('[data-mojito-image]');
   const nameNode = document.querySelector('[data-flavor-name]');
@@ -28,18 +29,40 @@
   const next = document.querySelector('[data-mojito-next]');
   let activeIndex = 0;
   let swapTimer = 0;
+  let assetsWarmed = false;
 
   function assetFor(id) {
     return `assets/mojitos/mojito-${id}-stable.webp?v=1.1.1`;
   }
 
-  // Warm the browser cache so changing flavor never changes layout while an image loads.
-  flavors.forEach((flavor) => {
-    const preload = new Image();
-    preload.src = assetFor(flavor.id);
-  });
+  function warmFlavorAssets() {
+    if (assetsWarmed) return;
+    assetsWarmed = true;
 
-  function centerChipInRail(chip, behavior = 'smooth') {
+    flavors.forEach((flavor, index) => {
+      if (index === 0) return; // Original is already loaded/preloaded by the document.
+      const preload = new Image();
+      preload.decoding = 'async';
+      preload.src = assetFor(flavor.id);
+    });
+  }
+
+  // Warm the flavor assets when the user approaches the mojito section instead of competing with the hero on first paint.
+  if (section && 'IntersectionObserver' in window) {
+    const preloadObserver = new IntersectionObserver((entries, observer) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      warmFlavorAssets();
+      observer.disconnect();
+    }, { rootMargin: '900px 0px' });
+    preloadObserver.observe(section);
+  } else {
+    window.setTimeout(warmFlavorAssets, 1200);
+  }
+
+  // Fallback warm-up for users who stay on the hero for a while.
+  window.addEventListener('load', () => window.setTimeout(warmFlavorAssets, 2600), { once: true });
+
+  function centerChipInRail(chip, behavior = reducedMotion ? 'auto' : 'smooth') {
     if (!rail || !chip || rail.scrollWidth <= rail.clientWidth) return;
 
     const railRect = rail.getBoundingClientRect();
@@ -58,6 +81,7 @@
   function setFlavor(index, options = {}) {
     if (!section || !image || !nameNode || !descriptionNode || !chips.length) return;
 
+    warmFlavorAssets();
     activeIndex = (index + flavors.length) % flavors.length;
     const flavor = flavors[activeIndex];
     const activeChip = chips.find((chip) => chip.dataset.flavor === flavor.id);
@@ -91,7 +115,7 @@
           centerChipInRail(activeChip);
         }
       });
-    }, 165);
+    }, reducedMotion ? 0 : 165);
   }
 
   chips.forEach((chip) => {
@@ -105,7 +129,7 @@
   next?.addEventListener('click', () => setFlavor(activeIndex + 1));
 
   document.addEventListener('keydown', (event) => {
-    if (!section) return;
+    if (!section || document.documentElement.classList.contains('menu-open')) return;
     const rect = section.getBoundingClientRect();
     const visible = rect.bottom > 0 && rect.top < window.innerHeight;
     if (!visible) return;
@@ -124,41 +148,97 @@
   const layer = document.querySelector('[data-menu-layer]');
   const dismiss = document.querySelector('[data-menu-dismiss]');
   const closeButton = document.querySelector('[data-menu-close]');
+  const card = layer?.querySelector('.lav-nav-card') ?? null;
   const menuLinks = layer ? Array.from(layer.querySelectorAll('nav a')) : [];
+  const main = document.querySelector('main');
+  const bottomCta = document.querySelector('.bottom-cta');
+  const footer = document.querySelector('footer');
+  let previouslyFocused = null;
+
+  layer?.setAttribute('role', 'dialog');
+  layer?.setAttribute('aria-modal', 'true');
+  layer?.setAttribute('aria-label', 'Menú de navegación');
+
+  function setBackgroundInert(state) {
+    [main, bottomCta, footer].forEach((node) => {
+      if (node && 'inert' in node) node.inert = state;
+    });
+  }
+
+  function menuFocusables() {
+    if (!card) return [];
+    return Array.from(card.querySelectorAll('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'))
+      .filter((node) => !node.hidden && node.getAttribute('aria-hidden') !== 'true');
+  }
 
   function openMenu() {
     if (!trigger || !layer) return;
+    previouslyFocused = document.activeElement instanceof HTMLElement ? document.activeElement : trigger;
     layer.hidden = false;
     trigger.setAttribute('aria-expanded', 'true');
     document.documentElement.classList.add('menu-open');
+    setBackgroundInert(true);
+
+    requestAnimationFrame(() => {
+      const target = closeButton || menuFocusables()[0];
+      target?.focus({ preventScroll: true });
+    });
   }
 
-  function closeMenu({ restoreFocus = false } = {}) {
+  function closeMenu({ restoreFocus = true } = {}) {
     if (!trigger || !layer) return;
     layer.hidden = true;
     trigger.setAttribute('aria-expanded', 'false');
     document.documentElement.classList.remove('menu-open');
-    if (restoreFocus) trigger.focus();
+    setBackgroundInert(false);
+
+    if (restoreFocus) {
+      const target = previouslyFocused?.isConnected ? previouslyFocused : trigger;
+      target?.focus({ preventScroll: true });
+    }
   }
 
   trigger?.addEventListener('click', () => {
     const open = trigger.getAttribute('aria-expanded') === 'true';
-    open ? closeMenu() : openMenu();
+    open ? closeMenu({ restoreFocus: false }) : openMenu();
   });
   dismiss?.addEventListener('click', () => closeMenu());
-  closeButton?.addEventListener('click', () => closeMenu({ restoreFocus: true }));
-  menuLinks.forEach((link) => link.addEventListener('click', () => closeMenu()));
+  closeButton?.addEventListener('click', () => closeMenu());
+  menuLinks.forEach((link) => link.addEventListener('click', () => closeMenu({ restoreFocus: false })));
 
   document.addEventListener('keydown', (event) => {
-    if (event.key === 'Escape' && trigger?.getAttribute('aria-expanded') === 'true') {
-      closeMenu({ restoreFocus: true });
+    const menuOpen = trigger?.getAttribute('aria-expanded') === 'true';
+    if (!menuOpen) return;
+
+    if (event.key === 'Escape') {
+      event.preventDefault();
+      closeMenu();
+      return;
+    }
+
+    if (event.key !== 'Tab' || !card) return;
+    const focusables = menuFocusables();
+    if (!focusables.length) return;
+
+    const first = focusables[0];
+    const last = focusables[focusables.length - 1];
+    const active = document.activeElement;
+
+    if (!card.contains(active)) {
+      event.preventDefault();
+      first.focus();
+    } else if (event.shiftKey && active === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && active === last) {
+      event.preventDefault();
+      first.focus();
     }
   });
 
   document.addEventListener('pointerdown', (event) => {
-    if (!layer || layer.hidden || !trigger) return;
-    const card = layer.querySelector('.lav-nav-card');
-    if (card && !card.contains(event.target) && !trigger.contains(event.target) && event.target !== dismiss) {
+    if (!layer || layer.hidden || !trigger || !card) return;
+    if (!card.contains(event.target) && !trigger.contains(event.target) && event.target !== dismiss) {
       closeMenu();
     }
   });
