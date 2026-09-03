@@ -11,7 +11,7 @@ Sitio web oficial de **LAVENDISH**, bar / cocktail bar en Lleida.
 **Hosting:** GitHub Pages  
 **Arquitectura:** HTML + CSS + JavaScript vanilla, sin framework ni proceso de build.
 
-La versión 1.2 añade la capa legal y de privacidad sobre la base visual estable 1.1.1. Los cambios legales se desarrollaron primero en `audit/legal-v1.2` para no alterar producción hasta completar la revisión.
+La versión 1.2 añade la capa legal, de privacidad y de cumplimiento web sobre la base visual estable 1.1.1. Los cambios se desarrollaron primero en `audit/legal-v1.2` para no alterar producción hasta completar la revisión.
 
 ## Dirección visual
 
@@ -45,7 +45,9 @@ La web sigue una estética editorial de hospitality premium:
 - Yakisoba
 - Yakisoba con pollo
 
-No se publican precios en la web.
+No se publican precios en la web y no existe contratación a distancia desde esta versión.
+
+La información comercial de esta selección está disponible también en catalán mediante `carta-catala.html`, con acceso directo desde la propia Carta y desde el footer.
 
 ### Mojitos
 
@@ -69,6 +71,7 @@ No se publican precios en la web.
 ```text
 lavendish-bar-new/
 ├── index.html
+├── carta-catala.html
 ├── aviso-legal.html
 ├── privacidad.html
 ├── cookies.html
@@ -80,6 +83,7 @@ lavendish-bar-new/
 ├── CHANGELOG.md
 ├── NOTICE.md
 ├── AUDIT-v1.2.md
+├── COMPLIANCE-CHECKLIST.md
 ├── js/
 │   └── app.js                 # menú + selector de mojitos
 ├── css/
@@ -92,7 +96,8 @@ lavendish-bar-new/
 │   ├── assets-physical.css    # legado 1.0, no cargado
 │   ├── style-06.css           # dirección visual oficial 1.1
 │   ├── style-07.css           # estabilidad responsive, carta, menú y footer
-│   └── legal.css              # diseño aislado para páginas legales
+│   ├── legal.css              # diseño aislado para páginas legales
+│   └── carta-ca.css           # estilo aislado de la carta en catalán
 └── assets/
     ├── favicon.png
     ├── lavendish-logo.webp
@@ -120,11 +125,22 @@ GitHub Pages registra la dirección IP de las visitas con fines de seguridad seg
 
 ### Páginas legales
 
-- `aviso-legal.html`: identificación del titular, objeto, uso, propiedad intelectual, enlaces, responsabilidad y legislación.
+- `aviso-legal.html`: identificación y contacto del titular, objeto, uso, propiedad intelectual, enlaces, responsabilidad y legislación.
 - `privacidad.html`: responsable, datos, finalidades, bases jurídicas, proveedores, conservación y derechos RGPD.
 - `cookies.html`: situación técnica actual, tecnologías no utilizadas, GitHub Pages y criterio de consentimiento.
 
 Las páginas legales tienen CSS independiente para que cualquier cambio en ellas no afecte al hero, menú, mojitos o carta.
+
+## Cumplimiento en Cataluña
+
+`COMPLIANCE-CHECKLIST.md` documenta las comprobaciones web y las obligaciones del establecimiento que no se resuelven únicamente con una página web.
+
+Entre las medidas incorporadas en v1.2:
+
+- acceso a la información comercial de la selección de carta también en catalán;
+- aviso de alergias/intolerancias en la carta catalana;
+- canal de contacto adicional en el Aviso Legal;
+- checklist separado para información de alérgenos, carta física, precios, hojas de reclamación, horario y otros tratamientos de datos del negocio.
 
 ## Arquitectura del showcase de mojitos
 
@@ -202,7 +218,8 @@ La composición se ha preparado para móvil, tablet, portátil y escritorio gran
 - copy de sabor con altura reservada para evitar saltos;
 - rail de sabores como único elemento con scroll horizontal;
 - carta en una sola columna en móvil;
-- footer en tres columnas en escritorio y una columna en móvil.
+- footer en tres columnas en escritorio y una columna en móvil;
+- páginas legales y carta catalana con CSS aislado y layout móvil propio.
 
 ## Ubicación
 
@@ -210,7 +227,7 @@ La composición se ha preparado para móvil, tablet, portátil y escritorio gran
 Av. de Balmes, 21  
 25006 Lleida
 
-La página comercial no muestra teléfono ni correo. El correo legal aparece únicamente donde es necesario en las páginas de información legal y privacidad.
+La página comercial no muestra teléfono ni correo. Los datos de contacto se muestran únicamente en la información legal cuando corresponden a obligaciones de identificación y contacto.
 
 ## SEO y producción
 
@@ -247,10 +264,11 @@ python -m http.server 8080
 3. Rail de sabores no corta el primer o último icono.
 4. No aparece fondo rectangular detrás de ningún mojito.
 5. Carta mantiene contraste y lectura cómoda.
-6. Footer legal se adapta sin solapamientos.
-7. Aviso legal, privacidad y cookies abren y vuelven correctamente a la web.
-8. No se ha añadido analítica o tracking sin revisar cookies y privacidad.
-9. Todos los assets cargan mediante rutas relativas compatibles con GitHub Pages.
+6. Enlace `Català` abre la selección correctamente y vuelve a `#carta`.
+7. Footer legal se adapta sin solapamientos.
+8. Aviso legal, privacidad y cookies abren y vuelven correctamente a la web.
+9. No se ha añadido analítica o tracking sin revisar cookies y privacidad.
+10. Todos los assets cargan mediante rutas relativas compatibles con GitHub Pages.
 
 ## Principios de mantenimiento
 
@@ -263,6 +281,7 @@ python -m http.server 8080
 7. Mantener JavaScript pequeño y sin librerías pesadas.
 8. Probar visualmente escritorio, tablet y Safari/iPhone tras cambios de layout o assets.
 9. Revisar privacidad/cookies antes de añadir formularios, reservas, analítica, publicidad o contenido de terceros.
+10. Mantener actualizada la versión catalana de la información comercial cuando cambie la carta publicada.
 
 ---
 
