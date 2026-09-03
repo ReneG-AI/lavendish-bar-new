@@ -1,0 +1,83 @@
+/* LAVENDISH v1.1.1 — responsive stability + carta readability */
+
+/* Guard against accidental horizontal viewport drift, especially on iOS Safari. */
+html,body{width:100%;max-width:100%;overflow-x:clip!important}
+main,.mojito-scene,.mojito-editorial,.mojito-showcase,.mojito-stage-v11{min-width:0!important;max-width:100%!important}
+
+/* The drink is removed from layout flow so intrinsic dimensions never move the module. */
+.mojito-showcase{width:100%!important;margin-inline:auto!important}
+.mojito-stage-v11{flex:0 0 auto!important;width:min(690px,100%)!important;max-width:690px!important;margin-inline:auto!important}
+.mojito-image{position:absolute!important;left:50%!important;top:50%!important;width:72%!important;height:88%!important;max-width:none!important;max-height:none!important;object-fit:contain!important;object-position:50% 50%!important;transform:translate(-50%,-50%)!important;transform-origin:center!important}
+.mojito-image.is-changing{opacity:0!important;transform:translate(-50%,calc(-50% + 8px)) scale(.98)!important}
+
+/* Reserve the same amount of copy space for every flavor so the rail never jumps. */
+.flavor-meta-v11{width:min(620px,100%)!important;min-height:102px!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:flex-start!important}
+.flavor-meta-v11 h3{min-height:34px!important;display:flex!important;align-items:center!important;justify-content:center!important}
+.flavor-meta-v11 p{min-height:24px!important;display:flex!important;align-items:flex-start!important;justify-content:center!important}
+.flavor-meta-v11>span{min-height:19px!important}
+
+/* The rail is the only element allowed to scroll horizontally. */
+.flavor-rail{max-width:100%!important;overscroll-behavior-x:contain!important;overflow-y:hidden!important;scroll-behavior:smooth!important;contain:inline-size!important}
+.flavor-chip{scroll-snap-align:center!important}
+
+/* Carta: warm editorial surface with explicit contrast. */
+.menu-section{background:linear-gradient(180deg,#f2ebe0 0%,#e8dfd1 100%)!important;color:#241f1a!important}
+.menu-section .container{position:relative!important;z-index:2!important}
+.menu-section .eyebrow{color:#98702f!important}
+.menu-intro h2,.department h3{color:#211d18!important;text-shadow:none!important}
+.menu-lead{color:#655c51!important;max-width:660px!important;margin:14px auto 0!important;line-height:1.65!important}
+.category-nav a{color:#5b4e3e!important;background:rgba(255,255,255,.64)!important;border-color:rgba(122,88,44,.20)!important;box-shadow:0 4px 18px rgba(63,47,30,.04)!important}
+.category-nav a:hover,.category-nav a:focus-visible{color:#8b6428!important;border-color:rgba(139,100,40,.42)!important;background:#fffaf3!important;outline:none!important}
+.department{border-color:rgba(104,76,42,.18)!important}
+.department:last-child{border-bottom-color:rgba(104,76,42,.18)!important}
+.dish{color:#332c24!important;border-top-color:rgba(104,76,42,.10)!important;font-weight:500!important}
+.sharing{background:linear-gradient(145deg,#171819,#111314)!important;border:1px solid rgba(205,166,87,.20)!important;box-shadow:0 20px 55px rgba(45,34,23,.13)!important}
+.sharing strong,.sharing h3{color:#f3eadb!important}
+.sharing span{color:rgba(243,234,219,.76)!important}
+
+@media (max-width:1080px){
+  .mojito-stage-v11{width:min(600px,100%)!important}
+  .mojito-image{width:70%!important;height:87%!important}
+}
+
+@media (max-width:760px){
+  .mojito-scene{overflow-x:clip!important;padding-left:0!important;padding-right:0!important}
+  .mojito-editorial{width:100%!important;max-width:100%!important;overflow:visible!important}
+  .mojito-copy,.mojito-showcase{width:100%!important;max-width:100%!important}
+  .mojito-stage-v11{width:100%!important;max-width:520px!important;height:clamp(390px,108vw,500px)!important;margin-inline:auto!important;overflow:visible!important}
+  .mojito-image{width:68%!important;height:86%!important}
+  .mojito-arrow{top:50%!important}
+  .mojito-arrow-prev{left:max(12px,env(safe-area-inset-left))!important}
+  .mojito-arrow-next{right:max(12px,env(safe-area-inset-right))!important}
+  .flavor-meta-v11{min-height:112px!important;padding-inline:18px!important;margin-top:-12px!important}
+  .flavor-meta-v11 h3{width:100%!important;min-height:30px!important;white-space:nowrap!important;font-size:clamp(17px,5.1vw,21px)!important;letter-spacing:.045em!important}
+  .flavor-meta-v11 p{width:100%!important;min-height:42px!important;max-width:330px!important;text-align:center!important}
+  .flavor-discovery{margin-top:14px!important}
+  .flavor-rail{width:100%!important;max-width:100vw!important;padding-left:max(18px,env(safe-area-inset-left))!important;padding-right:max(18px,env(safe-area-inset-right))!important;scroll-padding-left:max(18px,env(safe-area-inset-left))!important;scroll-padding-right:max(18px,env(safe-area-inset-right))!important}
+
+  .menu-section{padding:68px 0 82px!important}
+  .menu-section .container{width:calc(100% - 36px)!important;max-width:1120px!important}
+  .menu-intro h2{font-size:clamp(3rem,14vw,4.6rem)!important}
+  .menu-lead{font-size:15px!important;line-height:1.6!important}
+  .category-nav{justify-content:flex-start!important;margin-inline:-2px!important;padding-inline:2px!important}
+  .sharing{grid-template-columns:1fr!important;gap:18px!important;padding:22px!important;border-radius:22px!important}
+  .sharing-grid{grid-template-columns:1fr!important;gap:14px!important}
+  .menu-columns{grid-template-columns:1fr!important;gap:0!important;margin-top:28px!important}
+  .department{padding:20px 0!important}
+  .department h3{font-size:clamp(2rem,10vw,2.8rem)!important}
+  .dish{padding:11px 0!important;font-size:15px!important}
+}
+
+@media (max-width:390px){
+  .mojito-stage-v11{height:390px!important}
+  .mojito-image{width:67%!important;height:84%!important}
+  .flavor-meta-v11{min-height:116px!important;margin-top:-8px!important}
+  .flavor-meta-v11 h3{font-size:16.5px!important;letter-spacing:.035em!important}
+}
+
+@media (max-width:340px){
+  .mojito-stage-v11{height:350px!important}
+  .mojito-image{width:66%!important;height:82%!important}
+  .flavor-meta-v11 h3{font-size:15px!important}
+  .menu-section .container{width:calc(100% - 28px)!important}
+}
