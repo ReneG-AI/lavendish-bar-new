@@ -1,0 +1,13 @@
+/* LAVENDISH v1.2 — carta en català */
+.menu-ca-main{width:min(1100px,calc(100% - 40px));padding-bottom:92px}
+.menu-ca-hero{max-width:820px}
+.menu-ca-card{margin-top:38px;padding:clamp(26px,4vw,48px);border-radius:30px;background:linear-gradient(180deg,#f3ece2 0%,#e9dfd2 100%);color:#241f1a;box-shadow:0 30px 80px rgba(0,0,0,.26);border:1px solid rgba(255,255,255,.22)}
+.menu-ca-card .menu-ca-kicker{color:#98702f;font:750 10px/1 var(--sans);letter-spacing:.19em;text-transform:uppercase}
+.menu-ca-card h2{margin:9px 0 13px;color:#211d18;font:500 clamp(38px,6vw,64px)/.92 var(--serif);letter-spacing:-.045em}
+.menu-ca-card>p{max-width:680px;margin:0;color:#655c51;font:400 15px/1.65 var(--sans)}
+.menu-ca-nav{display:flex;gap:7px;overflow-x:auto;margin:24px 0 4px;padding-bottom:5px;scrollbar-width:none}.menu-ca-nav::-webkit-scrollbar{display:none}.menu-ca-nav a{flex:none;display:inline-flex;align-items:center;min-height:40px;padding:0 13px;border:1px solid rgba(122,88,44,.20);border-radius:999px;background:rgba(255,255,255,.62);color:#5b4e3e;text-decoration:none;font:700 12px/1 var(--sans)}.menu-ca-nav a:hover,.menu-ca-nav a:focus-visible{color:#8b6428;border-color:rgba(139,100,40,.45);background:#fffaf4;outline:none}
+.menu-ca-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(32px,5vw,70px);margin-top:28px}
+.menu-ca-group{padding:25px 0;border-top:1px solid rgba(104,76,42,.16);scroll-margin-top:115px}.menu-ca-group:last-child{border-bottom:1px solid rgba(104,76,42,.16)}.menu-ca-group h3{margin:0 0 12px;color:#211d18;font:500 clamp(28px,4vw,42px)/1 var(--serif);letter-spacing:-.035em}.menu-ca-item{padding:12px 0;border-top:1px solid rgba(104,76,42,.09);color:#332c24;font:500 15px/1.42 var(--sans)}
+.menu-ca-note{margin-top:26px;padding:18px 20px;border-radius:16px;background:#151718;color:#f3eadb}.menu-ca-note strong{display:block;margin-bottom:6px;color:#d7b86c;font:700 10px/1 var(--sans);letter-spacing:.16em;text-transform:uppercase}.menu-ca-note p{margin:0;color:rgba(243,234,219,.74);font:400 13px/1.6 var(--sans)}
+.menu-ca-switch{display:inline-flex;margin-top:22px;align-items:center;min-height:40px;padding:0 14px;border:1px solid rgba(208,169,82,.28);border-radius:999px;color:var(--gold-soft);text-decoration:none;font:650 11px/1 var(--sans)}
+@media(max-width:700px){.menu-ca-grid{grid-template-columns:1fr}.menu-ca-card{padding:24px;border-radius:23px}.menu-ca-main{width:min(100% - 28px,1100px)}}

@@ -1,30 +1,34 @@
 # LAVENDISH — Official Website
 
-Sitio web oficial de **LAVENDISH**, bar / cocktail bar en Lleida. La rama `main` contiene la web de producción publicada en GitHub Pages.
+Sitio web oficial de **LAVENDISH**, bar / cocktail bar en Lleida.
 
 **Live:** https://reneg-ai.github.io/lavendish-bar-new/
 
 ## Estado
 
-**Versión:** 1.1.0  
+**Versión candidata:** 1.2.0  
 **Rama de publicación:** `main`  
 **Hosting:** GitHub Pages  
 **Arquitectura:** HTML + CSS + JavaScript vanilla, sin framework ni proceso de build.
 
-## v1.1 — dirección visual
+La versión 1.2 añade la capa legal, de privacidad y de cumplimiento web sobre la base visual estable 1.1.1. Los cambios se desarrollaron primero en `audit/legal-v1.2` para no alterar producción hasta completar la revisión.
 
-La versión 1.1 refina la base estable 1.0 hacia una estética editorial de hospitality premium:
+## Dirección visual
+
+La web sigue una estética editorial de hospitality premium:
 
 - fondo carbón / negro cinematográfico;
 - tipografía serif de alto contraste para titulares;
 - acentos dorados cálidos y contenidos;
-- Piña Colada como bebida protagonista del hero;
-- showcase editorial de **14 mojitos**;
+- Piña Colada como protagonista del hero;
+- showcase editorial de 14 mojitos;
 - iluminación atmosférica adaptativa por sabor;
 - navegación anterior / siguiente junto al vaso;
-- selector de sabores táctil, centrado y con scroll horizontal seguro;
-- menú compacto superior derecho con cierre por selección, botón, Escape y clic exterior;
-- transiciones cortas y soporte para `prefers-reduced-motion`.
+- selector de sabores táctil con scroll horizontal seguro;
+- menú compacto superior derecho;
+- transiciones cortas y soporte para `prefers-reduced-motion`;
+- carta sobre superficie cálida clara para garantizar legibilidad;
+- footer editorial con ubicación y acceso permanente a la información legal.
 
 ## Contenido real publicado
 
@@ -41,7 +45,9 @@ La versión 1.1 refina la base estable 1.0 hacia una estética editorial de hosp
 - Yakisoba
 - Yakisoba con pollo
 
-No se publican precios en la web.
+No se publican precios en la web y no existe contratación a distancia desde esta versión.
+
+La información comercial de esta selección está disponible también en catalán mediante `carta-catala.html`, con acceso directo desde la propia Carta y desde el footer.
 
 ### Mojitos
 
@@ -65,31 +71,76 @@ No se publican precios en la web.
 ```text
 lavendish-bar-new/
 ├── index.html
+├── carta-catala.html
+├── aviso-legal.html
+├── privacidad.html
+├── cookies.html
 ├── robots.txt
 ├── sitemap.xml
 ├── .nojekyll
 ├── VERSION
 ├── README.md
 ├── CHANGELOG.md
+├── NOTICE.md
+├── AUDIT-v1.2.md
+├── COMPLIANCE-CHECKLIST.md
 ├── js/
 │   └── app.js                 # menú + selector de mojitos
 ├── css/
-│   ├── style-00.css           # base histórica estable
+│   ├── style-00.css           # base histórica
 │   ├── style-01.css
 │   ├── style-02.css
 │   ├── style-03.css
 │   ├── style-04.css
-│   ├── style-05.css           # legado 1.0, ya no se carga en producción
-│   ├── assets-physical.css    # legado 1.0, ya no se carga en producción
-│   └── style-06.css           # capa visual oficial v1.1
+│   ├── style-05.css           # legado 1.0, no cargado
+│   ├── assets-physical.css    # legado 1.0, no cargado
+│   ├── style-06.css           # dirección visual oficial 1.1
+│   ├── style-07.css           # estabilidad responsive, carta, menú y footer
+│   ├── legal.css              # diseño aislado para páginas legales
+│   └── carta-ca.css           # estilo aislado de la carta en catalán
 └── assets/
     ├── favicon.png
     ├── lavendish-logo.webp
     ├── lavendish-storefront.webp
     ├── pina-colada.webp
-    ├── icons/                 # 14 archivos físicos independientes
+    ├── icons/                 # 14 iconos físicos independientes
     └── mojitos/               # 14 mojitos WebP transparentes
 ```
+
+## Privacidad y cookies
+
+La versión actual es una web informativa y deliberadamente ligera:
+
+- no contiene formularios;
+- no contiene registro de usuarios;
+- no contiene reservas o pagos online;
+- no incorpora Google Analytics, Google Tag Manager o Meta Pixel;
+- no incorpora publicidad comportamental o remarketing;
+- no utiliza `localStorage` / `sessionStorage` para seguimiento;
+- Google Maps se abre mediante un enlace externo, no mediante iframe embebido.
+
+Por esta razón, mientras se mantenga esta arquitectura no se muestra un banner de consentimiento de cookies. Si se incorpora cualquier tecnología no exenta, debe revisarse `cookies.html` e implantar el consentimiento correspondiente **antes** de cargarla en producción.
+
+GitHub Pages registra la dirección IP de las visitas con fines de seguridad según su documentación pública. Esta circunstancia se explica en `privacidad.html` y `cookies.html`.
+
+### Páginas legales
+
+- `aviso-legal.html`: identificación y contacto del titular, objeto, uso, propiedad intelectual, enlaces, responsabilidad y legislación.
+- `privacidad.html`: responsable, datos, finalidades, bases jurídicas, proveedores, conservación y derechos RGPD.
+- `cookies.html`: situación técnica actual, tecnologías no utilizadas, GitHub Pages y criterio de consentimiento.
+
+Las páginas legales tienen CSS independiente para que cualquier cambio en ellas no afecte al hero, menú, mojitos o carta.
+
+## Cumplimiento en Cataluña
+
+`COMPLIANCE-CHECKLIST.md` documenta las comprobaciones web y las obligaciones del establecimiento que no se resuelven únicamente con una página web.
+
+Entre las medidas incorporadas en v1.2:
+
+- acceso a la información comercial de la selección de carta también en catalán;
+- aviso de alergias/intolerancias en la carta catalana;
+- canal de contacto adicional en el Aviso Legal;
+- checklist separado para información de alérgenos, carta física, precios, hojas de reclamación, horario y otros tratamientos de datos del negocio.
 
 ## Arquitectura del showcase de mojitos
 
@@ -118,11 +169,11 @@ El color ambiental cambia por sabor mediante `--flavor-rgb`. La saturación se m
 
 ### Causa raíz
 
-La implementación 1.0 había acumulado un render heredado basado en `.mojito-sprite` y una imagen embebida en CSS. Aunque `assets-physical.css` reemplazaba después la fuente por WebP físicos, el uso de una capa de background para la bebida hacía demasiado fácil que un fondo, filtro, pseudo-elemento o glow aplicado al mismo lienzo revelase los límites rectangulares del bitmap.
+La implementación 1.0 había acumulado un render heredado basado en `.mojito-sprite` y una imagen embebida en CSS. El uso de una capa de background para la bebida hacía demasiado fácil que un fondo, filtro, pseudo-elemento o glow aplicado al mismo lienzo revelase los límites rectangulares del bitmap.
 
-### Solución v1.1
+### Solución permanente
 
-La bebida activa se renderiza ahora como un **`<img>` real y transparente**. El vaso y la iluminación son capas completamente independientes.
+La bebida activa se renderiza como un **`<img>` real y transparente**. El vaso y la iluminación son capas completamente independientes.
 
 Regla permanente:
 
@@ -144,54 +195,31 @@ Nunca aplicar al bitmap del mojito:
 - `mix-blend-mode`;
 - overlays o pseudo-elementos.
 
-Todo glow, niebla, partículas o spotlight debe añadirse como **hermano situado detrás del `<img>`**. Así el efecto no puede pintar un rectángulo siguiendo los límites del archivo.
-
-`style-05.css` y `assets-physical.css` se conservan solo como historia técnica de la base 1.0, pero **ya no se cargan desde `index.html`**.
-
-## Cómo sustituir assets sin romper la web
-
-### Mojito
-
-1. Exportar en WebP con transparencia real.
-2. Mantener el nombre `assets/mojitos/mojito-<sabor>-stable.webp` o actualizar `assetFor()` en `js/app.js`.
-3. No hornear glow ni fondo oscuro dentro del archivo.
-4. Mantener espacio suficiente alrededor del vaso dentro del canvas transparente.
-5. Verificar escritorio y móvil antes de publicar.
-
-### Icono de sabor
-
-1. Un archivo por sabor en `assets/icons/`.
-2. No usar recortes de sprite sheets.
-3. Centrar el arte dentro de un canvas consistente.
-4. Comprobar que no hay fragmentos del icono vecino, clipping ni bordes accidentales.
+Todo glow, niebla, partículas o spotlight debe añadirse como **hermano situado detrás del `<img>`**.
 
 ## Interacción
 
 - Flechas laterales: sabor anterior / siguiente con loop continuo.
 - `ArrowLeft` / `ArrowRight`: navegación por teclado cuando la sección está visible.
 - Iconos: selección directa.
-- Rail móvil: scroll táctil horizontal con padding inicial y final para que Original y Uva nunca queden cortados.
-- Menú: abre desde el botón superior, cierra al seleccionar, con clic exterior, botón × o `Escape`.
+- Rail móvil: scroll táctil horizontal con padding inicial y final.
+- Menú: abre desde el botón superior y cierra al seleccionar, con clic exterior, botón × o `Escape`.
+
+### Regla crítica del menú
+
+La visibilidad del menú se controla mediante `html.menu-open`. `style-07.css` fuerza el panel a ser visible e interactivo únicamente en ese estado. No eliminar estas reglas sin probar escritorio y Safari/iPhone.
 
 ## Responsive
 
-La composición tiene breakpoints específicos y usa tamaños fluidos para conservar jerarquía entre 320 px y escritorios grandes:
+La composición se ha preparado para móvil, tablet, portátil y escritorio grande. Reglas principales:
 
-- desktop: copy editorial a la izquierda + cocktail a la derecha;
-- tablet: misma jerarquía con menor escala;
-- móvil: titular → cocktail → controles → nombre / descriptor → rail de sabores.
-
-La sección usa `100svh` cuando conviene, evita scroll horizontal de página y mantiene el rail independiente para pantallas pequeñas.
-
-## Piña Colada
-
-El asset oficial del hero sigue siendo:
-
-```text
-assets/pina-colada.webp
-```
-
-No debe sustituirse por un mojito.
+- no permitir overflow horizontal de la página;
+- vaso absolutamente centrado dentro de un stage estable;
+- copy de sabor con altura reservada para evitar saltos;
+- rail de sabores como único elemento con scroll horizontal;
+- carta en una sola columna en móvil;
+- footer en tres columnas en escritorio y una columna en móvil;
+- páginas legales y carta catalana con CSS aislado y layout móvil propio.
 
 ## Ubicación
 
@@ -199,7 +227,7 @@ No debe sustituirse por un mojito.
 Av. de Balmes, 21  
 25006 Lleida
 
-La web pública no muestra teléfono ni email. El CTA de ubicación es **Cómo llegar**.
+La página comercial no muestra teléfono ni correo. Los datos de contacto se muestran únicamente en la información legal cuando corresponden a obligaciones de identificación y contacto.
 
 ## SEO y producción
 
@@ -212,9 +240,14 @@ Se mantienen:
 - `robots.txt`;
 - `sitemap.xml`;
 - HTML semántico y textos alternativos;
-- `.nojekyll` para GitHub Pages.
+- `.nojekyll` para GitHub Pages;
+- `strict-origin-when-cross-origin` como política de referrer.
 
 La URL canónica temporal de producción es `https://reneg-ai.github.io/lavendish-bar-new/`.
+
+## Licencias y activos de marca
+
+El archivo `LICENSE` se aplica al código en los términos indicados allí. `NOTICE.md` aclara expresamente que la publicación del repositorio no concede una licencia general sobre la marca LAVENDISH, logotipo, fotografías, ilustraciones o demás activos gráficos del negocio.
 
 ## Desarrollo local
 
@@ -224,16 +257,31 @@ No existe proceso de build. Se puede servir directamente:
 python -m http.server 8080
 ```
 
+## Checklist antes de publicar
+
+1. Menú abre y cierra correctamente en escritorio y móvil.
+2. Mojitos cambian sin desplazar el viewport.
+3. Rail de sabores no corta el primer o último icono.
+4. No aparece fondo rectangular detrás de ningún mojito.
+5. Carta mantiene contraste y lectura cómoda.
+6. Enlace `Català` abre la selección correctamente y vuelve a `#carta`.
+7. Footer legal se adapta sin solapamientos.
+8. Aviso legal, privacidad y cookies abren y vuelven correctamente a la web.
+9. No se ha añadido analítica o tracking sin revisar cookies y privacidad.
+10. Todos los assets cargan mediante rutas relativas compatibles con GitHub Pages.
+
 ## Principios de mantenimiento
 
 1. `main` contiene siempre la versión publicable.
-2. No crear carpetas `preview-vXX` ni una segunda web de Pages.
-3. No inventar platos, precios, teléfono, email ni información del negocio.
+2. Los cambios con riesgo visual o legal se preparan primero en una rama.
+3. No inventar platos, precios, datos de negocio o información legal.
 4. No volver a sprites para los iconos de sabores.
 5. Mantener los mojitos transparentes y la iluminación en capas independientes.
 6. No añadir imágenes grandes embebidas en base64 al CSS de producción.
-7. Mantener JavaScript pequeño, sin librerías pesadas.
+7. Mantener JavaScript pequeño y sin librerías pesadas.
 8. Probar visualmente escritorio, tablet y Safari/iPhone tras cambios de layout o assets.
+9. Revisar privacidad/cookies antes de añadir formularios, reservas, analítica, publicidad o contenido de terceros.
+10. Mantener actualizada la versión catalana de la información comercial cuando cambie la carta publicada.
 
 ---
 
