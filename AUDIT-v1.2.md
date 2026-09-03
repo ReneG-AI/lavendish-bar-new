@@ -58,7 +58,7 @@ La producción ya incluye:
 - HTTPS mediante GitHub Pages;
 - `.nojekyll`.
 
-Las páginas legales se mantienen con `noindex,follow` durante el borrador. No se añaden al sitemap hasta que estén finalizadas.
+Las páginas legales se mantienen con `noindex,follow` mientras se revisa la rama. No se añaden al sitemap por ahora.
 
 ### Accesibilidad básica
 
@@ -81,16 +81,18 @@ La web ya contiene:
 
 Las páginas legales son deliberadamente independientes del CSS y JS principal para reducir el riesgo de regresiones.
 
-## Datos que faltan antes de publicar
+## Identificación legal incorporada
 
-No se deben inventar. Son necesarios para completar correctamente el aviso legal y la política de privacidad:
+A partir de la documentación facilitada por el negocio se han incorporado:
 
-1. Nombre completo del titular o razón social de la empresa/autónomo.
-2. NIF/CIF.
-3. Correo electrónico de contacto legal / privacidad.
-4. Datos de Registro Mercantil u otro registro, únicamente si corresponde.
+- Titular: Jiayi Huangzheng.
+- NIF/NIE: X7471573T.
+- Domicilio del establecimiento: Av. de Balmes, 21 · 25006 Lleida.
+- Correo de contacto legal/privacidad: jiayi19733@gmail.com.
 
-Cuando se faciliten estos datos hay que sustituir los avisos `Pendiente antes de publicar` de las páginas legales y hacer una revisión final antes de fusionar.
+El teléfono no se publica porque la web pública había decidido expresamente no mostrarlo y no es necesario para esta implementación.
+
+No se han añadido datos registrales porque no constan en la documentación facilitada; solo deben incorporarse si realmente proceden.
 
 ## Recomendaciones no bloqueantes
 
@@ -101,9 +103,10 @@ Cuando se faciliten estos datos hay que sustituir los avisos `Pendiente antes de
 
 ## Criterio para fusionar a `main`
 
-No fusionar esta rama hasta:
+Antes de fusionar esta rama:
 
-- completar los datos legales;
-- revisar el texto final;
+- revisar una última vez el texto legal;
 - comprobar enlaces legales desde footer en móvil y escritorio;
-- confirmar que menú, mojitos y carta se comportan exactamente igual que en el commit estable de partida.
+- confirmar que menú, mojitos y carta se comportan exactamente igual que en el commit estable de partida;
+- decidir si se mantiene `noindex` en las páginas legales o se permite su indexación;
+- decidir cómo se separan los activos de marca de la licencia MIT del código.
