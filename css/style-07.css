@@ -38,6 +38,11 @@ html.menu-open .lav-nav-dismiss{display:block!important;visibility:visible!impor
 html.menu-open .lav-nav-card{display:block!important;visibility:visible!important;opacity:1!important;pointer-events:auto!important;transform:none!important}
 .lav-nav-dismiss,.lav-nav-card,.lav-nav-card a,.lav-nav-head button{pointer-events:auto!important}
 
+/* Legal links stay deliberately quiet so they do not compete with the main CTA. */
+.footer-legal{display:flex!important;flex-wrap:wrap!important;justify-content:center!important;gap:12px 16px!important;margin:14px 0 10px!important}
+.footer-legal a{font-size:12px!important;font-weight:500!important;color:rgba(238,230,216,.58)!important;text-decoration:none!important;transition:color .2s ease!important}
+.footer-legal a:hover,.footer-legal a:focus-visible{color:#d7b86c!important;outline:none!important}
+
 @media (max-width:1080px){
   .mojito-stage-v11{width:min(600px,100%)!important}
   .mojito-image{width:70%!important;height:87%!important}
