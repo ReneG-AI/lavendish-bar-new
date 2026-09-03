@@ -30,7 +30,29 @@
   let swapTimer = 0;
 
   function assetFor(id) {
-    return `assets/mojitos/mojito-${id}-stable.webp?v=1.1.0`;
+    return `assets/mojitos/mojito-${id}-stable.webp?v=1.1.1`;
+  }
+
+  // Warm the browser cache so changing flavor never changes layout while an image loads.
+  flavors.forEach((flavor) => {
+    const preload = new Image();
+    preload.src = assetFor(flavor.id);
+  });
+
+  function centerChipInRail(chip, behavior = 'smooth') {
+    if (!rail || !chip || rail.scrollWidth <= rail.clientWidth) return;
+
+    const railRect = rail.getBoundingClientRect();
+    const chipRect = chip.getBoundingClientRect();
+    const current = rail.scrollLeft;
+    const chipCenterInsideRail = (chipRect.left - railRect.left) + (chipRect.width / 2);
+    const target = current + chipCenterInsideRail - (rail.clientWidth / 2);
+    const max = Math.max(0, rail.scrollWidth - rail.clientWidth);
+
+    rail.scrollTo({
+      left: Math.max(0, Math.min(max, target)),
+      behavior
+    });
   }
 
   function setFlavor(index, options = {}) {
@@ -63,11 +85,12 @@
         image.classList.remove('is-changing');
         nameNode.style.opacity = '1';
         descriptionNode.style.opacity = '1';
-      });
 
-      if (options.scrollChip !== false && activeChip && rail) {
-        activeChip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-      }
+        if (options.scrollChip !== false && activeChip && rail) {
+          // Never use scrollIntoView here: on iOS Safari it can shift the whole page horizontally.
+          centerChipInRail(activeChip);
+        }
+      });
     }, 165);
   }
 
@@ -88,8 +111,10 @@
     if (!visible) return;
 
     if (event.key === 'ArrowLeft') {
+      event.preventDefault();
       setFlavor(activeIndex - 1);
     } else if (event.key === 'ArrowRight') {
+      event.preventDefault();
       setFlavor(activeIndex + 1);
     }
   });
@@ -138,7 +163,6 @@
     }
   });
 
-  // Establish a deterministic initial state without requiring CSS :has().
   chips.forEach((chip, index) => {
     chip.tabIndex = index === 0 ? 0 : -1;
   });
