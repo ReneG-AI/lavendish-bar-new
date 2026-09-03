@@ -19,14 +19,15 @@ La rama `audit/legal-v1.2` parte exactamente del commit estable de `main`:
 - No se modifica la lógica del selector de mojitos.
 - No se modifican los assets de mojitos ni sus iconos.
 - La carta conserva la capa clara y el contraste introducidos en v1.1.1.
-- El único cambio visual sobre la página comercial, aparte de metadatos, es el footer y su acceso legal.
+- Los cambios visuales sobre la página comercial se limitan al footer, enlaces legales, acceso a la carta catalana y metadatos.
 
 ### Responsive
 
 - Se mantienen los breakpoints y protecciones de viewport existentes.
-- No se introducen nuevos wrappers dentro de hero, mojitos o carta.
+- No se introducen nuevos wrappers dentro de hero o mojitos.
 - El nuevo footer pasa de tres columnas en escritorio a una sola columna en móvil.
 - Las páginas legales utilizan `css/legal.css`, aislado del CSS de la web comercial.
+- La carta catalana utiliza una capa adicional aislada (`css/carta-ca.css`).
 
 ### Accesibilidad básica
 
@@ -69,6 +70,10 @@ Referencia oficial:
 - https://docs.github.com/en/pages/getting-started-with-github-pages/what-is-github-pages
 - https://docs.github.com/es/site-policy/privacy-policies/github-general-privacy-statement
 
+### Correo electrónico
+
+El canal de privacidad utiliza una dirección `@gmail.com`. La política identifica por ello Google/Gmail como proveedor tecnológico del correo, sin atribuirle a LAVENDISH tratamientos de seguimiento que no realiza.
+
 ## 4. Cookies y consentimiento
 
 ### Estado actual
@@ -89,8 +94,8 @@ Si se añaden analítica, publicidad, remarketing, mapas o vídeos embebidos que
 
 Referencias oficiales de la AEPD:
 
-- https://www.aepd.es/es/documento/guia-cookies.pdf
-- https://www.aepd.es/prensa-y-comunicacion/notas-de-prensa/aepd-actualiza-guia-cookies-para-adaptarla-a-nuevas-directrices-cepd
+- https://www.aepd.es/guias/guia-cookies.pdf
+- https://www.aepd.es/preguntas-frecuentes/17-internet-y-redes-sociales/FAQ-1707-importancia-de-las-cookies-en-la-proteccion-de-datos
 
 ## 5. Aviso legal
 
@@ -100,7 +105,8 @@ Se ha completado `aviso-legal.html` con:
 - titular;
 - NIF/NIE;
 - domicilio;
-- correo electrónico de contacto;
+- correo electrónico;
+- teléfono de contacto como canal adicional de comunicación directa y efectiva;
 - objeto del sitio;
 - condiciones de acceso y uso;
 - naturaleza informativa de la carta;
@@ -111,29 +117,33 @@ Se ha completado `aviso-legal.html` con:
 - legislación aplicable y resolución de conflictos;
 - fecha de actualización.
 
-Los datos identificativos incorporados proceden de documentación facilitada por el negocio. No se publica el teléfono.
+Los datos identificativos incorporados proceden de documentación facilitada por el negocio. El teléfono no aparece en la página comercial ni en el footer principal; queda limitado al Aviso Legal.
 
 No se han inventado datos de Registro Mercantil ni autorizaciones administrativas. Solo deben añadirse si realmente resultan aplicables y se dispone de la información correcta.
 
 Referencia principal:
 
 - Ley 34/2002 (LSSI-CE), especialmente artículo 10: https://www.boe.es/buscar/act.php?id=BOE-A-2002-13758
+- TJUE C-298/07, sobre contacto rápido, directo y efectivo: https://curia.europa.eu/
 
 ## 6. Política de privacidad
 
-`privacidad.html` incluye ahora los puntos esenciales exigibles para una información transparente y adaptada al funcionamiento real de esta web:
+`privacidad.html` incluye los puntos esenciales exigibles para una información transparente y adaptada al funcionamiento real de esta web:
 
 - identidad y contacto del responsable;
 - alcance de la política;
 - categorías de datos tratados;
 - explicación del alojamiento en GitHub Pages;
 - datos facilitados voluntariamente por correo;
+- carácter voluntario del contacto y consecuencias de no facilitar datos mínimos de respuesta;
 - finalidades;
 - bases jurídicas según el tratamiento;
 - destinatarios y proveedores tecnológicos;
+- GitHub Pages y Google/Gmail identificados;
 - posible tratamiento internacional por proveedores globales;
 - criterios de conservación;
 - derechos de los interesados;
+- retirada del consentimiento cuando un tratamiento se base en él;
 - canal para ejercer derechos;
 - derecho a reclamar ante la AEPD;
 - ausencia de perfilado y decisiones automatizadas;
@@ -145,14 +155,46 @@ Referencias oficiales:
 
 - RGPD, artículo 13: https://eur-lex.europa.eu/eli/reg/2016/679/oj
 - LOPDGDD: https://www.boe.es/buscar/act.php?id=BOE-A-2018-16673
-- AEPD, deber de informar: https://www.aepd.es/preguntas-frecuentes/2-tus-obligaciones-como-responsable-del-tratamiento/6-el-deber-de-informacion/FAQ-0247-como-debo-cumplir-con-el-deber-de-informar
-- AEPD Facilita RGPD: https://www.aepd.es/guias-y-herramientas/herramientas/facilita-rgpd
+- AEPD, derecho de información: https://www.aepd.es/derechos-y-deberes/conoce-tus-derechos/derecho-de-informacion
 
 ### Importante fuera de la web
 
 Estas páginas cubren la presencia web actual. No sustituyen las obligaciones internas del negocio respecto de otros tratamientos que puedan existir fuera de Internet, como empleados, proveedores, facturación, videovigilancia o bases de datos de clientes. Esos tratamientos, si existen, deben gestionarse por separado con sus bases jurídicas, información, contratos, registro de actividades y medidas de seguridad correspondientes.
 
-## 7. Footer y diseño legal
+## 7. Derechos lingüísticos y carta en catalán
+
+La revisión específica para un bar de Lleida detectó un punto importante del Código de consumo de Cataluña: las cartas de comidas y bebidas deben estar a disposición de la clientela al menos en catalán, y la información comercial dirigida a consumidores debe respetar los derechos lingüísticos aplicables.
+
+Para reforzar este punto sin duplicar ni reescribir la web principal:
+
+- se añade `carta-catala.html`;
+- reproduce exactamente la selección de platos publicada en la web, sin inventar productos o precios;
+- se enlaza desde la navegación de categorías de la Carta y desde el footer;
+- ofrece vuelta directa a `index.html#carta`;
+- incorpora un aviso claro para personas con alergias o intolerancias.
+
+Referencias oficiales:
+
+- Agència Catalana del Consum — Bars i restaurants: https://consum.gencat.cat/ca/detalls/article/Bars-i-restaurants-00003
+- Obligacions generals per a les empreses: https://consum.gencat.cat/ca/empreses/requisits-obligatoris/obligacions-generals-per-a-les-empreses/
+- Código de consumo de Cataluña: https://www.boe.es/buscar/act.php?id=BOE-A-2010-13115
+
+## 8. Alérgenos y otras obligaciones del establecimiento
+
+La web no realiza venta a distancia de alimentos, por lo que no se ha convertido la carta web en una ficha de venta online. Sin embargo, los bares y restaurantes deben disponer y facilitar información sobre los alérgenos de sus alimentos. Si la información se facilita oralmente, debe existir soporte documentado y el correspondiente aviso en el establecimiento.
+
+Se crea `COMPLIANCE-CHECKLIST.md` para que estas obligaciones operativas no queden confundidas con el cumplimiento meramente web. Incluye, entre otros:
+
+- alérgenos;
+- carta física en catalán;
+- precios totales con impuestos;
+- hojas oficiales de reclamación;
+- horario visible;
+- tratamientos de datos fuera de la web.
+
+Referencia: https://consum.gencat.cat/ca/empreses/requisits-obligatoris/obligacions-generals-per-a-les-empreses/
+
+## 9. Footer y diseño legal
 
 El footer de producción se ha rediseñado sin modificar la navegación o el JavaScript principal:
 
@@ -162,6 +204,7 @@ El footer de producción se ha rediseñado sin modificar la navegación o el Jav
 - Aviso legal;
 - Privacidad;
 - Cookies;
+- Carta en català;
 - copyright.
 
 En escritorio utiliza una composición editorial de tres áreas y en móvil se convierte en una columna limpia. Los enlaces legales quedan visibles pero deliberadamente secundarios frente al CTA principal.
@@ -178,7 +221,7 @@ Las tres páginas legales comparten:
 - cabecera sticky y botón de vuelta;
 - footer legal consistente.
 
-## 8. Seguridad y navegación externa
+## 10. Seguridad y navegación externa
 
 - Se ha añadido `strict-origin-when-cross-origin` como política de referrer.
 - Los enlaces que abren una pestaña externa incluyen `rel="noopener noreferrer"` cuando se han tocado en esta versión.
@@ -187,7 +230,7 @@ Las tres páginas legales comparten:
 
 GitHub Pages no permite configurar desde este repositorio todos los encabezados HTTP que permitiría un hosting administrado. No se fuerza una CSP mediante `<meta>` en esta release para evitar bloquear assets o introducir una regresión sin una fase específica de pruebas.
 
-## 9. SEO / estructura
+## 11. SEO / estructura
 
 La página comercial mantiene:
 
@@ -202,9 +245,17 @@ La página comercial mantiene:
 - HTTPS mediante GitHub Pages;
 - `.nojekyll`.
 
-Las páginas legales se mantienen con `noindex,follow`. No es necesario incluirlas en el sitemap para que sean válidas o accesibles: están enlazadas permanentemente desde el footer.
+Las páginas legales y la carta catalana se mantienen con `noindex,follow`. No es necesario incluirlas en el sitemap para que sean accesibles: están enlazadas desde la interfaz.
 
-## 10. Licencias y marca
+## 12. Accesibilidad — alcance revisado
+
+La Ley 11/2023 incluye los servicios de comercio electrónico entre los servicios sometidos a requisitos específicos de accesibilidad y contempla una exención para microempresas que presten servicios. La web actual de LAVENDISH no permite celebrar contratos, comprar, pagar o reservar online, por lo que no se presenta como un servicio de comercio electrónico.
+
+No se añade una “declaración de accesibilidad” genérica que pudiera dar a entender una certificación no realizada. Se mantienen buenas prácticas de accesibilidad y se documenta que cualquier futura incorporación de e-commerce debe pasar por una revisión específica.
+
+Referencia: https://www.boe.es/buscar/act.php?id=BOE-A-2023-11022
+
+## 13. Licencias y marca
 
 Se añade `NOTICE.md` para dejar claro que la licencia técnica del código no concede automáticamente derechos sobre:
 
@@ -217,18 +268,21 @@ Se añade `NOTICE.md` para dejar claro que la licencia técnica del código no c
 
 Esto resuelve la principal ambigüedad detectada en la licencia MIT del repositorio sin modificar la licencia histórica del código.
 
-## 11. Archivos añadidos o modificados en v1.2
+## 14. Archivos añadidos o modificados en v1.2
 
 - `index.html`
+- `carta-catala.html`
 - `aviso-legal.html`
 - `privacidad.html`
 - `cookies.html`
+- `css/carta-ca.css`
 - `css/legal.css`
 - `css/style-07.css`
 - `README.md`
 - `CHANGELOG.md`
 - `VERSION`
 - `NOTICE.md`
+- `COMPLIANCE-CHECKLIST.md`
 - `AUDIT-v1.2.md`
 
 No se modifica:
@@ -239,7 +293,7 @@ No se modifica:
 - lógica del selector;
 - estructura funcional del menú.
 
-## 12. Criterio antes de fusionar a `main`
+## 15. Criterio antes de fusionar a `main`
 
 La rama es técnicamente candidata a release. Antes de fusionar deben hacerse estas comprobaciones finales:
 
@@ -247,10 +301,11 @@ La rama es técnicamente candidata a release. Antes de fusionar deben hacerse es
 2. comprobar que el menú sigue abriendo y cerrando exactamente como en la versión estable;
 3. recorrer varios mojitos y confirmar que el viewport no se desplaza;
 4. revisar que la carta se mantiene clara y legible;
-5. llegar al footer y comprobar su jerarquía y responsive;
-6. abrir Aviso legal, Privacidad y Cookies desde el footer;
-7. comprobar sus botones de vuelta, enlaces internos y enlaces externos;
-8. verificar que ningún asset da 404 en GitHub Pages;
-9. confirmar que `style-07.css?v=1.2.0` evita caché antigua.
+5. comprobar el enlace `Català`, la carta catalana y su vuelta a `#carta`;
+6. llegar al footer y comprobar su jerarquía y responsive;
+7. abrir Aviso legal, Privacidad y Cookies desde el footer;
+8. comprobar sus botones de vuelta, enlaces internos y enlaces externos;
+9. verificar que ningún asset da 404 en GitHub Pages;
+10. confirmar que `style-07.css?v=1.2.0` evita caché antigua.
 
 Si estas comprobaciones visuales son correctas, la rama puede fusionarse a `main` como **v1.2.0**.
