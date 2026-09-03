@@ -2,12 +2,14 @@
 
 ## 1.2.0 — 2026-09-03
 
-- Añadido Aviso legal completo con identificación del titular, NIF/NIE, domicilio, correo legal, condiciones de uso, propiedad intelectual, enlaces, responsabilidad y legislación aplicable.
+- Añadido Aviso legal completo con identificación del titular, NIF/NIE, domicilio, correo legal, teléfono de contacto, condiciones de uso, propiedad intelectual, enlaces, responsabilidad y legislación aplicable.
 - Añadida Política de privacidad adaptada a la web real: sin formularios, cuentas, reservas, pagos ni analítica propia; tratamiento de consultas por correo y explicación del alojamiento en GitHub Pages.
 - Añadida Política de cookies específica para la configuración actual, sin analítica ni publicidad y sin banner de consentimiento mientras no se incorporen tecnologías no exentas.
 - Documentado que GitHub Pages registra direcciones IP con fines de seguridad según su documentación pública.
+- Añadida versión accesible de la información de carta en catalán (`carta-catala.html`), enlazada directamente desde la carta y el footer, para reforzar el cumplimiento de los derechos lingüísticos de consumo en Cataluña.
+- Añadido aviso visible en la carta catalana para que las personas con alergias o intolerancias consulten la información correspondiente antes de pedir.
 - Añadido diseño editorial propio para las páginas legales, coherente con la identidad negra, marfil y dorada de LAVENDISH.
-- Rediseñado el footer principal para mejorar jerarquía, legibilidad, ubicación, CTA y acceso permanente a Aviso legal, Privacidad y Cookies.
+- Rediseñado el footer principal para mejorar jerarquía, legibilidad, ubicación, CTA y acceso permanente a Aviso legal, Privacidad, Cookies y Carta en català.
 - Añadido `meta referrer` con política `strict-origin-when-cross-origin`.
 - Añadido `NOTICE.md` para separar expresamente la licencia del código de los derechos sobre marca, logo, fotografías e ilustraciones de LAVENDISH.
 - Actualizado el cache-busting de `style-07.css` a `1.2.0`.
