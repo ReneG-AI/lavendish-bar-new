@@ -40,14 +40,13 @@
     assetsWarmed = true;
 
     flavors.forEach((flavor, index) => {
-      if (index === 0) return; // Original is already loaded/preloaded by the document.
+      if (index === 0) return;
       const preload = new Image();
       preload.decoding = 'async';
       preload.src = assetFor(flavor.id);
     });
   }
 
-  // Warm the flavor assets when the user approaches the mojito section instead of competing with the hero on first paint.
   if (section && 'IntersectionObserver' in window) {
     const preloadObserver = new IntersectionObserver((entries, observer) => {
       if (!entries.some((entry) => entry.isIntersecting)) return;
@@ -59,7 +58,6 @@
     window.setTimeout(warmFlavorAssets, 1200);
   }
 
-  // Fallback warm-up for users who stay on the hero for a while.
   window.addEventListener('load', () => window.setTimeout(warmFlavorAssets, 2600), { once: true });
 
   function centerChipInRail(chip, behavior = reducedMotion ? 'auto' : 'smooth') {
@@ -111,7 +109,6 @@
         descriptionNode.style.opacity = '1';
 
         if (options.scrollChip !== false && activeChip && rail) {
-          // Never use scrollIntoView here: on iOS Safari it can shift the whole page horizontally.
           centerChipInRail(activeChip);
         }
       });
@@ -143,7 +140,6 @@
     }
   });
 
-  // Compact menu: explicit state is more reliable than :target on mobile Safari.
   const trigger = document.querySelector('[data-menu-trigger]');
   const layer = document.querySelector('[data-menu-layer]');
   const dismiss = document.querySelector('[data-menu-dismiss]');
@@ -158,6 +154,10 @@
   layer?.setAttribute('role', 'dialog');
   layer?.setAttribute('aria-modal', 'true');
   layer?.setAttribute('aria-label', 'Menú de navegación');
+  if (dismiss) {
+    dismiss.tabIndex = -1;
+    dismiss.setAttribute('aria-hidden', 'true');
+  }
 
   function setBackgroundInert(state) {
     [main, bottomCta, footer].forEach((node) => {
@@ -204,7 +204,7 @@
   });
   dismiss?.addEventListener('click', () => closeMenu());
   closeButton?.addEventListener('click', () => closeMenu());
-  menuLinks.forEach((link) => link.addEventListener('click', () => closeMenu({ restoreFocus: false })));
+  menuLinks.forEach((link) => link.addEventListener('click', () => closeMenu()));
 
   document.addEventListener('keydown', (event) => {
     const menuOpen = trigger?.getAttribute('aria-expanded') === 'true';
