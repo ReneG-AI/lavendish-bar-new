@@ -1,5 +1,18 @@
 # Changelog
 
+## 1.1.1 — 2026-09-03
+
+- Corregido el desplazamiento horizontal del viewport al cambiar de mojito en móvil.
+- Sustituido `scrollIntoView()` por scroll controlado únicamente dentro del rail de sabores para evitar el bug de iOS Safari.
+- El mojito activo queda ahora absolutamente centrado dentro de un stage estable, independientemente de las dimensiones intrínsecas de cada asset.
+- Reservado espacio fijo para nombre y descripción de sabor para evitar saltos verticales entre sabores.
+- Añadidas protecciones de overflow y anchura para 320–760 px.
+- Precarga ligera de los 14 mojitos para cambios más estables y sin reflow visual.
+- Carta rediseñada sobre una superficie cálida clara con contraste explícito para títulos, platos, navegación y texto descriptivo.
+- Mejorada la carta en móvil con una sola columna, espaciado y tamaños de lectura más cómodos.
+- Nuevo `style-07.css` como capa de corrección responsive y accesibilidad visual.
+- Cache-busting actualizado a 1.1.1.
+
 ## 1.1.0 — 2026-09-03
 
 - Rediseñado el showcase de Mojitos con composición editorial premium inspirada en la referencia visual definitiva.
