@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.3.0 — 2026-09-03
+
+- Añadida capa final de accesibilidad visual aislada en `style-08.css`, sin modificar la geometría estable de la web.
+- Mejorado el menú para mover el foco al abrir, mantener la navegación por teclado dentro del panel, cerrar con `Escape` y devolver el foco al control correspondiente.
+- El contenido de fondo se marca como `inert` mientras el menú está abierto cuando el navegador lo soporta.
+- La navegación de mojitos por teclado queda desactivada mientras el menú está abierto para evitar conflictos de interacción.
+- La precarga de sabores deja de competir con el hero: los mojitos secundarios se calientan cuando el usuario se aproxima a la sección o tras un tiempo de espera.
+- Añadido soporte explícito para `prefers-reduced-motion` tanto en JavaScript como en CSS.
+- Añadida página `404.html` propia, responsive y coherente con la identidad negra, marfil y dorada de LAVENDISH.
+- Añadidos estados `focus-visible` consistentes para menú, mojitos, CTA, ubicación y footer.
+- Mejorados metadatos sociales con dimensiones, tipo y texto alternativo de la imagen Open Graph/Twitter.
+- Añadido `hasMenu` al dato estructurado `BarOrPub` y metadatos técnicos de aplicación/formato telefónico.
+- Cache-busting actualizado para `app.js` y nueva capa `style-08.css` a `1.3.0`.
+- La versión estable v1.2.0 queda preservada en `backup/stable-v1.2.0` antes de cualquier despliegue.
+
 ## 1.2.0 — 2026-09-03
 
 - Añadido Aviso legal completo con identificación del titular, NIF/NIE, domicilio, correo legal, teléfono de contacto, condiciones de uso, propiedad intelectual, enlaces, responsabilidad y legislación aplicable.

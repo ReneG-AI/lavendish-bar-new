@@ -6,12 +6,14 @@ Sitio web oficial de **LAVENDISH**, bar / cocktail bar en Lleida.
 
 ## Estado
 
-**Versión candidata:** 1.2.0  
-**Rama de publicación:** `main`  
+**Versión candidata:** 1.3.0  
+**Rama estable actual:** `main` → v1.2.0  
+**Rama de trabajo:** `polish/premium-v1.3`  
+**Backup estable:** `backup/stable-v1.2.0`  
 **Hosting:** GitHub Pages  
 **Arquitectura:** HTML + CSS + JavaScript vanilla, sin framework ni proceso de build.
 
-La versión 1.2 añade la capa legal, de privacidad y de cumplimiento web sobre la base visual estable 1.1.1. Los cambios se desarrollaron primero en `audit/legal-v1.2` para no alterar producción hasta completar la revisión.
+La versión 1.3 es una capa de acabado técnico y de accesibilidad sobre la base visual ya aprobada en v1.2. No rediseña el hero, la carta, el showcase de mojitos ni la geometría responsive estable.
 
 ## Dirección visual
 
@@ -28,7 +30,8 @@ La web sigue una estética editorial de hospitality premium:
 - menú compacto superior derecho;
 - transiciones cortas y soporte para `prefers-reduced-motion`;
 - carta sobre superficie cálida clara para garantizar legibilidad;
-- footer editorial con ubicación y acceso permanente a la información legal.
+- footer editorial con ubicación y acceso permanente a la información legal;
+- página 404 propia y coherente con la identidad visual.
 
 ## Contenido real publicado
 
@@ -71,6 +74,7 @@ La información comercial de esta selección está disponible también en catal�
 ```text
 lavendish-bar-new/
 ├── index.html
+├── 404.html
 ├── carta-catala.html
 ├── aviso-legal.html
 ├── privacidad.html
@@ -85,7 +89,7 @@ lavendish-bar-new/
 ├── AUDIT-v1.2.md
 ├── COMPLIANCE-CHECKLIST.md
 ├── js/
-│   └── app.js                 # menú + selector de mojitos
+│   └── app.js                 # menú accesible + selector de mojitos
 ├── css/
 │   ├── style-00.css           # base histórica
 │   ├── style-01.css
@@ -96,8 +100,10 @@ lavendish-bar-new/
 │   ├── assets-physical.css    # legado 1.0, no cargado
 │   ├── style-06.css           # dirección visual oficial 1.1
 │   ├── style-07.css           # estabilidad responsive, carta, menú y footer
+│   ├── style-08.css           # foco, reduced motion y acabado accesible 1.3
 │   ├── legal.css              # diseño aislado para páginas legales
-│   └── carta-ca.css           # estilo aislado de la carta en catalán
+│   ├── carta-ca.css           # estilo aislado de la carta en catalán
+│   └── 404.css                # página de error de marca
 └── assets/
     ├── favicon.png
     ├── lavendish-logo.webp
@@ -148,6 +154,10 @@ Cada sabor usa un **archivo WebP físico** de `assets/mojitos/` y un icono físi
 
 No se usa sprite sheet ni `background-image` para renderizar el vaso activo en producción.
 
+### Precarga v1.3
+
+El primer mojito se carga normalmente desde el documento. Los sabores secundarios ya no compiten con el hero durante el primer render: `app.js` los precarga al aproximarse a la sección de Mojitos o mediante un fallback posterior a la carga.
+
 ### Iluminación
 
 La iluminación se compone mediante capas HTML/CSS separadas detrás del vaso:
@@ -197,17 +207,23 @@ Nunca aplicar al bitmap del mojito:
 
 Todo glow, niebla, partículas o spotlight debe añadirse como **hermano situado detrás del `<img>`**.
 
-## Interacción
+## Interacción y accesibilidad
 
 - Flechas laterales: sabor anterior / siguiente con loop continuo.
-- `ArrowLeft` / `ArrowRight`: navegación por teclado cuando la sección está visible.
-- Iconos: selección directa.
+- `ArrowLeft` / `ArrowRight`: navegación por teclado cuando la sección está visible y el menú está cerrado.
+- Iconos: selección directa con estado ARIA.
 - Rail móvil: scroll táctil horizontal con padding inicial y final.
 - Menú: abre desde el botón superior y cierra al seleccionar, con clic exterior, botón × o `Escape`.
+- Al abrir el menú, el foco entra en el panel; `Tab` queda contenido en él hasta cerrar.
+- El contenido de fondo se marca como `inert` durante la apertura cuando el navegador lo soporta.
+- Los controles principales tienen estados `focus-visible` consistentes.
+- `prefers-reduced-motion` elimina transiciones no esenciales sin eliminar funcionalidad.
 
 ### Regla crítica del menú
 
 La visibilidad del menú se controla mediante `html.menu-open`. `style-07.css` fuerza el panel a ser visible e interactivo únicamente en ese estado. No eliminar estas reglas sin probar escritorio y Safari/iPhone.
+
+`style-08.css` solo añade acabado accesible. No debe convertirse en una nueva capa de correcciones de layout.
 
 ## Responsive
 
@@ -219,7 +235,7 @@ La composición se ha preparado para móvil, tablet, portátil y escritorio gran
 - rail de sabores como único elemento con scroll horizontal;
 - carta en una sola columna en móvil;
 - footer en tres columnas en escritorio y una columna en móvil;
-- páginas legales y carta catalana con CSS aislado y layout móvil propio.
+- páginas legales, carta catalana y 404 con CSS aislado y layout móvil propio.
 
 ## Ubicación
 
@@ -234,16 +250,19 @@ La página comercial no muestra teléfono ni correo. Los datos de contacto se mu
 Se mantienen:
 
 - canonical;
-- Open Graph;
-- Twitter Card;
-- JSON-LD `BarOrPub`;
+- Open Graph con tipo, dimensiones y texto alternativo de imagen;
+- Twitter Card con texto alternativo;
+- JSON-LD `BarOrPub` con enlace a la carta mediante `hasMenu`;
 - `robots.txt`;
 - `sitemap.xml`;
 - HTML semántico y textos alternativos;
 - `.nojekyll` para GitHub Pages;
-- `strict-origin-when-cross-origin` como política de referrer.
+- `strict-origin-when-cross-origin` como política de referrer;
+- `404.html` propia para rutas inexistentes.
 
 La URL canónica temporal de producción es `https://reneg-ai.github.io/lavendish-bar-new/`.
+
+Cuando exista dominio propio, deben actualizarse conjuntamente canonical, Open Graph, Twitter, JSON-LD, sitemap, robots y el `<base>` de `404.html`.
 
 ## Licencias y activos de marca
 
@@ -260,28 +279,32 @@ python -m http.server 8080
 ## Checklist antes de publicar
 
 1. Menú abre y cierra correctamente en escritorio y móvil.
-2. Mojitos cambian sin desplazar el viewport.
-3. Rail de sabores no corta el primer o último icono.
-4. No aparece fondo rectangular detrás de ningún mojito.
-5. Carta mantiene contraste y lectura cómoda.
-6. Enlace `Català` abre la selección correctamente y vuelve a `#carta`.
-7. Footer legal se adapta sin solapamientos.
-8. Aviso legal, privacidad y cookies abren y vuelven correctamente a la web.
-9. No se ha añadido analítica o tracking sin revisar cookies y privacidad.
-10. Todos los assets cargan mediante rutas relativas compatibles con GitHub Pages.
+2. Al abrir el menú, el foco entra en el panel y `Tab` no escapa al contenido de fondo.
+3. `Escape`, × y clic exterior cierran el menú y recuperan el foco cuando corresponde.
+4. Mojitos cambian sin desplazar el viewport.
+5. Rail de sabores no corta el primer o último icono.
+6. No aparece fondo rectangular detrás de ningún mojito.
+7. Carta mantiene contraste y lectura cómoda.
+8. Enlace `Català` abre la selección correctamente y vuelve a `#carta`.
+9. Footer legal se adapta sin solapamientos.
+10. Aviso legal, privacidad, cookies y 404 cargan sus estilos y rutas correctamente.
+11. `prefers-reduced-motion` mantiene funcionalidad sin animaciones innecesarias.
+12. No se ha añadido analítica o tracking sin revisar cookies y privacidad.
+13. Todos los assets cargan mediante rutas compatibles con GitHub Pages.
 
 ## Principios de mantenimiento
 
 1. `main` contiene siempre la versión publicable.
 2. Los cambios con riesgo visual o legal se preparan primero en una rama.
-3. No inventar platos, precios, datos de negocio o información legal.
-4. No volver a sprites para los iconos de sabores.
-5. Mantener los mojitos transparentes y la iluminación en capas independientes.
-6. No añadir imágenes grandes embebidas en base64 al CSS de producción.
-7. Mantener JavaScript pequeño y sin librerías pesadas.
-8. Probar visualmente escritorio, tablet y Safari/iPhone tras cambios de layout o assets.
-9. Revisar privacidad/cookies antes de añadir formularios, reservas, analítica, publicidad o contenido de terceros.
-10. Mantener actualizada la versión catalana de la información comercial cuando cambie la carta publicada.
+3. Crear una rama `backup/stable-vX.Y.Z` antes de cada release relevante.
+4. No inventar platos, precios, datos de negocio o información legal.
+5. No volver a sprites para los iconos de sabores.
+6. Mantener los mojitos transparentes y la iluminación en capas independientes.
+7. No añadir imágenes grandes embebidas en base64 al CSS de producción.
+8. Mantener JavaScript pequeño y sin librerías pesadas.
+9. Probar visualmente escritorio, tablet y Safari/iPhone tras cambios de layout o assets.
+10. Revisar privacidad/cookies antes de añadir formularios, reservas, analítica, publicidad o contenido de terceros.
+11. Mantener actualizada la versión catalana de la información comercial cuando cambie la carta publicada.
 
 ---
 
