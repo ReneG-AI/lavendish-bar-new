@@ -246,4 +246,13 @@
   chips.forEach((chip, index) => {
     chip.tabIndex = index === 0 ? 0 : -1;
   });
+
+  // Experimental experience is loaded separately so it can be removed without touching the stable UI.
+  if (!document.querySelector('script[data-pc3d-loader]')) {
+    const pc3dScript = document.createElement('script');
+    pc3dScript.src = 'js/pina-3d.js?v=0.1.0';
+    pc3dScript.async = false;
+    pc3dScript.dataset.pc3dLoader = '';
+    document.body.appendChild(pc3dScript);
+  }
 })();
