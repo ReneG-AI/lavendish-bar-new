@@ -16,10 +16,12 @@
   if (!document.querySelector('link[data-pc3d-style]')) {
     const style = document.createElement('link');
     style.rel = 'stylesheet';
-    style.href = 'css/pina-3d.css?v=0.3.0';
+    style.href = 'css/pina-3d.css?v=0.4.0';
     style.dataset.pc3dStyle = '';
     document.head.appendChild(style);
   }
+
+  const productSrc = 'assets/pina-colada.webp?v=1.1.1';
 
   const section = document.createElement('section');
   section.className = 'pcfilm-scroll';
@@ -36,11 +38,11 @@
         <div class="pcfilm-copy">
           <div class="pcfilm-kicker">Signature serve · LAVENDISH</div>
           <h2 id="pcfilm-title">De cero a<br><strong>Piña Colada.</strong></h2>
-          <p class="pcfilm-lead">Fría, cremosa y tropical. Desliza y mira cómo toma forma hasta quedar lista para el primer sorbo.</p>
+          <p class="pcfilm-lead">Fría, cremosa y tropical. Baja despacio y mira cómo aparece hasta quedar lista para el primer sorbo.</p>
 
           <ol class="pcfilm-steps" aria-label="Secuencia de la Piña Colada">
-            <li class="pcfilm-step is-active" data-film-step="0"><span>01</span>Entra en escena</li>
-            <li class="pcfilm-step" data-film-step="1"><span>02</span>Cobra cuerpo</li>
+            <li class="pcfilm-step is-active" data-film-step="0"><span>01</span>Aparece</li>
+            <li class="pcfilm-step" data-film-step="1"><span>02</span>Se llena</li>
             <li class="pcfilm-step" data-film-step="2"><span>03</span>Acabado tropical</li>
             <li class="pcfilm-step" data-film-step="3"><span>04</span>Lista para servir</li>
           </ol>
@@ -48,27 +50,28 @@
 
         <div class="pcfilm-viewport" data-film-viewport>
           <div class="pcfilm-floor" aria-hidden="true"></div>
+
           <div class="pcfilm-product" data-film-product aria-hidden="true">
             <div class="pcfilm-layer pcfilm-ghost" data-film-ghost>
-              <img src="assets/pina-colada.webp?v=1.1.1" width="900" height="1125" alt="" decoding="async">
+              <img src="${productSrc}" width="900" height="1125" alt="" decoding="async">
             </div>
-            <div class="pcfilm-layer pcfilm-base" data-film-base>
-              <img src="assets/pina-colada.webp?v=1.1.1" width="900" height="1125" alt="" decoding="async">
+
+            <div class="pcfilm-layer pcfilm-fill" data-film-fill>
+              <img src="${productSrc}" width="900" height="1125" alt="" decoding="async">
             </div>
-            <div class="pcfilm-layer pcfilm-body" data-film-body>
-              <img src="assets/pina-colada.webp?v=1.1.1" width="900" height="1125" alt="" decoding="async">
-            </div>
-            <div class="pcfilm-layer pcfilm-top" data-film-top>
-              <img src="assets/pina-colada.webp?v=1.1.1" width="900" height="1125" alt="" decoding="async">
-            </div>
+
+            <div class="pcfilm-reveal-edge" data-film-edge></div>
+
             <div class="pcfilm-layer pcfilm-final" data-film-final>
-              <img src="assets/pina-colada.webp?v=1.1.1" width="900" height="1125" alt="" decoding="async">
+              <img src="${productSrc}" width="900" height="1125" alt="" decoding="async">
             </div>
+
             <div class="pcfilm-reflection" data-film-reflection>
-              <img src="assets/pina-colada.webp?v=1.1.1" width="900" height="1125" alt="" decoding="async">
+              <img src="${productSrc}" width="900" height="1125" alt="" decoding="async">
             </div>
           </div>
-          <div class="pcfilm-caption" data-film-caption>Desliza para verla aparecer</div>
+
+          <div class="pcfilm-caption" data-film-caption>Baja para verla aparecer</div>
         </div>
       </div>
 
@@ -91,9 +94,8 @@
   const product = section.querySelector('[data-film-product]');
   const viewport = section.querySelector('[data-film-viewport]');
   const ghost = section.querySelector('[data-film-ghost]');
-  const base = section.querySelector('[data-film-base]');
-  const body = section.querySelector('[data-film-body]');
-  const top = section.querySelector('[data-film-top]');
+  const fillLayer = section.querySelector('[data-film-fill]');
+  const revealEdge = section.querySelector('[data-film-edge]');
   const finalLayer = section.querySelector('[data-film-final]');
   const reflection = section.querySelector('[data-film-reflection]');
   const glow = section.querySelector('[data-film-glow]');
@@ -102,7 +104,7 @@
   const progressBar = section.querySelector('[data-film-progress]');
   const steps = Array.from(section.querySelectorAll('[data-film-step]'));
 
-  if (!product || !base || !body || !top || !finalLayer || !progressBar) return;
+  if (!product || !fillLayer || !finalLayer || !progressBar) return;
 
   let sectionTop = 0;
   let scrollRange = 1;
@@ -111,7 +113,6 @@
   let pointerX = 0;
   let pointerY = 0;
   let raf = 0;
-  let active = true;
   let viewportWidth = window.innerWidth;
 
   const clamp = (value, min = 0, max = 1) => Math.min(max, Math.max(min, value));
@@ -129,71 +130,75 @@
   }
 
   function setStep(p) {
-    const index = p < .25 ? 0 : p < .52 ? 1 : p < .78 ? 2 : 3;
+    const index = p < .20 ? 0 : p < .62 ? 1 : p < .84 ? 2 : 3;
     steps.forEach((step, i) => step.classList.toggle('is-active', i === index));
   }
 
   function applyFrame(p) {
-    const intro = seg(p, .00, .18);
-    const bodyIn = seg(p, .14, .52);
-    const topIn = seg(p, .42, .76);
-    const finish = seg(p, .72, .97);
-    const heroMoment = seg(p, .86, 1);
+    const reveal = seg(p, .04, .78);
+    const finish = seg(p, .74, .95);
+    const heroMoment = seg(p, .88, 1);
 
-    const motionScale = viewportWidth < 760 ? .34 : viewportWidth < 1100 ? .62 : 1;
-    const rx = (lerp(2.2, -.8, p) - pointerY * 1.6) * motionScale;
-    const ry = (lerp(-5.5, 2.4, p) + pointerX * 3.2) * motionScale;
-    const y = lerp(34, -8, p);
-    const scale = lerp(.91, 1.03, heroMoment);
+    const revealPercent = lerp(0, 100, reveal);
+    const insetTop = 100 - revealPercent;
+    const clip = `inset(${insetTop.toFixed(2)}% 0 0 0)`;
 
-    product.style.transform = `translate3d(0,${y.toFixed(2)}px,0) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) scale(${scale.toFixed(4)})`;
+    fillLayer.style.clipPath = clip;
+    fillLayer.style.webkitClipPath = clip;
+    fillLayer.style.opacity = String(lerp(.30, 1, reveal));
+
+    if (revealEdge) {
+      revealEdge.style.opacity = String(reveal > .02 && reveal < .985 ? lerp(.24, .72, 1 - Math.abs(.5 - reveal) * 2) : 0);
+      revealEdge.style.top = `${insetTop.toFixed(2)}%`;
+    }
 
     if (ghost) {
-      ghost.style.opacity = String(lerp(.08, .18, intro) * (1 - finish * .9));
-      ghost.style.transform = `translate3d(0,${lerp(26, 0, intro).toFixed(1)}px,-22px) scale(${lerp(.95,1,intro).toFixed(3)})`;
+      ghost.style.opacity = String(lerp(.15, .045, reveal) * (1 - finish));
+      ghost.style.transform = `translate3d(0,${lerp(22, 0, reveal).toFixed(1)}px,-24px) scale(${lerp(.97, 1, reveal).toFixed(3)})`;
     }
-
-    base.style.opacity = intro.toFixed(3);
-    base.style.transform = `translate3d(0,${lerp(88, 0, intro).toFixed(1)}px,12px) scale(${lerp(.92,1,intro).toFixed(3)})`;
-
-    body.style.opacity = bodyIn.toFixed(3);
-    body.style.transform = `translate3d(${lerp(-26, 0, bodyIn).toFixed(1)}px,${lerp(52, 0, bodyIn).toFixed(1)}px,28px) scale(${lerp(.96,1,bodyIn).toFixed(3)})`;
-    body.style.setProperty('--film-reveal', `${lerp(12, 100, bodyIn).toFixed(1)}%`);
-
-    top.style.opacity = topIn.toFixed(3);
-    top.style.transform = `translate3d(${lerp(42, 0, topIn).toFixed(1)}px,${lerp(-78, 0, topIn).toFixed(1)}px,44px) rotateZ(${lerp(3.2,0,topIn).toFixed(2)}deg) scale(${lerp(.94,1,topIn).toFixed(3)})`;
 
     finalLayer.style.opacity = finish.toFixed(3);
-    finalLayer.style.transform = `translate3d(0,${lerp(16,0,finish).toFixed(1)}px,62px) scale(${lerp(.985,1,finish).toFixed(3)})`;
+    finalLayer.style.transform = `translate3d(0,${lerp(12, 0, finish).toFixed(1)}px,54px) scale(${lerp(.992, 1, finish).toFixed(3)})`;
+
+    const motionScale = viewportWidth < 760 ? .24 : viewportWidth < 1100 ? .50 : 1;
+    const rx = (lerp(1.5, -.5, p) - pointerY * 1.25) * motionScale;
+    const ry = (lerp(-3.2, 1.3, p) + pointerX * 2.3) * motionScale;
+    const y = lerp(26, -5, p);
+    const scale = lerp(.94, 1.025, heroMoment);
+    product.style.transform = `translate3d(0,${y.toFixed(2)}px,0) rotateX(${rx.toFixed(2)}deg) rotateY(${ry.toFixed(2)}deg) scale(${scale.toFixed(4)})`;
 
     if (reflection) {
-      const reflectionOpacity = constrainedDevice ? 0 : finish * .17;
+      const reflectionOpacity = constrainedDevice ? 0 : finish * .15;
       reflection.style.opacity = reflectionOpacity.toFixed(3);
-      reflection.style.transform = `translate3d(0,${lerp(-10,0,finish).toFixed(1)}px,0) scaleY(-.24) scaleX(.94)`;
+      reflection.style.transform = 'translate3d(0,0,0) scaleY(-.22) scaleX(.94)';
     }
 
-    if (glow) glow.style.opacity = String(lerp(.28, .92, Math.max(bodyIn, finish)));
+    if (glow) glow.style.opacity = String(lerp(.28, .92, Math.max(reveal, finish)));
+
     progressBar.style.transform = `scaleY(${p.toFixed(4)})`;
     setStep(p);
 
     if (caption) {
-      caption.textContent = p > .82 ? 'Lista para servir.' : 'Desliza para verla aparecer';
-      caption.classList.toggle('is-final', p > .82);
+      if (p < .20) caption.textContent = 'Baja para verla aparecer';
+      else if (p < .72) caption.textContent = 'Se está llenando…';
+      else if (p < .90) caption.textContent = 'Últimos detalles…';
+      else caption.textContent = 'Lista para servir.';
+      caption.classList.toggle('is-final', p > .90);
     }
 
-    if (outro) outro.classList.toggle('is-visible', p > .90);
-    section.classList.toggle('is-finished', p > .965);
+    if (outro) outro.classList.toggle('is-visible', p > .91);
+    section.classList.toggle('is-finished', p > .97);
   }
 
   function tick() {
     raf = 0;
     const delta = targetProgress - currentProgress;
-    currentProgress += delta * (reducedMotion ? 1 : .13);
+    currentProgress += delta * (reducedMotion ? 1 : .18);
 
-    if (Math.abs(delta) < .0005) currentProgress = targetProgress;
+    if (Math.abs(delta) < .0004) currentProgress = targetProgress;
     applyFrame(currentProgress);
 
-    if (currentProgress !== targetProgress && !raf) raf = requestAnimationFrame(tick);
+    if (currentProgress !== targetProgress) raf = requestAnimationFrame(tick);
   }
 
   function schedule() {
@@ -201,7 +206,7 @@
   }
 
   function updateFromScroll() {
-    if (reducedMotion || !active) return;
+    if (reducedMotion) return;
     targetProgress = clamp((window.scrollY - sectionTop) / scrollRange);
     schedule();
   }
@@ -211,15 +216,14 @@
     updateFromScroll();
   }
 
-  if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver((entries) => {
-      const entry = entries[0];
-      active = entry.isIntersecting;
-      document.documentElement.classList.toggle('pc3d-active', entry.intersectionRatio > .08);
-      if (active) updateFromScroll();
-    }, { rootMargin: '25% 0px 25% 0px', threshold: [0, .08, .2] });
-    observer.observe(section);
-  }
+  const sectionObserver = 'IntersectionObserver' in window
+    ? new IntersectionObserver((entries) => {
+        const visible = entries.some((entry) => entry.isIntersecting);
+        document.documentElement.classList.toggle('pc3d-active', visible);
+        if (visible) updateFromScroll();
+      }, { rootMargin: '12% 0px 12% 0px', threshold: 0 })
+    : null;
+  sectionObserver?.observe(section);
 
   if (finePointer && !reducedMotion && !constrainedDevice && viewport) {
     viewport.addEventListener('pointermove', (event) => {
@@ -228,6 +232,7 @@
       pointerY = clamp(((event.clientY - rect.top) / rect.height) * 2 - 1, -1, 1);
       schedule();
     }, { passive: true });
+
     viewport.addEventListener('pointerleave', () => {
       pointerX = 0;
       pointerY = 0;
@@ -243,12 +248,15 @@
     motionQuery.addEventListener('change', () => window.location.reload());
   }
 
-  measure();
-  if (reducedMotion) {
-    currentProgress = targetProgress = 1;
-    applyFrame(1);
-  } else {
-    updateFromScroll();
-    applyFrame(currentProgress);
-  }
+  requestAnimationFrame(() => {
+    measure();
+    if (reducedMotion) {
+      currentProgress = targetProgress = 1;
+      applyFrame(1);
+    } else {
+      targetProgress = clamp((window.scrollY - sectionTop) / scrollRange);
+      currentProgress = targetProgress;
+      applyFrame(currentProgress);
+    }
+  });
 })();
