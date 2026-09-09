@@ -246,4 +246,13 @@
   chips.forEach((chip, index) => {
     chip.tabIndex = index === 0 ? 0 : -1;
   });
+
+  // Premium 3D layer is kept isolated so the stable UI remains easy to restore.
+  if (!document.querySelector('script[data-pc3d-loader]')) {
+    const pc3dScript = document.createElement('script');
+    pc3dScript.src = 'js/pina-3d.js?v=0.2.0';
+    pc3dScript.async = false;
+    pc3dScript.dataset.pc3dLoader = '';
+    document.body.appendChild(pc3dScript);
+  }
 })();
