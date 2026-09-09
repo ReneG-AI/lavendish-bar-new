@@ -6,32 +6,78 @@ Sitio web oficial de **LAVENDISH**, bar / cocktail bar en Lleida.
 
 ## Estado
 
-**Versión candidata:** 1.3.0  
-**Rama estable actual:** `main` → v1.2.0  
-**Rama de trabajo:** `polish/premium-v1.3`  
-**Backup estable:** `backup/stable-v1.2.0`  
+**Versión estable:** 1.4.0  
+**Rama de producción:** `main`  
+**Backup anterior a la integración 3D:** `backup/pre-3d-home-v1.3`  
+**Backup estable v1.3:** `backup/stable-v1.3.0`  
 **Hosting:** GitHub Pages  
 **Arquitectura:** HTML + CSS + JavaScript vanilla, sin framework ni proceso de build.
 
-La versión 1.3 es una capa de acabado técnico y de accesibilidad sobre la base visual ya aprobada en v1.2. No rediseña el hero, la carta, el showcase de mojitos ni la geometría responsive estable.
+La v1.4 mantiene intacta la base aprobada de navegación, Mojitos, Carta, footer y páginas legales, y añade una experiencia inmersiva de **Piña Colada construida por scroll** entre el hero y la sección de Mojitos.
 
 ## Dirección visual
 
 La web sigue una estética editorial de hospitality premium:
 
-- fondo carbón / negro cinematográfico;
-- tipografía serif de alto contraste para titulares;
-- acentos dorados cálidos y contenidos;
-- Piña Colada como protagonista del hero;
+- negro / carbón cinematográfico;
+- marfil y dorado cálido;
+- titulares serif de alto contraste;
+- composición limpia con profundidad y luz atmosférica;
+- Piña Colada como producto protagonista;
 - showcase editorial de 14 mojitos;
-- iluminación atmosférica adaptativa por sabor;
-- navegación anterior / siguiente junto al vaso;
-- selector de sabores táctil con scroll horizontal seguro;
-- menú compacto superior derecho;
-- transiciones cortas y soporte para `prefers-reduced-motion`;
-- carta sobre superficie cálida clara para garantizar legibilidad;
-- footer editorial con ubicación y acceso permanente a la información legal;
-- página 404 propia y coherente con la identidad visual.
+- Carta clara y legible sobre superficie cálida;
+- footer y páginas legales coherentes con la marca;
+- motion contenido, con soporte explícito para `prefers-reduced-motion`.
+
+## Experiencia Piña Colada v1.4
+
+La home incorpora `js/pina-3d.js` y `css/pina-3d.css` como módulo aislado. No depende de Three.js, WebGL, CDN ni librerías externas.
+
+La experiencia usa perspectiva CSS 3D y JavaScript sincronizado con scroll para construir visualmente la copa en cinco fases:
+
+1. Cristal
+2. Hielo
+3. Mezcla
+4. Espuma
+5. Acabado
+
+Durante el recorrido se animan profundidad, rotación, hielo, nivel de mezcla, espuma, pajita, piña y cereza. Al final se realiza una transición al asset real de Piña Colada para recuperar el acabado fotográfico de marca.
+
+Características técnicas:
+
+- sección `sticky` controlada por scroll;
+- `requestAnimationFrame` para agrupar renders;
+- `IntersectionObserver` para suspender trabajo fuera del área relevante;
+- parallax de puntero solo en dispositivos con puntero fino;
+- parallax desactivado con `Save-Data` o memoria de dispositivo muy limitada;
+- fallback estático completo para `prefers-reduced-motion`;
+- CSS y JS independientes del layout principal;
+- CTA final hacia Mojitos;
+- el indicador inferior “Ver carta” se oculta durante la experiencia y reaparece después.
+
+El prototipo aislado permanece disponible en `preview-pina-3d.html` con `noindex,nofollow` para pruebas internas.
+
+## Validación v1.4
+
+La experiencia v0.2 se verificó mediante navegador automatizado en:
+
+- 1440×900
+- 1024×768
+- 768×1024
+- 430×932
+- 390×844
+- 320×700
+
+Comprobaciones realizadas:
+
+- cero overflow horizontal en todas las resoluciones probadas;
+- progresión completa de las cinco fases;
+- CTA final visible únicamente al terminar;
+- fallback `prefers-reduced-motion` funcional;
+- sin errores JavaScript en el fixture de navegador;
+- build y deploy de GitHub Pages correctos.
+
+Las notas de prueba están documentadas en `TESTING-3D-v0.2.md` y las reglas de aislamiento en `EXPERIMENTS.md`.
 
 ## Contenido real publicado
 
@@ -48,9 +94,9 @@ La web sigue una estética editorial de hospitality premium:
 - Yakisoba
 - Yakisoba con pollo
 
-No se publican precios en la web y no existe contratación a distancia desde esta versión.
+No se publican precios ni existe contratación a distancia desde esta web.
 
-La información comercial de esta selección está disponible también en catalán mediante `carta-catala.html`, con acceso directo desde la propia Carta y desde el footer.
+La selección de Carta también está disponible en catalán mediante `carta-catala.html`.
 
 ### Mojitos
 
@@ -69,242 +115,161 @@ La información comercial de esta selección está disponible también en catal�
 13. Manzana verde
 14. Uva
 
-## Estructura
+## Estructura principal
 
 ```text
 lavendish-bar-new/
 ├── index.html
 ├── 404.html
+├── preview-pina-3d.html
 ├── carta-catala.html
 ├── aviso-legal.html
 ├── privacidad.html
 ├── cookies.html
 ├── robots.txt
 ├── sitemap.xml
-├── .nojekyll
 ├── VERSION
 ├── README.md
 ├── CHANGELOG.md
 ├── NOTICE.md
-├── AUDIT-v1.2.md
+├── EXPERIMENTS.md
+├── TESTING-3D-v0.2.md
 ├── COMPLIANCE-CHECKLIST.md
 ├── js/
-│   └── app.js                 # menú accesible + selector de mojitos
+│   ├── app.js                 # menú + mojitos + loader del módulo 3D
+│   └── pina-3d.js             # experiencia Piña Colada por scroll
 ├── css/
-│   ├── style-00.css           # base histórica
-│   ├── style-01.css
-│   ├── style-02.css
-│   ├── style-03.css
-│   ├── style-04.css
-│   ├── style-05.css           # legado 1.0, no cargado
-│   ├── assets-physical.css    # legado 1.0, no cargado
-│   ├── style-06.css           # dirección visual oficial 1.1
-│   ├── style-07.css           # estabilidad responsive, carta, menú y footer
-│   ├── style-08.css           # foco, reduced motion y acabado accesible 1.3
-│   ├── legal.css              # diseño aislado para páginas legales
-│   ├── carta-ca.css           # estilo aislado de la carta en catalán
-│   └── 404.css                # página de error de marca
+│   ├── style-00.css … style-08.css
+│   ├── pina-3d.css            # experiencia 3D aislada
+│   ├── legal.css
+│   ├── carta-ca.css
+│   └── 404.css
 └── assets/
-    ├── favicon.png
     ├── lavendish-logo.webp
     ├── lavendish-storefront.webp
     ├── pina-colada.webp
-    ├── icons/                 # 14 iconos físicos independientes
-    └── mojitos/               # 14 mojitos WebP transparentes
+    ├── icons/
+    └── mojitos/
 ```
 
-## Privacidad y cookies
+## Arquitectura de Mojitos
 
-La versión actual es una web informativa y deliberadamente ligera:
+Cada sabor utiliza un WebP físico de `assets/mojitos/` y un icono físico independiente de `assets/icons/`.
 
-- no contiene formularios;
-- no contiene registro de usuarios;
-- no contiene reservas o pagos online;
-- no incorpora Google Analytics, Google Tag Manager o Meta Pixel;
-- no incorpora publicidad comportamental o remarketing;
-- no utiliza `localStorage` / `sessionStorage` para seguimiento;
-- Google Maps se abre mediante un enlace externo, no mediante iframe embebido.
+La bebida activa se renderiza como un `<img>` real y transparente. El glow, niebla, partículas y focos son capas independientes colocadas detrás del bitmap.
 
-Por esta razón, mientras se mantenga esta arquitectura no se muestra un banner de consentimiento de cookies. Si se incorpora cualquier tecnología no exenta, debe revisarse `cookies.html` e implantar el consentimiento correspondiente **antes** de cargarla en producción.
+### Regla permanente contra el fondo rectangular
 
-GitHub Pages registra la dirección IP de las visitas con fines de seguridad según su documentación pública. Esta circunstancia se explica en `privacidad.html` y `cookies.html`.
-
-### Páginas legales
-
-- `aviso-legal.html`: identificación y contacto del titular, objeto, uso, propiedad intelectual, enlaces, responsabilidad y legislación.
-- `privacidad.html`: responsable, datos, finalidades, bases jurídicas, proveedores, conservación y derechos RGPD.
-- `cookies.html`: situación técnica actual, tecnologías no utilizadas, GitHub Pages y criterio de consentimiento.
-
-Las páginas legales tienen CSS independiente para que cualquier cambio en ellas no afecte al hero, menú, mojitos o carta.
-
-## Cumplimiento en Cataluña
-
-`COMPLIANCE-CHECKLIST.md` documenta las comprobaciones web y las obligaciones del establecimiento que no se resuelven únicamente con una página web.
-
-Entre las medidas incorporadas en v1.2:
-
-- acceso a la información comercial de la selección de carta también en catalán;
-- aviso de alergias/intolerancias en la carta catalana;
-- canal de contacto adicional en el Aviso Legal;
-- checklist separado para información de alérgenos, carta física, precios, hojas de reclamación, horario y otros tratamientos de datos del negocio.
-
-## Arquitectura del showcase de mojitos
-
-Cada sabor usa un **archivo WebP físico** de `assets/mojitos/` y un icono físico independiente de `assets/icons/`. La selección se controla desde `js/app.js`, que cambia la fuente del elemento `<img class="mojito-image">`, actualiza el texto, el estado ARIA y la variable CSS `--flavor-rgb`.
-
-No se usa sprite sheet ni `background-image` para renderizar el vaso activo en producción.
-
-### Precarga v1.3
-
-El primer mojito se carga normalmente desde el documento. Los sabores secundarios ya no compiten con el hero durante el primer render: `app.js` los precarga al aproximarse a la sección de Mojitos o mediante un fallback posterior a la carga.
-
-### Iluminación
-
-La iluminación se compone mediante capas HTML/CSS separadas detrás del vaso:
-
-```text
-mojito-stage-v11
-├── mojito-light-wide
-├── mojito-light-core
-├── mojito-light-streak
-├── mojito-mist
-├── mojito-particles
-├── mojito-image              # bitmap transparente, sin efectos de fondo
-└── controles prev / next
-```
-
-El color ambiental cambia por sabor mediante `--flavor-rgb`. La saturación se mantiene contenida para evitar una estética de neón.
-
-## Corrección permanente: rectángulo / cuadrado detrás del mojito
-
-### Causa raíz
-
-La implementación 1.0 había acumulado un render heredado basado en `.mojito-sprite` y una imagen embebida en CSS. El uso de una capa de background para la bebida hacía demasiado fácil que un fondo, filtro, pseudo-elemento o glow aplicado al mismo lienzo revelase los límites rectangulares del bitmap.
-
-### Solución permanente
-
-La bebida activa se renderiza como un **`<img>` real y transparente**. El vaso y la iluminación son capas completamente independientes.
-
-Regla permanente:
-
-```css
-.mojito-image {
-  background: transparent;
-  box-shadow: none;
-  filter: none;
-  mix-blend-mode: normal;
-}
-```
-
-Nunca aplicar al bitmap del mojito:
+No aplicar directamente al bitmap del mojito:
 
 - `background-color`;
-- gradientes de iluminación;
-- `box-shadow` como glow;
+- gradientes;
+- `box-shadow` usado como glow;
 - `backdrop-filter`;
 - `mix-blend-mode`;
 - overlays o pseudo-elementos.
 
-Todo glow, niebla, partículas o spotlight debe añadirse como **hermano situado detrás del `<img>`**.
+El render del vaso debe permanecer transparente y aislado de las capas de iluminación. Esta regla evita la reaparición del antiguo rectángulo / cuadrado detrás de los mojitos.
 
-## Interacción y accesibilidad
+## Menú y accesibilidad
 
-- Flechas laterales: sabor anterior / siguiente con loop continuo.
-- `ArrowLeft` / `ArrowRight`: navegación por teclado cuando la sección está visible y el menú está cerrado.
-- Iconos: selección directa con estado ARIA.
-- Rail móvil: scroll táctil horizontal con padding inicial y final.
-- Menú: abre desde el botón superior y cierra al seleccionar, con clic exterior, botón × o `Escape`.
-- Al abrir el menú, el foco entra en el panel; `Tab` queda contenido en él hasta cerrar.
-- El contenido de fondo se marca como `inert` durante la apertura cuando el navegador lo soporta.
-- Los controles principales tienen estados `focus-visible` consistentes.
-- `prefers-reduced-motion` elimina transiciones no esenciales sin eliminar funcionalidad.
+El menú superior derecho conserva la implementación estable de v1.3:
 
-### Regla crítica del menú
+- apertura mediante botón con `aria-expanded`;
+- cierre con ×, `Escape`, selección o clic fuera;
+- focus trap mientras permanece abierto;
+- devolución del foco al cerrar;
+- contenido de fondo `inert` cuando el navegador lo soporta.
 
-La visibilidad del menú se controla mediante `html.menu-open`. `style-07.css` fuerza el panel a ser visible e interactivo únicamente en ese estado. No eliminar estas reglas sin probar escritorio y Safari/iPhone.
-
-`style-08.css` solo añade acabado accesible. No debe convertirse en una nueva capa de correcciones de layout.
+La visibilidad del menú depende de `html.menu-open`. No modificar esa regla sin volver a probar móvil y Safari/iPhone.
 
 ## Responsive
 
-La composición se ha preparado para móvil, tablet, portátil y escritorio grande. Reglas principales:
+Principios de layout:
 
 - no permitir overflow horizontal de la página;
-- vaso absolutamente centrado dentro de un stage estable;
-- copy de sabor con altura reservada para evitar saltos;
-- rail de sabores como único elemento con scroll horizontal;
-- carta en una sola columna en móvil;
-- footer en tres columnas en escritorio y una columna en móvil;
-- páginas legales, carta catalana y 404 con CSS aislado y layout móvil propio.
+- Mojitos siempre centrados dentro de un stage estable;
+- rail de sabores como único scroll horizontal intencionado;
+- Carta a una columna en móvil;
+- footer apilado en móvil;
+- módulo Piña Colada con menor recorrido, perspectiva y movimiento en pantallas pequeñas;
+- páginas legales, carta catalana y 404 con CSS aislado.
 
-## Ubicación
+## Privacidad y cookies
 
-**LAVENDISH**  
-Av. de Balmes, 21  
-25006 Lleida
+La web continúa siendo informativa y deliberadamente ligera:
 
-La página comercial no muestra teléfono ni correo. Los datos de contacto se muestran únicamente en la información legal cuando corresponden a obligaciones de identificación y contacto.
+- sin formularios;
+- sin cuentas de usuario;
+- sin reservas o pagos online;
+- sin Google Analytics, GTM o Meta Pixel;
+- sin publicidad comportamental;
+- sin tracking mediante `localStorage` / `sessionStorage`;
+- Google Maps se abre mediante enlace externo.
 
-## SEO y producción
+Por esta razón no se muestra banner de consentimiento mientras no se incorporen tecnologías no exentas. Si se añade analítica, embeds de terceros, publicidad, reservas u otras tecnologías, deben revisarse primero `privacidad.html` y `cookies.html`.
+
+Páginas legales:
+
+- `aviso-legal.html`
+- `privacidad.html`
+- `cookies.html`
+
+## Producción y SEO
 
 Se mantienen:
 
 - canonical;
-- Open Graph con tipo, dimensiones y texto alternativo de imagen;
-- Twitter Card con texto alternativo;
-- JSON-LD `BarOrPub` con enlace a la carta mediante `hasMenu`;
-- `robots.txt`;
-- `sitemap.xml`;
-- HTML semántico y textos alternativos;
-- `.nojekyll` para GitHub Pages;
-- `strict-origin-when-cross-origin` como política de referrer;
-- `404.html` propia para rutas inexistentes.
+- Open Graph y Twitter Card;
+- JSON-LD `BarOrPub` con `hasMenu`;
+- `robots.txt` y `sitemap.xml`;
+- `.nojekyll`;
+- página 404 propia;
+- política `strict-origin-when-cross-origin`.
 
-La URL canónica temporal de producción es `https://reneg-ai.github.io/lavendish-bar-new/`.
+La URL canónica temporal es `https://reneg-ai.github.io/lavendish-bar-new/`.
 
 Cuando exista dominio propio, deben actualizarse conjuntamente canonical, Open Graph, Twitter, JSON-LD, sitemap, robots y el `<base>` de `404.html`.
 
-## Licencias y activos de marca
-
-El archivo `LICENSE` se aplica al código en los términos indicados allí. `NOTICE.md` aclara expresamente que la publicación del repositorio no concede una licencia general sobre la marca LAVENDISH, logotipo, fotografías, ilustraciones o demás activos gráficos del negocio.
-
 ## Desarrollo local
 
-No existe proceso de build. Se puede servir directamente:
+No existe proceso de build:
 
 ```bash
 python -m http.server 8080
 ```
 
-## Checklist antes de publicar
+## Checklist antes de futuras releases
 
-1. Menú abre y cierra correctamente en escritorio y móvil.
-2. Al abrir el menú, el foco entra en el panel y `Tab` no escapa al contenido de fondo.
-3. `Escape`, × y clic exterior cierran el menú y recuperan el foco cuando corresponde.
-4. Mojitos cambian sin desplazar el viewport.
-5. Rail de sabores no corta el primer o último icono.
-6. No aparece fondo rectangular detrás de ningún mojito.
-7. Carta mantiene contraste y lectura cómoda.
-8. Enlace `Català` abre la selección correctamente y vuelve a `#carta`.
-9. Footer legal se adapta sin solapamientos.
-10. Aviso legal, privacidad, cookies y 404 cargan sus estilos y rutas correctamente.
-11. `prefers-reduced-motion` mantiene funcionalidad sin animaciones innecesarias.
-12. No se ha añadido analítica o tracking sin revisar cookies y privacidad.
-13. Todos los assets cargan mediante rutas compatibles con GitHub Pages.
+1. Menú abre/cierra correctamente en escritorio y móvil.
+2. `Tab`, `Escape` y devolución de foco funcionan en el menú.
+3. La experiencia Piña Colada no genera overflow ni corta contenido.
+4. `prefers-reduced-motion` muestra una experiencia estática completa.
+5. Mojitos cambian sin desplazar el viewport.
+6. El primer y último icono del rail permanecen accesibles.
+7. No reaparece ningún fondo rectangular detrás de los mojitos.
+8. Carta mantiene contraste y legibilidad.
+9. Footer y páginas legales no se solapan.
+10. Todas las rutas funcionan bajo GitHub Pages.
+11. No se incorpora tracking sin revisar privacidad y cookies.
+12. Build y deploy de GitHub Pages deben finalizar correctamente.
 
 ## Principios de mantenimiento
 
-1. `main` contiene siempre la versión publicable.
-2. Los cambios con riesgo visual o legal se preparan primero en una rama.
-3. Crear una rama `backup/stable-vX.Y.Z` antes de cada release relevante.
-4. No inventar platos, precios, datos de negocio o información legal.
-5. No volver a sprites para los iconos de sabores.
-6. Mantener los mojitos transparentes y la iluminación en capas independientes.
-7. No añadir imágenes grandes embebidas en base64 al CSS de producción.
-8. Mantener JavaScript pequeño y sin librerías pesadas.
-9. Probar visualmente escritorio, tablet y Safari/iPhone tras cambios de layout o assets.
-10. Revisar privacidad/cookies antes de añadir formularios, reservas, analítica, publicidad o contenido de terceros.
-11. Mantener actualizada la versión catalana de la información comercial cuando cambie la carta publicada.
+1. `main` contiene siempre una versión publicable.
+2. Cambios visuales de riesgo se prueban primero en rama y/o preview aislada.
+3. Crear backup antes de releases relevantes.
+4. Mantener módulos experimentales en archivos separados del layout estable.
+5. No inventar platos, precios o datos de negocio.
+6. No volver a sprites para Mojitos.
+7. Mantener assets de bebida transparentes y glow en capas separadas.
+8. Evitar dependencias pesadas si no aportan una mejora perceptible.
+9. Probar escritorio, tablet y móvil tras cambios de layout.
+10. Mantener actualizada la información legal y la Carta en catalán.
+
+## Licencias y marca
+
+`LICENSE` regula el código según sus propios términos. `NOTICE.md` aclara que la marca LAVENDISH, logotipo, fotografías, ilustraciones y demás activos gráficos no quedan liberados automáticamente por la licencia del código.
 
 ---
 
