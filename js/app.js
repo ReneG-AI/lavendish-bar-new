@@ -250,7 +250,7 @@
   // Cinematic Piña Colada module; isolated from the stable UI for safe rollback.
   if (!document.querySelector('script[data-pc3d-loader]')) {
     const pc3dScript = document.createElement('script');
-    pc3dScript.src = 'js/pina-3d.js?v=0.3.0';
+    pc3dScript.src = 'js/pina-3d.js?v=0.4.0';
     pc3dScript.async = false;
     pc3dScript.dataset.pc3dLoader = '';
     document.body.appendChild(pc3dScript);
