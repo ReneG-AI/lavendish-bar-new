@@ -12,6 +12,7 @@ const viewports = [
   { name: 'mobile-320x700', width: 320, height: 700 }
 ];
 const frames = [0, 0.20, 0.45, 0.68, 0.85, 0.97, 1];
+const expectedVersion = '0.3.1';
 
 await mkdir('artifacts/cinematic-v2', { recursive: true });
 
@@ -119,11 +120,11 @@ try {
         };
       }, { frame });
 
-      if (result.version !== '0.3.0') {
-        failures.push(`${viewport.name} frame ${frame}: preview version ${result.version} != 0.3.0`);
+      if (result.version !== expectedVersion) {
+        failures.push(`${viewport.name} frame ${frame}: preview version ${result.version} != ${expectedVersion}`);
       }
       if (result.fakeTableSurfaceVisible) {
-        failures.push(`${viewport.name} frame ${frame}: CSS-drawn tabletop is still visible in Phase 3A`);
+        failures.push(`${viewport.name} frame ${frame}: CSS-drawn tabletop is still visible in Phase 3B`);
       }
       if (Math.abs(result.overflow) > 1) {
         failures.push(`${viewport.name} frame ${frame}: horizontal overflow ${result.overflow}px`);
