@@ -1,97 +1,123 @@
-# LAVENDISH — Cinematic Intro V6 AAA Roadmap
+# LAVENDISH — Cinematic Hero V6 AAA Roadmap
 
 ## Objective
-Create a short, elegant, cinematic intro that feels premium and natural rather than mechanical. The sequence must last only a few seconds, begin in a refined night sky, briefly feature the real Piña Colada, and resolve smoothly into LAVENDISH / the bar experience.
+Create a short, elegant cinematic arrival that feels like part of the website itself, not a separate intro screen. The user must be able to understand, interact with, and scroll the site immediately while a subtle sky → Piña Colada → LAVENDISH transition happens in the hero background.
+
+## UX principle
+**The animation is decoration. The website is available from frame one.**
+
+If the cinematic ever delays navigation, hides the main CTA, captures scroll, requires an “Enter” action, or makes the user feel they are waiting for a splash screen, the implementation is wrong.
 
 ## Non-negotiable rules
 - `main` stays untouched until explicit approval.
 - Work only on `feature/cinematic-intro-v6-aaa`.
-- No GLB, fake 3D, procedural cocktail, cubes, assembly mechanics, or scroll-driven choreography.
+- No GLB, fake 3D, procedural cocktail, cubes, assembly mechanics, or scroll-locked choreography.
 - Use the real Piña Colada photography already in the repository.
-- Motion must be subtle: opacity, very small scale, very small translation only.
-- No looping hero animation after the intro.
-- Total cinematic duration target: 3.4–4.0 seconds.
-- Mobile first-class support.
-- `prefers-reduced-motion` must skip/reduce motion safely.
-- Each phase has a review gate. Do not advance past a gate without visual approval.
+- Motion is limited to cross-dissolve, tiny scale changes and tiny translations.
+- No looping hero animation.
+- Navigation and primary CTA are interactive immediately.
+- Scrolling is never locked.
+- Any real user intent (wheel, touch, pointer, keyboard) settles the cinematic immediately without cancelling the intended interaction.
+- Returning visits in the same session skip the cinematic.
+- `?replay=1` is available only for review/testing so the animation can be replayed on reload.
+- `prefers-reduced-motion` resolves directly to the final hero.
+- Each phase has a review gate. Do not add complexity to compensate for a failed gate.
 
-## Visual direction
-Premium hospitality / cocktail-bar language:
-- deep navy-black night palette;
-- real photographic sky, restrained haze, no fantasy overload;
-- real product photography as the focal point;
-- soft cross-dissolve into LAVENDISH;
-- minimal typography;
-- no progress bar, no technical UI, no debug chrome in the cinematic itself;
-- movement should feel camera-like rather than element-like.
+## Target experience
+The user should perceive one continuous page:
+1. LAVENDISH UI is already present.
+2. The background begins as an elegant night sky.
+3. The real Piña Colada appears briefly and gently.
+4. The bar image emerges underneath through a photographic cross-dissolve.
+5. The cocktail disappears and the exact same hero remains fully usable.
 
-## Timeline target
-Approximate cinematic timing:
-- 0.00–0.60 s — night sky fades in from black.
-- 0.55–1.90 s — Piña Colada appears gently; subtle 1–2% camera push only.
-- 1.75–3.20 s — bar/LAVENDISH image cross-dissolves under the drink.
-- 2.35–3.55 s — drink dissolves away; LAVENDISH lockup becomes visible.
-- 3.55–3.80 s — intro is complete and normal interaction begins.
+There is no separate end card and no “Enter” step.
+
+## Timing target
+Total decorative motion: approximately **2.5 seconds**.
+- 0.00–0.35 s — hero is already usable; sky dominates.
+- 0.30–1.20 s — Piña Colada fades in with sub-2% movement.
+- 0.75–2.10 s — LAVENDISH/bar image cross-dissolves underneath.
+- 1.45–2.45 s — drink dissolves away.
+- ~2.55 s — only the final usable hero remains.
+
+If the user interacts at any point, resolve immediately to the final hero.
 
 ## Phase 0 — Safety and clean baseline
 Status: COMPLETE
-- Create clean branch from current `main`.
-- Do not inherit experimental V3/V4/V5 implementation.
-- Confirm production remains unchanged.
+- Branch created from current `main`.
+- No production integration.
+- Experimental V3/V4/V5 implementation not inherited.
 
-Gate: branch exists from current `main` and contains no production integration.
+Gate: COMPLETE.
 
-## Phase 1 — Micro-intro motion prototype
-Status: IMPLEMENTED — PENDING VISUAL APPROVAL
+## Phase 1A — Separate intro prototype
+Status: REJECTED AS UX DIRECTION
+Reason:
+- visually cleaner than previous versions, but still perceived as a separate intro/splash;
+- final lockup + “Entrar” created an unnecessary interaction boundary;
+- body was effectively intro-only rather than a real page from frame one.
+
+Decision: do not refine this direction further.
+
+## Phase 1B — Seamless cinematic hero
+Status: IMPLEMENTED — PENDING VISUAL/UX APPROVAL
 Deliverables:
 - `preview-cinematic-v6.html`
 - `css/cinematic-v6.css`
 - `js/cinematic-v6.js`
 
-Implemented:
-- one viewport only;
-- automatic playback;
-- no scrolling required;
-- no progress UI;
-- one unobtrusive Skip control;
-- deterministic controller with one completion clock;
-- critical-image preload/decode handling;
-- graceful timeout/failure behavior;
-- reduced-motion support;
-- photographic night-sky layer;
-- real Piña Colada layer;
-- soft cross-dissolve to LAVENDISH;
-- minimal final lockup only.
+Implemented UX requirements:
+- real page and hero from the first frame;
+- header and “Ver carta” available immediately;
+- normal scrolling available immediately;
+- no Skip/Enter screen required;
+- cinematic runs behind useful content;
+- total motion shortened to ~2.55 s;
+- interaction intent instantly settles the visual transition;
+- same-session repeat visits skip the cinematic;
+- `?replay=1` forces replay for review;
+- critical asset preload has a strict time budget;
+- missing critical imagery falls back to final usable state;
+- reduced-motion resolves immediately;
+- second content section included to validate uninterrupted scrolling into the site.
 
-Gate: user approves the overall rhythm and transition style.
+Gate:
+- user should no longer describe it as “an intro”;
+- interaction should feel immediate, fluid and natural;
+- animation should be noticed as polish, not as a task or wait state.
 
-## Phase 2 — Final sky / bar art direction
+## Phase 2 — Final photographic art direction
 Status: NOT STARTED
-- Replace temporary/reference sky if needed with a final locally hosted asset.
-- Verify crop and focal point on desktop + mobile.
-- Confirm the final transition target: storefront, interior/bar photo, or actual website hero.
-- Tune tonal grade so sky → product → LAVENDISH feels like one photographic sequence.
+Only start after Phase 1B UX approval.
+- Decide final sky asset.
+- Decide final LAVENDISH destination photograph: storefront, actual interior/bar, terrace, or final production hero.
+- Match exposure, contrast, focal point and color grade between sky/product/bar.
+- Host all final imagery locally.
 
-Gate: visual assets and grading approved.
+Gate: imagery feels like one photographic sequence, not three unrelated layers.
 
-## Phase 3 — Production-quality polish
+## Phase 3 — Interaction polish and performance
 Status: NOT STARTED
 - Tune timing in 50–100 ms increments.
-- Eliminate visible layout shifts.
-- Confirm image decoding/preload order.
-- Test iOS Safari, Chrome mobile, desktop Chromium/WebKit class behavior.
-- Confirm no repeated intro in the same session if that behavior is desired.
+- Validate first input delay and pointer responsiveness.
+- Remove layout shift and visual flash risk.
+- Validate mobile viewport/safe-area behavior.
+- Test iOS Safari and modern Chromium.
+- Verify session behavior and fallback paths.
 
-Gate: no obvious jank, abrupt cuts, flashes, or blocking load states.
+Gate: no visible jank, blocking, lost input, accidental navigation delay or animation replay annoyance.
 
-## Phase 4 — Controlled integration
+## Phase 4 — Controlled production integration
 Status: NOT STARTED
 - Create a separate integration branch from then-current `main`.
-- Rebase/reconcile production changes first.
-- Integrate only approved cinematic files/logic.
-- Keep a kill switch / fallback to normal home.
+- Reconcile production changes first.
+- Integrate only approved hero behavior.
+- Keep a straightforward disable/fallback path.
 
 Gate: explicit user approval before merge.
 
 ## Current review question
-Does the V6 micro-intro feel elegant, short, fluid and premium enough to keep this direction? If not, adjust Phase 1 only; do not add more complexity.
+Does Phase 1B now feel like **the website itself coming alive**, rather than an intro the user has to sit through?
+
+If not, modify Phase 1B only. Do not add more scenes, more effects or more technology.
