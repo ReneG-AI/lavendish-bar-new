@@ -4,57 +4,83 @@
   const root = document.querySelector('[data-cinematic-v6]');
   if (!root) return;
 
-  const skipButton = root.querySelector('[data-c6-skip]');
-  const durationMs = 3800;
+  const durationMs = 2550;
+  const preloadBudgetMs = 900;
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let completed = false;
-  let finishTimer = null;
+  const params = new URLSearchParams(window.location.search);
+  const forceReplay = params.get('replay') === '1';
+  const sessionKey = 'lavendish-cinematic-v6-seen';
 
-  const criticalImages = Array.from(root.querySelectorAll('img[data-c6-critical]'));
+  let settled = false;
+  let finishTimer = 0;
 
-  const waitForImage = (image) => {
-    if (image.complete && image.naturalWidth > 0) {
-      return image.decode ? image.decode().catch(() => undefined) : Promise.resolve();
+  const hasSeen = (() => {
+    if (forceReplay) return false;
+    try {
+      return window.sessionStorage.getItem(sessionKey) === '1';
+    } catch {
+      return false;
     }
+  })();
 
-    return new Promise((resolve) => {
-      const done = () => {
-        image.removeEventListener('load', done);
-        image.removeEventListener('error', done);
-        if (image.decode && image.naturalWidth > 0) {
-          image.decode().catch(() => undefined).finally(resolve);
-        } else {
-          resolve();
-        }
-      };
-
-      image.addEventListener('load', done, { once: true });
-      image.addEventListener('error', done, { once: true });
-    });
+  const remember = () => {
+    if (forceReplay) return;
+    try {
+      window.sessionStorage.setItem(sessionKey, '1');
+    } catch {
+      // Storage is an enhancement only. Never block the experience.
+    }
   };
 
-  const complete = () => {
-    if (completed) return;
-    completed = true;
+  const settle = () => {
+    if (settled) return;
+    settled = true;
     window.clearTimeout(finishTimer);
     root.classList.remove('is-loading', 'is-playing');
     root.classList.add('is-complete');
     root.setAttribute('data-state', 'complete');
+    remember();
+  };
+
+  const onUserIntent = () => settle();
+
+  const bindIntentExit = () => {
+    const passive = { passive: true, once: true };
+    window.addEventListener('wheel', onUserIntent, passive);
+    window.addEventListener('touchstart', onUserIntent, passive);
+    window.addEventListener('pointerdown', onUserIntent, passive);
+    window.addEventListener('keydown', onUserIntent, { once: true });
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) settle();
+    }, { once: true });
+  };
+
+  const waitForImage = (image) => {
+    if (image.complete) {
+      if (image.naturalWidth === 0) return Promise.resolve(false);
+      return image.decode ? image.decode().then(() => true).catch(() => true) : Promise.resolve(true);
+    }
+
+    return new Promise((resolve) => {
+      const loaded = () => resolve(image.naturalWidth > 0);
+      image.addEventListener('load', loaded, { once: true });
+      image.addEventListener('error', () => resolve(false), { once: true });
+    });
   };
 
   const play = () => {
-    if (reducedMotion) {
-      complete();
-      return;
-    }
+    if (settled) return;
 
     root.classList.remove('is-loading');
     root.setAttribute('data-state', 'playing');
+    bindIntentExit();
 
     requestAnimationFrame(() => {
       requestAnimationFrame(() => {
+        if (settled) return;
         root.classList.add('is-playing');
-        finishTimer = window.setTimeout(complete, durationMs + 120);
+        finishTimer = window.setTimeout(settle, durationMs + 80);
       });
     });
   };
@@ -63,22 +89,24 @@
     root.classList.add('is-loading');
     root.setAttribute('data-state', 'loading');
 
-    await Promise.race([
+    if (reducedMotion || hasSeen || window.scrollY > 4) {
+      settle();
+      return;
+    }
+
+    const criticalImages = Array.from(root.querySelectorAll('img[data-c6-critical]'));
+    const results = await Promise.race([
       Promise.all(criticalImages.map(waitForImage)),
-      new Promise((resolve) => window.setTimeout(resolve, 2200))
+      new Promise((resolve) => window.setTimeout(() => resolve(null), preloadBudgetMs))
     ]);
+
+    if (Array.isArray(results) && results.includes(false)) {
+      settle();
+      return;
+    }
 
     play();
   };
 
-  if (skipButton) {
-    skipButton.addEventListener('click', complete);
-  }
-
-  document.addEventListener('keydown', (event) => {
-    if (completed) return;
-    if (event.key === 'Escape') complete();
-  });
-
-  init().catch(complete);
+  init().catch(settle);
 })();
