@@ -42,8 +42,9 @@ jobs:
               css = Path(name).read_text()
               assert css.count('{') == css.count('}'), f'Unbalanced CSS blocks: {name}'
           html = Path('preview-cinematic-v2.html').read_text()
-          assert 'cinematic-v2-photoreal.css?v=0.3.0' in html, 'Phase 3A override is not loaded'
-          assert 'data-version="0.3.0"' in html, 'Preview version mismatch'
+          assert 'cinematic-v2-photoreal.css?v=0.3.1' in html, 'Photoreal override is not loaded at current version'
+          assert 'data-version="0.3.1"' in html, 'Preview version mismatch'
+          assert 'cinematic-v2.js?v=0.3.1' in html, 'JS cache version mismatch'
           print('Static checks passed')
           PY
 
