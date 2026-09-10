@@ -10,9 +10,11 @@
   const params = new URLSearchParams(window.location.search);
   const forceReplay = params.get('replay') === '1';
   const sessionKey = 'lavendish-cinematic-v6-seen';
+  const drink = root.querySelector('.c6-drink');
 
   let settled = false;
   let finishTimer = 0;
+  let drinkMotion = null;
 
   const hasSeen = (() => {
     if (forceReplay) return false;
@@ -32,10 +34,17 @@
     }
   };
 
+  const stopDrinkMotion = () => {
+    if (!drinkMotion) return;
+    drinkMotion.cancel();
+    drinkMotion = null;
+  };
+
   const settle = () => {
     if (settled) return;
     settled = true;
     window.clearTimeout(finishTimer);
+    stopDrinkMotion();
     root.classList.remove('is-loading', 'is-playing');
     root.classList.add('is-complete');
     root.setAttribute('data-state', 'complete');
@@ -69,6 +78,30 @@
     });
   };
 
+  const startDrinkMotion = () => {
+    if (!drink || typeof drink.animate !== 'function' || reducedMotion) return;
+
+    drinkMotion = drink.animate([
+      {
+        transform: 'translate3d(-1px, 4px, 0) scale(.988)',
+        transformOrigin: '50% 62%'
+      },
+      {
+        offset: 0.46,
+        transform: 'translate3d(1px, -2px, 0) scale(1.004)',
+        transformOrigin: '50% 62%'
+      },
+      {
+        transform: 'translate3d(2px, -5px, 0) scale(1.016)',
+        transformOrigin: '50% 62%'
+      }
+    ], {
+      duration: 1900,
+      easing: 'cubic-bezier(.22,.61,.36,1)',
+      fill: 'both'
+    });
+  };
+
   const play = () => {
     if (settled) return;
 
@@ -80,6 +113,7 @@
       requestAnimationFrame(() => {
         if (settled) return;
         root.classList.add('is-playing');
+        startDrinkMotion();
         finishTimer = window.setTimeout(settle, durationMs + 80);
       });
     });
