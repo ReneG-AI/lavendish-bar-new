@@ -8,7 +8,8 @@
   <title>LAVENDISH · Piña Colada True 3D v3</title>
   <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-  <link rel="stylesheet" href="css/pina-true3d-v3.css?v=0.1.0">
+  <link rel="preload" as="fetch" href="assets/3d/pina-colada-v3.glb" crossorigin>
+  <link rel="stylesheet" href="css/pina-true3d-v3.css?v=0.2.0">
   <script type="importmap">
   {
     "imports": {
@@ -20,7 +21,7 @@
 </head>
 <body>
   <main>
-    <section class="p3d" data-p3d data-version="0.1.0">
+    <section class="p3d" data-p3d data-version="0.2.0">
       <div class="p3d-sticky">
         <div class="p3d-photo p3d-photo--sky" aria-hidden="true"></div>
         <div class="p3d-photo p3d-photo--terrace" data-terrace aria-hidden="true"></div>
@@ -34,15 +35,15 @@
         </div>
 
         <div class="p3d-copy p3d-copy--intro" data-intro-copy>
-          <span>TRUE 3D PRODUCT EXPERIENCE</span>
-          <h1>Piña Colada,<br><strong>construida en la noche.</strong></h1>
-          <p>Desliza para ensamblar la copa.</p>
+          <span>LAVENDISH · SIGNATURE EXPERIENCE</span>
+          <h1>Una copa.<br><strong>Parte a parte.</strong></h1>
+          <p>Desliza para construir la noche.</p>
         </div>
 
         <div class="p3d-copy p3d-copy--final" data-final-copy>
-          <span>LAVENDISH SIGNATURE</span>
+          <span>LAVENDISH · LLEIDA</span>
           <h2>Piña Colada.</h2>
-          <p>La noche aterriza en la mesa.</p>
+          <p>Fría, cremosa y lista para la noche.</p>
           <a href="#p3d-after">Entrar en LAVENDISH <span aria-hidden="true">↓</span></a>
         </div>
 
@@ -50,7 +51,7 @@
         <div class="p3d-act" data-act aria-live="polite">ATMOSPHERE</div>
 
         <aside class="p3d-status" data-status hidden>
-          <strong data-status-title>3D asset pending</strong>
+          <strong data-status-title>Estado del render 3D</strong>
           <p data-status-copy></p>
           <a href="preview-cinematic-v2.html">Abrir fallback cinematográfico v2</a>
         </aside>
@@ -61,11 +62,11 @@
       <div>
         <span>PROTOTIPO AISLADO · TRUE 3D V3</span>
         <h2>Aquí empieza la web normal.</h2>
-        <p>Este archivo no está conectado a la home de producción.</p>
+        <p>El experimento permanece separado de la home estable hasta su aprobación visual y técnica.</p>
       </div>
     </section>
   </main>
 
-  <script type="module" src="js/pina-true3d-v3.js?v=0.1.0"></script>
+  <script type="module" src="js/pina-true3d-v3.js?v=0.2.0"></script>
 </body>
 </html>
