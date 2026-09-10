@@ -25,6 +25,38 @@ await sleep(900);
 const browser = await chromium.launch({ headless: true });
 const failures = [];
 
+async function settleVisualAssets(page) {
+  // Never use networkidle here: Phase 3A intentionally exercises remote photographic
+  // plates, and a slow third-party connection must not stall the whole deterministic matrix.
+  const result = await page.evaluate(async () => {
+    const preloadLinks = Array.from(document.querySelectorAll('link[rel="preload"][as="image"]'));
+    const loaded = await Promise.all(preloadLinks.map((link) => new Promise((resolve) => {
+      const image = new Image();
+      const timer = setTimeout(() => resolve({ href: link.href, ok: false, reason: 'timeout' }), 8000);
+      image.onload = () => {
+        clearTimeout(timer);
+        resolve({ href: link.href, ok: true });
+      };
+      image.onerror = () => {
+        clearTimeout(timer);
+        resolve({ href: link.href, ok: false, reason: 'error' });
+      };
+      image.src = link.href;
+    })));
+
+    const product = document.querySelector('[data-product]');
+    if (product?.decode) {
+      try { await product.decode(); } catch {}
+    }
+    try { await document.fonts?.ready; } catch {}
+
+    return loaded;
+  });
+
+  await page.waitForTimeout(120);
+  return result;
+}
+
 try {
   for (const viewport of viewports) {
     const page = await browser.newPage({
@@ -39,9 +71,17 @@ try {
     });
 
     for (const frame of frames) {
-      await page.goto(`${baseUrl}?frame=${frame}`, { waitUntil: 'networkidle' });
-      await page.waitForSelector('[data-cin2]');
-      await page.waitForTimeout(80);
+      await page.goto(`${baseUrl}?frame=${frame}`, {
+        waitUntil: 'domcontentloaded',
+        timeout: 15000
+      });
+      await page.waitForSelector('[data-cin2]', { timeout: 5000 });
+
+      const assets = await settleVisualAssets(page);
+      const failedCriticalAssets = assets.filter((asset) => !asset.ok);
+      if (failedCriticalAssets.length) {
+        failures.push(`${viewport.name} frame ${frame}: critical image preload failed: ${failedCriticalAssets.map((asset) => `${asset.reason}:${asset.href}`).join(', ')}`);
+      }
 
       const result = await page.evaluate(({ frame }) => {
         const root = document.querySelector('[data-cin2]');
@@ -61,6 +101,7 @@ try {
 
         return {
           debugFrame: root?.dataset.debugFrame ?? null,
+          version: root?.dataset.version ?? null,
           stickyHeight: sticky?.getBoundingClientRect().height ?? 0,
           viewportHeight: window.innerHeight,
           overflow,
@@ -70,10 +111,20 @@ try {
           productOpacity: product ? Number(getComputedStyle(product).opacity) : -1,
           tableOpacity: table ? Number(getComputedStyle(table).opacity) : -1,
           copyOpacity: finalCopy ? Number(getComputedStyle(finalCopy).opacity) : -1,
+          fakeTableSurfaceVisible: (() => {
+            const surface = document.querySelector('.cin2-table-surface');
+            return surface ? getComputedStyle(surface).display !== 'none' : false;
+          })(),
           frame
         };
       }, { frame });
 
+      if (result.version !== '0.3.0') {
+        failures.push(`${viewport.name} frame ${frame}: preview version ${result.version} != 0.3.0`);
+      }
+      if (result.fakeTableSurfaceVisible) {
+        failures.push(`${viewport.name} frame ${frame}: CSS-drawn tabletop is still visible in Phase 3A`);
+      }
       if (Math.abs(result.overflow) > 1) {
         failures.push(`${viewport.name} frame ${frame}: horizontal overflow ${result.overflow}px`);
       }
@@ -81,7 +132,7 @@ try {
         failures.push(`${viewport.name} frame ${frame}: sticky ${result.stickyHeight}px != viewport ${result.viewportHeight}px`);
       }
       if (!result.productInViewport) failures.push(`${viewport.name} frame ${frame}: product outside viewport`);
-      if (frame >= 0.82 && !result.tableInViewport) failures.push(`${viewport.name} frame ${frame}: table outside viewport late in sequence`);
+      if (frame >= 0.82 && !result.tableInViewport) failures.push(`${viewport.name} frame ${frame}: table anchor outside viewport late in sequence`);
       if (frame >= 0.95 && !result.copyInViewport) failures.push(`${viewport.name} frame ${frame}: final copy outside viewport`);
       if (result.debugFrame !== Number(frame).toFixed(3)) {
         failures.push(`${viewport.name} frame ${frame}: deterministic frame mode not applied`);
