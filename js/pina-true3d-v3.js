@@ -18,38 +18,31 @@ const statusCopy = root.querySelector('[data-status-copy]');
 
 const MODEL_URL = 'assets/3d/pina-colada-v3.glb';
 const FALLBACK_URL = 'preview-cinematic-v2.html';
-
-const motionQuery = matchMedia('(prefers-reduced-motion: reduce)');
-const reducedMotion = motionQuery.matches;
-const saveData = navigator.connection?.saveData === true;
 const mobile = matchMedia('(max-width: 899px)').matches;
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const saveData = navigator.connection?.saveData === true;
 const rawFrame = new URLSearchParams(location.search).get('frame');
 const parsedFrame = rawFrame === null ? NaN : Number(rawFrame);
 const debugFrame = Number.isFinite(parsedFrame) ? THREE.MathUtils.clamp(parsedFrame, 0, 1) : null;
 
 const clamp = (v, a = 0, b = 1) => Math.min(b, Math.max(a, v));
 const mix = THREE.MathUtils.lerp;
-const smooth = (v) => {
-  const x = clamp(v);
-  return x * x * (3 - 2 * x);
-};
-const smoother = (v) => {
-  const x = clamp(v);
-  return x * x * x * (x * (x * 6 - 15) + 10);
-};
+const smooth = (v) => { const x = clamp(v); return x * x * (3 - 2 * x); };
+const smoother = (v) => { const x = clamp(v); return x * x * x * (x * (x * 6 - 15) + 10); };
 const seg = (p, start, end, ease = smooth) => ease((p - start) / (end - start));
 
-const showStatus = (title, copy, mode = 'asset-pending') => {
+function showStatus(title, copy, mode = 'asset-pending') {
   document.body.dataset.p3dMode = mode;
   status.hidden = false;
   statusTitle.textContent = title;
   statusCopy.textContent = copy;
-};
+  const link = status.querySelector('a');
+  if (link) link.href = FALLBACK_URL;
+}
 
-const fallback = (reason) => {
+function fallback(reason) {
   showStatus('Usando fallback cinematográfico', reason, 'fallback');
-  status.querySelector('a').href = FALLBACK_URL;
-};
+}
 
 if (saveData) {
   fallback('El navegador tiene Save-Data activo. La versión 3D no se fuerza en este dispositivo.');
@@ -73,43 +66,50 @@ try {
 renderer.setPixelRatio(Math.min(devicePixelRatio || 1, mobile ? 1.25 : 1.75));
 renderer.outputColorSpace = THREE.SRGBColorSpace;
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = mobile ? 1.02 : 1.08;
+renderer.toneMappingExposure = mobile ? 1.04 : 1.10;
 renderer.shadowMap.enabled = !mobile;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(mobile ? 34 : 31, 1, 0.02, 100);
-camera.position.set(0, mobile ? 0.1 : 0.18, mobile ? 5.7 : 5.25);
+const camera = new THREE.PerspectiveCamera(mobile ? 36 : 32, 1, 0.02, 100);
+const cameraStartZ = mobile ? 6.8 : 6.5;
+const cameraHeroZ = mobile ? 6.35 : 5.95;
+camera.position.set(0, mobile ? 0.12 : 0.18, cameraStartZ);
 
 const pmrem = new THREE.PMREMGenerator(renderer);
 const roomEnvironment = new RoomEnvironment();
-scene.environment = pmrem.fromScene(roomEnvironment, 0.04).texture;
+scene.environment = pmrem.fromScene(roomEnvironment, 0.035).texture;
 roomEnvironment.dispose();
 pmrem.dispose();
 
-scene.add(new THREE.HemisphereLight(0x8796b8, 0x19110d, mobile ? 0.95 : 0.8));
+scene.add(new THREE.HemisphereLight(0x8fa4cb, 0x1a120f, mobile ? 0.88 : 0.76));
 
-const key = new THREE.SpotLight(0xc9d8ff, mobile ? 24 : 34, 12, Math.PI / 5.2, 0.48, 1.5);
-key.position.set(-2.7, 4.4, 3.9);
-key.target.position.set(0, 0.8, 0);
+const key = new THREE.SpotLight(0xd5e2ff, mobile ? 21 : 30, 14, Math.PI / 5.1, 0.48, 1.45);
+key.position.set(-2.9, 4.5, 4.2);
+key.target.position.set(0, 0.75, 0);
 key.castShadow = !mobile;
+if (!mobile) {
+  key.shadow.mapSize.set(1024, 1024);
+  key.shadow.bias = -0.00025;
+}
 scene.add(key, key.target);
 
-const warm = new THREE.SpotLight(0xffbd74, mobile ? 14 : 20, 11, Math.PI / 4.5, 0.55, 1.3);
-warm.position.set(3.2, 1.8, 3.2);
-warm.target.position.set(0, 0.5, 0);
+const warm = new THREE.SpotLight(0xffbd74, mobile ? 13 : 18, 12, Math.PI / 4.4, 0.55, 1.25);
+warm.position.set(3.3, 1.9, 3.5);
+warm.target.position.set(0, 0.45, 0);
 scene.add(warm, warm.target);
 
-const rim = new THREE.DirectionalLight(0xd8e2ff, mobile ? 1.3 : 1.8);
-rim.position.set(2.8, 3.2, -3);
+const rim = new THREE.DirectionalLight(0xdce7ff, mobile ? 1.0 : 1.55);
+rim.position.set(2.4, 3.8, -3.5);
 scene.add(rim);
 
+const floorY = -1.68;
 const floor = new THREE.Mesh(
-  new THREE.CircleGeometry(2.2, 64),
-  new THREE.ShadowMaterial({ color: 0x000000, opacity: mobile ? 0 : 0.26 })
+  new THREE.CircleGeometry(1.65, 64),
+  new THREE.ShadowMaterial({ color: 0x000000, opacity: mobile ? 0 : 0.28 })
 );
 floor.rotation.x = -Math.PI / 2;
-floor.position.y = -1.68;
+floor.position.y = floorY;
 floor.receiveShadow = !mobile;
 scene.add(floor);
 
@@ -124,9 +124,10 @@ const state = {
   raf: 0,
   active: true,
   model: null,
-  modelBaseY: -0.05,
   nodes: null,
-  initial: new Map()
+  initial: new Map(),
+  heroBottom: mobile ? -1.10 : -1.22,
+  landingOffset: 0
 };
 
 function remember(object) {
@@ -148,27 +149,35 @@ function restore(object) {
 
 function tuneMaterial(material, nodeName) {
   if (!material) return;
-  material.envMapIntensity = Math.max(material.envMapIntensity ?? 1, 1.15);
+  material.envMapIntensity = Math.max(material.envMapIntensity ?? 1, 1.18);
 
   if (/glass/i.test(nodeName)) {
     material.transparent = true;
     material.depthWrite = false;
     material.metalness = 0;
-    material.roughness = Math.min(material.roughness ?? 0.12, 0.16);
-    if ('transmission' in material) material.transmission = Math.max(material.transmission ?? 0, 0.86);
+    material.roughness = Math.min(material.roughness ?? 0.08, 0.11);
+    if ('transmission' in material) material.transmission = Math.max(material.transmission ?? 0, 0.96);
     if ('ior' in material) material.ior = 1.45;
-    if ('thickness' in material) material.thickness = Math.max(material.thickness ?? 0, 0.08);
+    if ('thickness' in material) material.thickness = Math.max(material.thickness ?? 0, 0.055);
+    material.envMapIntensity = Math.max(material.envMapIntensity, 1.38);
   } else if (/ice/i.test(nodeName)) {
     material.transparent = true;
+    material.depthWrite = false;
     material.metalness = 0;
-    material.roughness = Math.min(material.roughness ?? 0.24, 0.28);
-    if ('transmission' in material) material.transmission = Math.max(material.transmission ?? 0, 0.52);
+    material.roughness = Math.min(material.roughness ?? 0.16, 0.22);
+    if ('transmission' in material) material.transmission = Math.max(material.transmission ?? 0, 0.72);
+    if ('ior' in material) material.ior = 1.31;
+  } else if (/condensation/i.test(nodeName)) {
+    material.transparent = true;
+    material.depthWrite = false;
+    if ('transmission' in material) material.transmission = Math.max(material.transmission ?? 0, 0.88);
   } else if (/liquid/i.test(nodeName)) {
     material.metalness = 0;
-    material.roughness = Math.max(material.roughness ?? 0.3, 0.22);
+    material.roughness = Math.max(0.24, Math.min(material.roughness ?? 0.3, 0.36));
+    material.envMapIntensity = Math.max(material.envMapIntensity, 1.05);
   } else if (/foam/i.test(nodeName)) {
     material.metalness = 0;
-    material.roughness = Math.max(material.roughness ?? 0.55, 0.5);
+    material.roughness = Math.max(material.roughness ?? 0.6, 0.58);
   }
   material.needsUpdate = true;
 }
@@ -177,39 +186,47 @@ function normalizeModel(model) {
   const box = new THREE.Box3().setFromObject(model);
   const size = box.getSize(new THREE.Vector3());
   const center = box.getCenter(new THREE.Vector3());
-  const targetHeight = mobile ? 3.75 : 4.05;
-  const scale = targetHeight / Math.max(size.y, 0.001);
-  model.scale.setScalar(scale);
-  model.position.set(-center.x * scale, -center.y * scale + state.modelBaseY, -center.z * scale);
+  const targetHeight = mobile ? 3.55 : 3.18;
+  const s = targetHeight / Math.max(size.y, 0.001);
+
+  model.scale.setScalar(s);
+  model.position.set(
+    -center.x * s,
+    state.heroBottom - box.min.y * s,
+    -center.z * s
+  );
   model.updateMatrixWorld(true);
+  state.landingOffset = floorY - state.heroBottom;
 }
 
 function collectNodes(model) {
   const exact = {};
   const ice = [];
+
   model.traverse((object) => {
-    if (!object.name) return;
-    if (/^Ice_\d+$/i.test(object.name)) ice.push(object);
-    else exact[object.name] = object;
+    if (object.name) {
+      if (/^Ice_\d+$/i.test(object.name)) ice.push(object);
+      else exact[object.name] = object;
+    }
 
     if (object.isMesh) {
       object.castShadow = !mobile;
       object.receiveShadow = !mobile;
-      const mats = Array.isArray(object.material) ? object.material : [object.material];
-      mats.forEach((material) => tuneMaterial(material, object.name));
+      const materials = Array.isArray(object.material) ? object.material : [object.material];
+      materials.forEach((material) => tuneMaterial(material, object.name));
     }
   });
 
   const required = ['Glass', 'Liquid', 'Foam', 'Straw', 'Pineapple', 'Cherry'];
   const missing = required.filter((name) => !exact[name]);
   if (!ice.length) missing.push('Ice_01...Ice_N');
-  if (missing.length) {
-    throw new Error(`GLB node contract failed. Missing: ${missing.join(', ')}`);
-  }
+  if (missing.length) throw new Error(`GLB node contract failed. Missing: ${missing.join(', ')}`);
 
   ice.sort((a, b) => a.name.localeCompare(b.name, undefined, { numeric: true }));
   const nodes = { ...exact, Ice: ice };
-  [exact.Glass, exact.Liquid, exact.Foam, exact.Straw, exact.Pineapple, exact.Cherry, ...ice].forEach(remember);
+  [exact.Glass, exact.Liquid, exact.Foam, exact.Straw, exact.Pineapple, exact.Cherry, exact.Condensation, ...ice]
+    .filter(Boolean)
+    .forEach(remember);
   return nodes;
 }
 
@@ -223,27 +240,20 @@ function fitRenderer() {
   state.scrollRange = Math.max(1, root.offsetHeight - h);
 }
 
-function placeNode(object, progress, from) {
+function placeNode(object, progress, from, scaleFrom = 0.2) {
   restore(object);
   object.visible = progress > 0.001;
   object.position.x += mix(from.x, 0, progress);
   object.position.y += mix(from.y, 0, progress);
   object.position.z += mix(from.z, 0, progress);
-  object.scale.multiplyScalar(Math.max(0.001, progress));
+  object.scale.multiplyScalar(mix(scaleFrom, 1, progress));
   object.rotation.x += mix(from.rx, 0, progress);
   object.rotation.y += mix(from.ry, 0, progress);
   object.rotation.z += mix(from.rz, 0, progress);
 }
 
 function updateActs(p) {
-  const label =
-    p < .12 ? 'ATMOSPHERE' :
-    p < .25 ? 'GLASS' :
-    p < .42 ? 'ICE' :
-    p < .58 ? 'LIQUID' :
-    p < .72 ? 'FOAM · GARNISH' :
-    p < .82 ? 'HERO' :
-    p < .94 ? 'TERRACE' : 'LANDING';
+  const label = p < .12 ? 'ATMOSPHERE' : p < .25 ? 'GLASS' : p < .42 ? 'ICE' : p < .58 ? 'LIQUID' : p < .72 ? 'FOAM · GARNISH' : p < .82 ? 'HERO' : p < .94 ? 'TERRACE' : 'LANDING';
   if (actLabel.textContent !== label) actLabel.textContent = label;
 }
 
@@ -261,7 +271,7 @@ function frame(progress) {
   const terraceIn = seg(p, .80, .95, smoother);
   terrace.style.opacity = terraceIn.toFixed(3);
   terrace.style.transform = `scale(${mix(1.06, 1, terraceIn).toFixed(4)}) translateY(${mix(24, 0, terraceIn).toFixed(1)}px)`;
-  haze.style.opacity = String(mix(.68, .22, seg(p, .58, .92)));
+  haze.style.opacity = String(mix(.70, .20, seg(p, .58, .92)));
 
   const finalIn = seg(p, .91, .995, smoother);
   finalCopy.style.opacity = finalIn.toFixed(3);
@@ -279,50 +289,58 @@ function frame(progress) {
   const liquidP = seg(p, .34, .58, smoother);
   const foamP = seg(p, .52, .66, smoother);
   const garnishP = seg(p, .58, .72, smoother);
+  const cherryP = seg(p, .64, .73, smoother);
   const heroP = seg(p, .70, .82, smoother);
   const landingP = seg(p, .82, .985, smoother);
   const settleP = seg(p, .95, 1, smoother);
 
-  placeNode(state.nodes.Glass, glassP, { x: -.7, y: .45, z: .35, rx: .10, ry: -.22, rz: -.08 });
+  placeNode(state.nodes.Glass, glassP, { x: -.52, y: .34, z: .28, rx: .08, ry: -.20, rz: -.06 }, .82);
 
   state.nodes.Ice.forEach((ice, index) => {
     const n = state.nodes.Ice.length;
-    const local = seg(iceP, index / Math.max(n, 1) * .58, Math.min(1, index / Math.max(n, 1) * .58 + .42), smoother);
+    const start = index / Math.max(n, 1) * .56;
+    const local = seg(iceP, start, Math.min(1, start + .44), smoother);
     const side = index % 2 ? 1 : -1;
     placeNode(ice, local, {
-      x: side * (.65 + index * .06),
-      y: .9 + (index % 3) * .25,
-      z: .25 + (index % 2) * .22,
-      rx: side * .55,
-      ry: .35 + index * .17,
-      rz: side * .38
-    });
+      x: side * (.48 + index * .045),
+      y: .72 + (index % 3) * .18,
+      z: .22 + (index % 2) * .18,
+      rx: side * .46,
+      ry: .30 + index * .14,
+      rz: side * .32
+    }, .56);
   });
 
   restore(state.nodes.Liquid);
   state.nodes.Liquid.visible = liquidP > .001;
   const liquidInitial = state.initial.get(state.nodes.Liquid);
-  state.nodes.Liquid.scale.y = liquidInitial.scale.y * Math.max(.002, liquidP);
-  state.nodes.Liquid.scale.x = liquidInitial.scale.x * mix(.985, 1, liquidP);
-  state.nodes.Liquid.scale.z = liquidInitial.scale.z * mix(.985, 1, liquidP);
+  state.nodes.Liquid.scale.y = liquidInitial.scale.y * Math.max(.001, liquidP);
+  state.nodes.Liquid.scale.x = liquidInitial.scale.x * mix(.986, 1, liquidP);
+  state.nodes.Liquid.scale.z = liquidInitial.scale.z * mix(.986, 1, liquidP);
 
-  placeNode(state.nodes.Foam, foamP, { x: 0, y: .35, z: .05, rx: 0, ry: .10, rz: 0 });
-  placeNode(state.nodes.Straw, garnishP, { x: .35, y: .95, z: .2, rx: -.26, ry: .22, rz: .16 });
-  placeNode(state.nodes.Pineapple, garnishP, { x: -.85, y: .48, z: .25, rx: .18, ry: -.35, rz: -.22 });
-  placeNode(state.nodes.Cherry, seg(p, .64, .73, smoother), { x: .42, y: .55, z: .4, rx: -.18, ry: .30, rz: .12 });
+  placeNode(state.nodes.Foam, foamP, { x: 0, y: .26, z: .03, rx: 0, ry: .08, rz: 0 }, .72);
+  placeNode(state.nodes.Straw, garnishP, { x: .28, y: .72, z: .18, rx: -.18, ry: .18, rz: .12 }, .72);
+  placeNode(state.nodes.Pineapple, garnishP, { x: -.62, y: .34, z: .22, rx: .12, ry: -.28, rz: -.17 }, .64);
+  placeNode(state.nodes.Cherry, cherryP, { x: -.25, y: .42, z: .30, rx: -.14, ry: .22, rz: .08 }, .58);
 
-  const heroOrbit = Math.sin(heroP * Math.PI) * (mobile ? .025 : .045);
-  productRoot.rotation.y = heroOrbit;
-  productRoot.position.y = mix(0, -1.02, landingP) - mix(0, .035, settleP);
-  productRoot.position.z = mix(0, .18, landingP);
-  productRoot.scale.setScalar(mix(1, .96, landingP));
+  if (state.nodes.Condensation) {
+    const condensationP = seg(p, .64, .78, smoother);
+    placeNode(state.nodes.Condensation, condensationP, { x: 0, y: .08, z: .04, rx: 0, ry: 0, rz: 0 }, .86);
+  }
 
-  camera.position.z = mix(mobile ? 5.7 : 5.25, mobile ? 5.45 : 4.86, heroP);
-  camera.position.x = mix(0, mobile ? 0 : .12, heroP) * (1 - landingP);
-  camera.lookAt(0, mix(.10, -.30, landingP), 0);
+  const heroOrbit = Math.sin(heroP * Math.PI) * (mobile ? .018 : .036);
+  productRoot.rotation.y = heroOrbit * (1 - landingP);
+  productRoot.position.y = mix(0, state.landingOffset, landingP) - mix(0, .018, settleP);
+  productRoot.position.z = mix(0, .10, landingP);
+  const landingScale = mix(1, .985, landingP);
+  productRoot.scale.set(landingScale, landingScale * mix(1, .996, settleP), landingScale);
 
-  key.intensity = mix(mobile ? 24 : 34, mobile ? 20 : 29, terraceIn);
-  warm.intensity = mix(mobile ? 14 : 20, mobile ? 23 : 31, terraceIn);
+  camera.position.z = mix(cameraStartZ, cameraHeroZ, heroP);
+  camera.position.x = mix(0, mobile ? 0 : .10, heroP) * (1 - landingP);
+  camera.lookAt(0, mix(.22, -.12, landingP), 0);
+
+  key.intensity = mix(mobile ? 21 : 30, mobile ? 18 : 25, terraceIn);
+  warm.intensity = mix(mobile ? 13 : 18, mobile ? 21 : 28, terraceIn);
 
   renderer.render(scene, camera);
 }
@@ -347,21 +365,6 @@ function updateFromScroll() {
 }
 
 async function loadModel() {
-  let head;
-  try {
-    head = await fetch(MODEL_URL, { method: 'HEAD', cache: 'no-store' });
-  } catch {
-    head = null;
-  }
-  if (!head?.ok) {
-    showStatus(
-      '3D asset pendiente',
-      'El preview v3 está preparado, pero no existe todavía un GLB aprobado en assets/3d/pina-colada-v3.glb. No se genera una copa falsa para sustituirlo.'
-    );
-    frame(state.current);
-    return;
-  }
-
   const loader = new GLTFLoader();
   loader.load(
     MODEL_URL,
@@ -395,27 +398,16 @@ if ('IntersectionObserver' in window) {
 }
 
 window.addEventListener('scroll', updateFromScroll, { passive: true });
-window.addEventListener('resize', () => {
-  fitRenderer();
-  updateFromScroll();
-  schedule();
-}, { passive: true });
-window.visualViewport?.addEventListener('resize', () => {
-  fitRenderer();
-  updateFromScroll();
-  schedule();
-}, { passive: true });
+window.addEventListener('resize', () => { fitRenderer(); updateFromScroll(); schedule(); }, { passive: true });
+window.visualViewport?.addEventListener('resize', () => { fitRenderer(); updateFromScroll(); schedule(); }, { passive: true });
 
 fitRenderer();
 frame(state.current);
 
-if (debugFrame !== null) {
-  root.dataset.debugFrame = debugFrame.toFixed(3);
-} else if (reducedMotion) {
+if (debugFrame !== null) root.dataset.debugFrame = debugFrame.toFixed(3);
+else if (reducedMotion) {
   state.current = state.target = 1;
   frame(1);
-} else {
-  updateFromScroll();
-}
+} else updateFromScroll();
 
 loadModel();
