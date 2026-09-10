@@ -82,9 +82,19 @@ Implemented UX requirements:
 - reduced-motion resolves immediately;
 - second content section included to validate uninterrupted scrolling into the site.
 
+### Current refinement — Piña Colada optical motion
+Status: IMPLEMENTED — PENDING VISUAL APPROVAL
+- The cocktail now has its own nested motion layer instead of relying only on the scene fade.
+- Motion is deliberately restrained: about **1.6% camera push**, **~9 px total vertical travel**, and **~3 px horizontal drift** across 1.9 s.
+- No rotation, bouncing, looping, mouse-follow, spring physics or 3D effect.
+- Motion uses the Web Animations API so it can be cancelled instantly when the user interacts.
+- The existing wrapper still controls appearance/disappearance; the image motion only adds subtle depth.
+- Reduced-motion users receive no cocktail movement.
+
 Gate:
 - user should no longer describe it as “an intro”;
 - interaction should feel immediate, fluid and natural;
+- cocktail motion should feel like a gentle camera move, not an animated sticker;
 - animation should be noticed as polish, not as a task or wait state.
 
 ## Phase 2 — Final photographic art direction
@@ -118,6 +128,6 @@ Status: NOT STARTED
 Gate: explicit user approval before merge.
 
 ## Current review question
-Does Phase 1B now feel like **the website itself coming alive**, rather than an intro the user has to sit through?
+Does Phase 1B now feel like **the website itself coming alive**, with the Piña Colada adding a small amount of premium depth rather than feeling like a separate animated object?
 
 If not, modify Phase 1B only. Do not add more scenes, more effects or more technology.
