@@ -63,13 +63,15 @@
   }
 
   function productLandingY(scale) {
-    const tableTop = viewportHeight * (viewportWidth < 900 ? 0.735 : 0.745);
+    const mobile = viewportWidth < 900;
+    const tableTop = viewportHeight * (mobile ? 0.735 : 0.745);
     const productHeight = Math.min(
-      viewportWidth < 560 ? 500 : viewportWidth < 900 ? 590 : 720,
-      viewportHeight * (viewportWidth < 900 ? 0.62 : 0.78)
+      viewportWidth < 560 ? 500 : mobile ? 590 : 720,
+      viewportHeight * (mobile ? 0.62 : 0.78)
     );
-    const visualBottomRatio = viewportWidth < 900 ? 0.435 : 0.445;
-    return tableTop - (viewportHeight * 0.50) - (productHeight * scale * visualBottomRatio);
+    const visualBottomRatio = mobile ? 0.435 : 0.445;
+    const contactOffset = mobile ? 16 : 22;
+    return tableTop - (viewportHeight * 0.50) - (productHeight * scale * visualBottomRatio) + contactOffset;
   }
 
   function frame(progress) {
@@ -82,6 +84,7 @@
     const terraceIn = seg(p, .58, .82, smoother);
     const tableIn = seg(p, .67, .86, smoother);
     const landing = seg(p, .75, .94, smoother);
+    const settle = seg(p, .91, .985, smoother);
     const finale = seg(p, .89, .99, smoother);
 
     if (sky) {
@@ -145,13 +148,14 @@
     const heroScale = mobile ? mix(.70, 1.09, hero) : mix(.64, 1.16, hero);
     const holdScale = mix(heroScale, mobile ? 1.07 : 1.14, heroHold);
     const finalScale = mobile ? .92 : .96;
-    const scale = mix(holdScale, finalScale, landing);
+    const settleCompression = mix(1, .994, settle);
+    const scale = mix(holdScale, finalScale, landing) * settleCompression;
 
     const startY = mobile ? 118 : 138;
     const heroY = mobile ? -14 : -24;
     const riseY = mix(startY, heroY, reveal);
     const landingY = productLandingY(finalScale);
-    const y = mix(riseY, landingY, landing);
+    const y = mix(riseY, landingY, landing) + mix(0, 3.5, settle);
     const x = pointerX * (mobile ? 0 : 10) * pointerStrength;
     const pointerOffsetY = pointerY * (mobile ? 0 : 7) * pointerStrength;
     const rotateY = ((pointerX * 1.8) + mix(-2.3, .7, hero)) * pointerStrength;
@@ -167,15 +171,16 @@
     product.style.filter = `blur(${blur.toFixed(2)}px) brightness(${brightness.toFixed(3)}) saturate(${saturation.toFixed(3)}) drop-shadow(0 36px 58px rgba(0,0,0,.60)) drop-shadow(0 0 30px rgba(222,181,93,.14))`;
 
     if (productGlow) {
-      const glowStrength = Math.max(reveal * .42, hero * .84) * mix(1, .76, landing);
+      const glowStrength = Math.max(reveal * .42, hero * .84) * mix(1, .72, landing);
       productGlow.style.opacity = String(glowStrength);
       productGlow.style.transform = `translate(-50%,-50%) scale(${mix(.72,1.12,hero).toFixed(4)})`;
     }
 
     if (productShadow) {
-      productShadow.style.opacity = String(landing * .76);
-      productShadow.style.transform = `translateX(-50%) scale(${mix(.56,1,landing).toFixed(4)})`;
-      productShadow.style.filter = `blur(${mix(15,7,landing).toFixed(1)}px)`;
+      const contact = Math.max(landing * .78, settle * .96);
+      productShadow.style.opacity = String(contact);
+      productShadow.style.transform = `translateX(-50%) scale(${mix(.52,1.06,contact).toFixed(4)})`;
+      productShadow.style.filter = `blur(${mix(16,5.5,contact).toFixed(1)}px)`;
     }
 
     if (finalCopy) {
