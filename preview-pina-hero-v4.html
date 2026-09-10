@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <title>LAVENDISH — Piña Colada Hero 3D V4</title>
+  <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/4.0.0/model-viewer.min.js"></script>
+  <style>
+    :root{color-scheme:dark;--bg:#09080b;--panel:#121016;--ink:#f4efe7;--muted:#a8a0ac;--accent:#c89cff;--line:rgba(255,255,255,.1)}
+    *{box-sizing:border-box} html,body{margin:0;min-height:100%;background:radial-gradient(circle at 50% 5%,#211727 0,#0d0a10 36%,#07070a 100%);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink)}
+    body{min-height:100vh;display:grid;grid-template-rows:auto 1fr}
+    header{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:18px 24px;border-bottom:1px solid var(--line);background:rgba(8,7,10,.72);backdrop-filter:blur(14px);position:relative;z-index:5}
+    .brand{font-size:13px;letter-spacing:.28em;font-weight:700}.meta{font-size:12px;color:var(--muted)}
+    main{min-height:0;padding:16px;display:grid;grid-template-columns:minmax(260px,.78fr) minmax(0,1.5fr);gap:16px}
+    .card{min-height:0;border:1px solid var(--line);border-radius:20px;overflow:hidden;background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.015));box-shadow:0 24px 80px rgba(0,0,0,.35)}
+    .reference{display:grid;grid-template-rows:auto 1fr}.label{padding:14px 16px;border-bottom:1px solid var(--line);font-size:11px;text-transform:uppercase;letter-spacing:.16em;color:var(--muted)}
+    .reference img{width:100%;height:100%;min-height:0;object-fit:contain;padding:18px;background:#0d0b0f}
+    .viewer{position:relative;min-height:72vh}
+    model-viewer{width:100%;height:100%;min-height:72vh;background:radial-gradient(circle at 50% 42%,#302338 0,#18121d 28%,#0a090c 70%)}
+    .hint{position:absolute;left:16px;bottom:16px;padding:10px 12px;border:1px solid var(--line);border-radius:999px;background:rgba(8,7,10,.72);backdrop-filter:blur(10px);font-size:12px;color:#d8d0dc;pointer-events:none}
+    .badge{position:absolute;right:16px;top:16px;padding:8px 10px;border-radius:999px;background:rgba(200,156,255,.12);border:1px solid rgba(200,156,255,.3);color:#eadcff;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
+    @media(max-width:800px){header{padding:14px 16px}.meta{display:none}main{grid-template-columns:1fr;grid-template-rows:minmax(180px,30vh) minmax(62vh,1fr);padding:10px;gap:10px}.reference img{padding:8px}.viewer,model-viewer{min-height:62vh}.card{border-radius:16px}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">LAVENDISH</div>
+    <div class="meta">Piña Colada · Hero 3D V4 · rama experimental</div>
+  </header>
+  <main>
+    <section class="card reference">
+      <div class="label">Referencia original</div>
+      <img src="assets/pina-colada.webp" alt="Piña Colada original de LAVENDISH">
+    </section>
+    <section class="card viewer">
+      <div class="badge">V4 3D</div>
+      <model-viewer
+        src="assets/3d/pina-colada-hero-v4.glb"
+        alt="Modelo 3D experimental de la Piña Colada de LAVENDISH"
+        camera-controls
+        auto-rotate
+        rotation-per-second="14deg"
+        shadow-intensity="1.1"
+        shadow-softness=".85"
+        exposure="1.12"
+        environment-image="neutral"
+        tone-mapping="commerce"
+        interaction-prompt="auto"
+        min-camera-orbit="auto 58deg auto"
+        max-camera-orbit="auto 92deg auto"
+        camera-orbit="18deg 74deg auto"
+        field-of-view="28deg">
+      </model-viewer>
+      <div class="hint">Arrastra para rotar · pellizca para zoom</div>
+    </section>
+  </main>
+</body>
+</html>
