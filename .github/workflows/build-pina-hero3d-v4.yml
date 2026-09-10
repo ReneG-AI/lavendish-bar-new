@@ -1,0 +1,66 @@
+name: Build Piña Colada Hero 3D v4
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/pina-hero3d-v4-clean
+    paths:
+      - scripts/blender/create-pina-hero-v4.py
+      - scripts/validate-pina-hero-v4.mjs
+      - .github/workflows/build-pina-hero3d-v4.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build-hero:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout clean v4 branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install Blender
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y blender
+          blender --version
+
+      - name: Author and render premium Piña Colada
+        run: blender -b --python scripts/blender/create-pina-hero-v4.py
+
+      - name: Validate GLB structure
+        run: node scripts/validate-pina-hero-v4.mjs assets/3d/pina-colada-hero-v4.glb
+
+      - name: Report output budget
+        run: |
+          ls -lh assets/3d/pina-colada-hero-v4.glb
+          ls -lh assets/3d/pina-colada-hero-v4.blend
+          ls -lh assets/3d/qa-v4/*.png
+          sha256sum assets/3d/pina-colada-hero-v4.glb
+
+      - name: Upload visual QA pack
+        uses: actions/upload-artifact@v4
+        with:
+          name: pina-hero3d-v4-review
+          path: |
+            assets/pina-colada.webp
+            assets/3d/pina-colada-hero-v4.glb
+            assets/3d/pina-colada-hero-v4.blend
+            assets/3d/qa-v4/*.png
+          retention-days: 7
+
+      - name: Commit generated hero asset
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/3d/pina-colada-hero-v4.glb
+          if git diff --cached --quiet; then
+            echo "GLB unchanged."
+            exit 0
+          fi
+          git commit -m "build: generate Blender Piña Colada hero v4 GLB"
+          git push
