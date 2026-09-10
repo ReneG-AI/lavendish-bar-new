@@ -1,20 +1,19 @@
-# Multi-view reference set — pending generation
+# Piña Colada v3 — multi-view QA
 
-All images must depict the same LAVENDISH Piña Colada.
+The active zero-cost route no longer depends on separately generated image-to-3D reference views.
 
-Expected files:
-- `front.png`
-- `left.png`
-- `right.png`
-- `left-front-45.png`
-- `right-front-45.png`
-- `top.png`
-- optional `back.png`
+Instead, the exact authored `assets/3d/pina-colada-v3.glb` is inspected from deterministic camera views so every angle is guaranteed to represent the same cocktail geometry:
 
-Source identity reference:
-`assets/pina-colada.webp`
+- front;
+- left-front 45°;
+- left;
+- right-front 45°;
+- right;
+- back;
+- top.
 
-Status on 2026-09-10:
-reference generation is blocked by the connected Fal account balance. The required prompt and consistency rules are documented in `ASSET-BRIEF-TRUE3D-PINA-v3.md`.
+This multi-view pass is used to catch silhouette, garnish scale, straw placement and clipping problems before browser integration.
 
-Do not populate this folder with unrelated stock cocktails merely to unblock 3D generation.
+The existing `assets/pina-colada.webp` remains the drink identity/art-direction reference.
+
+Important: offscreen multi-view geometry review does not replace final Three.js material review. Glass transmission, ice readability and premium beverage lighting must still be approved in the actual WebGL renderer.
