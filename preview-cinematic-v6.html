@@ -5,16 +5,15 @@
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="robots" content="noindex,nofollow">
   <meta name="theme-color" content="#07090d">
-  <title>LAVENDISH · Seamless Hero V6</title>
+  <title>LAVENDISH · Cinematic Hero V6</title>
 
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
-  <link rel="preload" as="image" href="https://images.unsplash.com/photo-1722338366856-b6c44736a86e?auto=format&fit=crop&w=2400&q=82" fetchpriority="high">
   <link rel="preload" as="image" href="assets/pina-colada.webp?v=1.1.1" fetchpriority="high">
   <link rel="preload" as="image" href="assets/lavendish-storefront.webp?v=1.1.1">
   <link rel="stylesheet" href="css/cinematic-v6.css?v=0.2.0">
 </head>
 <body>
-  <header class="c6-header" data-c6-ui>
+  <header class="c6-header" aria-label="Navegación LAVENDISH">
     <a class="c6-brand" href="#inicio" aria-label="LAVENDISH, inicio">
       <img src="assets/lavendish-logo.webp?v=1.1.1" width="640" height="624" alt="">
       <span>LAVENDISH</span>
@@ -22,8 +21,8 @@
     <a class="c6-header-cta" href="#carta">Ver carta</a>
   </header>
 
-  <main>
-    <section class="c6-hero" id="inicio" data-cinematic-v6 data-state="loading" aria-label="LAVENDISH en Lleida">
+  <main class="cinematic-v6" data-cinematic-v6 data-state="loading">
+    <section class="c6-hero" id="inicio" aria-labelledby="c6-title">
       <div class="c6-layer c6-sky" aria-hidden="true">
         <img
           class="c6-image"
@@ -58,32 +57,29 @@
       <div class="c6-vignette" aria-hidden="true"></div>
       <div class="c6-grain" aria-hidden="true"></div>
 
-      <div class="c6-hero-content" data-c6-ui>
-        <p class="c6-eyebrow">Lleida · Balmes 21</p>
-        <h1>La noche empieza aquí.</h1>
-        <p class="c6-lead">Mojitos, piña colada y algo para compartir.</p>
-        <a class="c6-primary" href="#carta">Descubrir LAVENDISH</a>
+      <div class="c6-hero-content">
+        <p class="c6-eyebrow">LAVENDISH · LLEIDA</p>
+        <h1 id="c6-title">Piña colada.</h1>
+        <p class="c6-lead">Una barra para brindar, compartir y quedarse un rato más.</p>
+        <a class="c6-primary" href="#carta">Ver carta</a>
       </div>
 
-      <a class="c6-scroll-cue" href="#carta" aria-label="Continuar hacia la carta" data-c6-ui>
-        <span>Descubrir</span>
-        <i aria-hidden="true"></i>
-      </a>
+      <a class="c6-scroll-cue" href="#carta" aria-label="Descubrir la carta"><span>Descubrir</span><i></i></a>
     </section>
 
     <section class="c6-next" id="carta" aria-labelledby="c6-next-title">
       <div class="c6-next-copy">
-        <p class="c6-kicker">Nuestra especialidad</p>
-        <h2 id="c6-next-title">Tu mojito.<br>Tu sabor.</h2>
-        <p>Una transición limpia hacia la web real, sin pantalla de entrada ni espera obligatoria.</p>
-        <a href="./#carta">Ver carta real</a>
+        <p class="c6-kicker">LAVENDISH · LLEIDA</p>
+        <h2 id="c6-next-title">La noche continúa.</h2>
+        <p>El hero ya es la propia web. Puedes llegar aquí haciendo scroll incluso mientras la transición visual está ocurriendo.</p>
+        <a href="./">Abrir web estable</a>
       </div>
-      <div class="c6-next-visual" aria-hidden="true">
-        <img src="assets/mojitos/mojito-original-stable.webp?v=1.1.1" width="900" height="1125" alt="" loading="lazy" decoding="async">
+      <div class="c6-next-visual">
+        <img src="assets/pina-colada.webp?v=1.1.1" alt="Piña colada LAVENDISH" width="900" height="1125" loading="lazy">
       </div>
     </section>
   </main>
 
-  <script src="js/cinematic-v6.js?v=0.2.0" defer></script>
+  <script src="js/cinematic-v6.js?v=0.3.0" defer></script>
 </body>
 </html>
