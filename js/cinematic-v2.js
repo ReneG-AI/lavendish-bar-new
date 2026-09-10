@@ -206,13 +206,18 @@
   }
 
   function updateFromScroll() {
-    if (reducedMotion || !active) return;
+    if (debugFrame !== null || reducedMotion || !active) return;
     target = clamp((window.scrollY - sectionTop) / scrollRange);
     schedule();
   }
 
   function remeasure() {
     measure();
+    if (debugFrame !== null) {
+      current = target = debugFrame;
+      frame(debugFrame);
+      return;
+    }
     if (!reducedMotion) updateFromScroll();
     else frame(1);
   }
@@ -225,7 +230,7 @@
     observer.observe(root);
   }
 
-  if (finePointer && !reducedMotion) {
+  if (finePointer && !reducedMotion && debugFrame === null) {
     root.addEventListener('pointermove', (event) => {
       pointerX = clamp((event.clientX / window.innerWidth) * 2 - 1, -1, 1);
       pointerY = clamp((event.clientY / window.innerHeight) * 2 - 1, -1, 1);
