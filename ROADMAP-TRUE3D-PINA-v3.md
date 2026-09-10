@@ -122,7 +122,7 @@ Isolated page:
 
 `preview-pina-true3d-v3.html`
 
-Current preview version: `0.2.0`.
+Current preview version: `0.2.1`.
 
 The preview:
 
@@ -170,7 +170,7 @@ The complete product moves from hero framing to calculated table contact and set
 
 The old harness normalised the model around its centre. That approach could push the foot below the table during the landing.
 
-v0.2 instead:
+v0.2+ instead:
 
 1. scales the model to the viewport target height;
 2. places the actual model bottom at a known hero baseline;
@@ -222,7 +222,7 @@ Command:
 
 `node scripts/validate-pina-glb-v3.mjs assets/3d/pina-colada-v3.glb`
 
-CI run #3 passed build, validation, budget reporting and generated-asset commit.
+GitHub Actions run #3 passed build, validation, budget reporting and generated-asset commit.
 
 Validator requires:
 
