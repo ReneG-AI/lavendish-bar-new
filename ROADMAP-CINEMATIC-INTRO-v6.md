@@ -42,22 +42,26 @@ Status: COMPLETE
 Gate: branch exists from current `main` and contains no production integration.
 
 ## Phase 1 — Micro-intro motion prototype
-Status: IN PROGRESS
+Status: IMPLEMENTED — PENDING VISUAL APPROVAL
 Deliverables:
 - `preview-cinematic-v6.html`
 - `css/cinematic-v6.css`
 - `js/cinematic-v6.js`
 
-Requirements:
+Implemented:
 - one viewport only;
 - automatic playback;
 - no scrolling required;
 - no progress UI;
-- one optional unobtrusive Skip control;
-- deterministic state machine, not chained ad-hoc timers;
-- preload critical images;
-- graceful load failure behavior;
-- reduced-motion support.
+- one unobtrusive Skip control;
+- deterministic controller with one completion clock;
+- critical-image preload/decode handling;
+- graceful timeout/failure behavior;
+- reduced-motion support;
+- photographic night-sky layer;
+- real Piña Colada layer;
+- soft cross-dissolve to LAVENDISH;
+- minimal final lockup only.
 
 Gate: user approves the overall rhythm and transition style.
 
