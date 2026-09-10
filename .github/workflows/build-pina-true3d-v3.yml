@@ -27,7 +27,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-          cache: pip
 
       - name: Install free local authoring dependencies
         run: pip install "numpy==2.2.6" "trimesh==4.11.1"
