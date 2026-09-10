@@ -2,7 +2,7 @@
 
 Branch: `feature/pina-true3d-v3`  
 Preview: `preview-pina-true3d-v3.html`  
-Current preview version: `0.2.0`
+Current preview version: `0.2.1`
 
 ## Current verified build
 
@@ -51,7 +51,7 @@ Required and currently passing:
 - `KHR_materials_volume`;
 - `KHR_materials_clearcoat`.
 
-Raster textures are not mandatory for this build. The current asset intentionally uses compact material-factor PBR, so lack of texture/image records is a warning/information condition rather than a structural failure.
+Raster textures are not mandatory for this build. The current asset intentionally uses compact material-factor PBR, so lack of texture/image records is informational rather than a structural failure.
 
 ## Gate B — Geometry / multi-view review ✅ for current authored pass
 
