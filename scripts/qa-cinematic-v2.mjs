@@ -25,14 +25,15 @@ await sleep(900);
 const browser = await chromium.launch({ headless: true });
 const failures = [];
 
-async function settleVisualAssets(page) {
-  // Never use networkidle here: Phase 3A intentionally exercises remote photographic
-  // plates, and a slow third-party connection must not stall the whole deterministic matrix.
-  const result = await page.evaluate(async () => {
+async function probeCriticalAssets(page) {
+  await page.goto(`${baseUrl}?frame=0`, { waitUntil: 'domcontentloaded', timeout: 15000 });
+  await page.waitForSelector('[data-cin2]', { timeout: 5000 });
+
+  return page.evaluate(async () => {
     const preloadLinks = Array.from(document.querySelectorAll('link[rel="preload"][as="image"]'));
-    const loaded = await Promise.all(preloadLinks.map((link) => new Promise((resolve) => {
+    return Promise.all(preloadLinks.map((link) => new Promise((resolve) => {
       const image = new Image();
-      const timer = setTimeout(() => resolve({ href: link.href, ok: false, reason: 'timeout' }), 8000);
+      const timer = setTimeout(() => resolve({ href: link.href, ok: false, reason: 'timeout' }), 10000);
       image.onload = () => {
         clearTimeout(timer);
         resolve({ href: link.href, ok: true });
@@ -43,21 +44,21 @@ async function settleVisualAssets(page) {
       };
       image.src = link.href;
     })));
-
-    const product = document.querySelector('[data-product]');
-    if (product?.decode) {
-      try { await product.decode(); } catch {}
-    }
-    try { await document.fonts?.ready; } catch {}
-
-    return loaded;
   });
-
-  await page.waitForTimeout(120);
-  return result;
 }
 
 try {
+  // Probe photographic/product assets once. Repeating a third-party network probe for
+  // every deterministic frame makes CI slow and can turn a transient CDN issue into
+  // dozens of duplicate failures. Chromium's shared cache then serves the matrix.
+  const probePage = await browser.newPage({ viewport: { width: 1440, height: 900 } });
+  const criticalAssets = await probeCriticalAssets(probePage);
+  const failedCriticalAssets = criticalAssets.filter((asset) => !asset.ok);
+  if (failedCriticalAssets.length) {
+    failures.push(`critical image preload failed: ${failedCriticalAssets.map((asset) => `${asset.reason}:${asset.href}`).join(', ')}`);
+  }
+  await probePage.close();
+
   for (const viewport of viewports) {
     const page = await browser.newPage({
       viewport: { width: viewport.width, height: viewport.height },
@@ -76,12 +77,11 @@ try {
         timeout: 15000
       });
       await page.waitForSelector('[data-cin2]', { timeout: 5000 });
-
-      const assets = await settleVisualAssets(page);
-      const failedCriticalAssets = assets.filter((asset) => !asset.ok);
-      if (failedCriticalAssets.length) {
-        failures.push(`${viewport.name} frame ${frame}: critical image preload failed: ${failedCriticalAssets.map((asset) => `${asset.reason}:${asset.href}`).join(', ')}`);
-      }
+      await page.waitForFunction(() => {
+        const product = document.querySelector('[data-product]');
+        return !product || product.complete;
+      }, { timeout: 5000 });
+      await page.waitForTimeout(100);
 
       const result = await page.evaluate(({ frame }) => {
         const root = document.querySelector('[data-cin2]');
