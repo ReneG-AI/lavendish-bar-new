@@ -8,7 +8,7 @@
   <title>LAVENDISH · Cinematic Intro v2 Preview</title>
   <link rel="preload" as="image" href="assets/pina-colada.webp?v=1.1.1" fetchpriority="high">
   <link rel="preload" as="image" href="assets/lavendish-storefront.webp?v=1.1.1">
-  <link rel="stylesheet" href="css/cinematic-v2.css?v=0.1.0">
+  <link rel="stylesheet" href="css/cinematic-v2.css?v=0.2.0">
 </head>
 <body>
   <main>
@@ -21,11 +21,15 @@
         </div>
 
         <div class="cin2-clouds cin2-clouds-back" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="cin2-clouds cin2-clouds-mid" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div class="cin2-haze" data-haze aria-hidden="true"></div>
         <div class="cin2-clouds cin2-clouds-front" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
 
         <div class="cin2-terrace" aria-hidden="true">
           <div class="cin2-terrace-photo"></div>
-          <div class="cin2-bokeh"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="cin2-terrace-lights" data-terrace-lights>
+            <div class="cin2-bokeh"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
           <div class="cin2-terrace-vignette"></div>
         </div>
 
@@ -47,7 +51,8 @@
         </div>
 
         <div class="cin2-table" data-table aria-hidden="true">
-          <div class="cin2-table-edge"></div>
+          <div class="cin2-table-surface"></div>
+          <div class="cin2-table-rim"></div>
           <div class="cin2-table-reflection"></div>
         </div>
 
@@ -65,12 +70,12 @@
 
     <section class="cin2-after" id="cin2-after">
       <div>
-        <span>PROTOTIPO AISLADO · V2</span>
+        <span>PROTOTIPO AISLADO · V2 · FASE 2</span>
         <h2>Aquí empezaría la web.</h2>
-        <p>Esta pantalla existe solo para validar el ritmo cinematográfico antes de tocar la versión estable.</p>
+        <p>La producción sigue intacta. Este prototipo valida la cámara, las nubes, el protagonismo de la copa y el aterrizaje sobre la mesa antes de crear los plates fotorealistas finales.</p>
       </div>
     </section>
   </main>
-  <script src="js/cinematic-v2.js?v=0.1.0" defer></script>
+  <script src="js/cinematic-v2.js?v=0.2.0" defer></script>
 </body>
 </html>
