@@ -38,8 +38,11 @@ The experiment stays isolated in new files:
 
 - `preview-cinematic-v2.html`
 - `css/cinematic-v2.css`
+- `css/cinematic-v2-photoreal.css`
 - `js/cinematic-v2.js`
 - `TESTING-CINEMATIC-v2.md`
+- `ASSET-BRIEF-CINEMATIC-v2.md`
+- `ASSET-SOURCES-CINEMATIC-v2.md`
 
 Existing production files are not edited during Phases 0–4.
 
@@ -54,8 +57,8 @@ The preview module also supports deterministic art-direction frames with `?frame
 ### ACT I — NIGHT SKY
 Progress: `0.00 → 0.20`
 
-- Deep blue-black night sky.
-- Sparse realistic-feeling stars, not a busy galaxy texture.
+- Deep blue-black photographic night sky.
+- Natural star density from a real sky plate, with only subtle procedural star accents.
 - Three atmospheric cloud depths plus central haze.
 - Subtle warm light begins below the clouds.
 - Piña Colada is initially hidden in haze/darkness.
@@ -80,16 +83,17 @@ Progress: `0.29 → 0.69`
 Progress: `0.58 → 0.86`
 
 - Night sky rises and fades.
-- Warm terrace atmosphere appears behind the drink.
-- A table enters from below only after the product hero moment.
-- Terrace environment remains a Phase 2 placeholder until the dedicated photoreal plate is produced in Phase 3.
+- A real photographic outdoor hospitality environment appears behind the drink.
+- The current Phase 3A plate provides genuine warm lighting and real furniture/table material.
+- The previous CSS-drawn tabletop is disabled in the photoreal override.
+- Product landing is now evaluated against the photographed environment rather than a fake geometric table.
 
 ### ACT V — LANDING / WEBSITE START
 Progress: `0.75 → 1.00`
 
 - Product movement changes from floating camera motion to a calculated landing target.
 - Pointer movement is progressively removed during the landing.
-- Contact shadow tightens as the glass meets the table.
+- Contact shadow tightens as the glass reaches the photographed table zone.
 - Final copy appears only after the landing is almost complete.
 - User exits the sticky scene into the normal LAVENDISH page.
 
@@ -120,11 +124,15 @@ Progress: `0.75 → 1.00`
 - [x] Re-measure after image decode, font readiness, resize, orientation, pageshow and VisualViewport changes.
 - [x] Add deterministic `?frame=` inspection mode for QA.
 
-### Phase 3 — Photoreal environment assets — NEXT
-- [ ] Produce final night-sky / cloud plate with realistic cloud texture.
-- [ ] Produce final dream-terrace plate with warm bar lighting and a clear table landing zone.
-- [ ] Replace the current storefront-based terrace placeholder.
-- [ ] Decide whether the final table should live inside the terrace plate or remain a separate foreground plate for parallax.
+### Phase 3 — Photoreal environment assets — IN PROGRESS
+- [x] Replace the procedural-looking sky as the dominant layer with a real photographic starry-night/cloud plate.
+- [x] Replace the storefront placeholder with a real photographed outdoor hospitality/night-table plate for Phase 3A.
+- [x] Disable the temporary CSS-drawn tabletop in the photoreal override.
+- [x] Record Phase 3A source/licensing information in `ASSET-SOURCES-CINEMATIC-v2.md`.
+- [x] Add `preconnect`/preload hints for the temporary photographic plates in the isolated preview.
+- [ ] Judge the Phase 3A composition at deterministic desktop/mobile frames and retune product landing against the real table zone.
+- [ ] Replace the remote reference plates with final local optimised assets before production integration.
+- [ ] Decide whether retained final plates are licensed references or dedicated LAVENDISH-specific generated/commissioned plates.
 - [ ] Optimise final environment assets to WebP/AVIF.
 - [ ] Preload only the first-frame-critical visual and lazy-load the terrace plate before Act IV.
 - [ ] Keep the real Piña Colada asset unchanged as the hero product.
