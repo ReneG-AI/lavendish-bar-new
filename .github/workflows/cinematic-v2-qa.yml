@@ -5,6 +5,7 @@ on:
     paths:
       - 'preview-cinematic-v2.html'
       - 'css/cinematic-v2.css'
+      - 'css/cinematic-v2-photoreal.css'
       - 'js/cinematic-v2.js'
       - 'scripts/qa-cinematic-v2.mjs'
       - '.github/workflows/cinematic-v2-qa.yml'
@@ -31,9 +32,14 @@ jobs:
           python3 - <<'PY'
           from html.parser import HTMLParser
           from pathlib import Path
+
           HTMLParser().feed(Path('preview-cinematic-v2.html').read_text())
-          css = Path('css/cinematic-v2.css').read_text()
-          assert css.count('{') == css.count('}'), 'Unbalanced CSS blocks'
+          for name in ('css/cinematic-v2.css', 'css/cinematic-v2-photoreal.css'):
+              css = Path(name).read_text()
+              assert css.count('{') == css.count('}'), f'Unbalanced CSS blocks: {name}'
+          html = Path('preview-cinematic-v2.html').read_text()
+          assert 'cinematic-v2-photoreal.css?v=0.3.0' in html, 'Phase 3A override is not loaded'
+          assert 'data-version="0.3.0"' in html, 'Preview version mismatch'
           print('Static checks passed')
           PY
 
