@@ -1,0 +1,110 @@
+/* LAVENDISH Cinematic Intro v2 — Phase 3A photoreal plate overrides.
+   Isolated experiment only. Loaded after cinematic-v2.css. */
+
+.cin2-sky {
+  background:
+    linear-gradient(180deg, rgba(3,8,18,.18), rgba(5,8,15,.46) 60%, rgba(8,7,10,.72) 100%),
+    radial-gradient(circle at 71% 16%, rgba(166,188,229,.13), transparent 24%),
+    url('https://images.unsplash.com/photo-1722338366856-b6c44736a86e?auto=format&fit=crop&w=2400&q=78') center 42% / cover no-repeat;
+  filter: saturate(.84) contrast(1.10) brightness(.72);
+  transform: scale(1.02);
+}
+
+/* The photographic sky already contains natural stars/cloud structure.
+   Procedural layers remain only as subtle depth/motion, not the visible scene itself. */
+.cin2-stars-a {
+  opacity: .30;
+  mix-blend-mode: screen;
+}
+.cin2-stars-b {
+  opacity: .14;
+  mix-blend-mode: screen;
+}
+.cin2-clouds-back { opacity: .40; }
+.cin2-clouds-mid { opacity: .46; }
+.cin2-clouds-front { opacity: .60; }
+.cin2-haze { opacity: .66; }
+
+.cin2-terrace-photo {
+  background:
+    linear-gradient(180deg, rgba(4,6,11,.10), rgba(8,6,6,.30) 56%, rgba(6,4,4,.54) 100%),
+    url('https://images.unsplash.com/photo-1671401220507-4ba98f444050?auto=format&fit=crop&w=2400&q=78') center 56% / cover no-repeat;
+  filter: brightness(.72) saturate(.92) contrast(1.08) blur(.35px);
+  transform: scale(1.075);
+}
+
+.cin2-terrace-photo::after {
+  background:
+    radial-gradient(circle at 67% 37%, rgba(232,181,96,.11), transparent 23%),
+    radial-gradient(circle at 23% 30%, rgba(159,111,55,.08), transparent 20%),
+    linear-gradient(180deg, rgba(5,7,12,.12), rgba(8,7,8,.27) 58%, rgba(5,4,4,.60));
+}
+
+/* Remove the temporary CSS-drawn tabletop. The final landing now happens
+   against the real photographed terrace/table environment. */
+.cin2-table-surface,
+.cin2-table-rim {
+  display: none;
+}
+
+.cin2-table-reflection {
+  left: 58%;
+  top: -3%;
+  width: 34%;
+  height: 14%;
+  background: radial-gradient(ellipse, rgba(255,210,136,.11), rgba(94,56,29,.04) 46%, transparent 72%);
+  filter: blur(14px);
+  mix-blend-mode: screen;
+}
+
+/* Keep the drink visually integrated into the photograph without recolouring it. */
+.cin2-product {
+  filter:
+    drop-shadow(0 34px 56px rgba(0,0,0,.58))
+    drop-shadow(0 0 24px rgba(222,181,93,.11));
+}
+
+.cin2-product-glow {
+  width: 126%;
+  height: 96%;
+  background: radial-gradient(circle, rgba(227,185,93,.16), rgba(227,185,93,.045) 38%, transparent 69%);
+  filter: blur(38px);
+}
+
+.cin2-product-shadow {
+  background: radial-gradient(ellipse, rgba(0,0,0,.72), rgba(0,0,0,.22) 52%, transparent 76%);
+}
+
+@media (max-width: 900px) {
+  .cin2-sky {
+    background-position: 52% 42%;
+  }
+  .cin2-terrace-photo {
+    background-position: 51% 58%;
+    filter: brightness(.67) saturate(.90) contrast(1.09) blur(.25px);
+  }
+  .cin2-clouds-back { opacity: .34; }
+  .cin2-clouds-mid { opacity: .40; }
+  .cin2-clouds-front { opacity: .52; }
+}
+
+@media (max-width: 560px) {
+  .cin2-sky {
+    background-position: 56% 44%;
+    filter: saturate(.80) contrast(1.08) brightness(.67);
+  }
+  .cin2-terrace-photo {
+    background-position: 52% 60%;
+    filter: brightness(.63) saturate(.88) contrast(1.08) blur(.18px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cin2-sky {
+    opacity: .18 !important;
+    transform: none !important;
+  }
+  .cin2-terrace-photo {
+    filter: brightness(.69) saturate(.90) contrast(1.08) !important;
+  }
+}
