@@ -4,175 +4,185 @@ Branch: `feature/pina-true3d-v3`
 
 ## Purpose
 
-Create the hero Piña Colada as a genuine 3D product asset for a close-camera, scroll-scrubbed beverage-commercial sequence. The product must withstand full-screen rendering on desktop without looking synthetic, low-poly, flat, or like a CSS reconstruction.
-
-The current `assets/pina-colada.webp` remains the visual identity reference for the drink. It is not the final 3D implementation.
+Create the hero Piña Colada as a genuine independently animatable 3D product asset for the isolated scroll-driven LAVENDISH intro. The quality bar remains premium beverage advertising; `main` remains untouched until explicit approval.
 
 ## Art direction
 
-The drink must read as:
-- premium, realistic and desirable;
-- creamy and refreshing rather than cartoonish;
-- physically plausible at close range;
-- compatible with cool night ambient light and warm terrace practicals;
-- elegant enough to remain the only dominant object for several seconds.
+The drink must read as premium, creamy, refreshing, elegant and physically believable under cool night ambience plus warm hospitality lighting.
 
 No beach, sea, resort, palm-beach or vacation-club styling.
 
-## Required multi-view reference set
+The existing `assets/pina-colada.webp` remains the product identity reference, but the runtime product is now genuine geometry rather than a flat image.
 
-Create the SAME cocktail from every view. Do not regenerate seven loosely related cocktails.
+## Active zero-cost authoring route
 
-Required files:
-- `front.png`
-- `left.png`
-- `right.png`
-- `left-front-45.png`
-- `right-front-45.png`
-- `top.png`
-- optional `back.png`
+The Fal/image-to-3D route is no longer required. To keep the experiment zero-cost, the model is authored procedurally with open-source/local tooling and generated reproducibly from:
 
-Reference rules:
-- one cocktail only;
-- fully visible with garnish inside frame;
-- neutral seamless light-gray background;
-- soft, even studio lighting;
-- same camera focal character across side/45° views;
-- minimal perspective distortion;
-- same glass silhouette and proportions;
-- same straw material, diameter, angle and insertion point;
-- same pineapple cut, thickness and placement;
-- same cherry size and placement;
-- same creamy liquid level and tone;
-- same foam height/profile;
-- no text, logo, props, hands, bar, beach or scenery.
+`scripts/build-pina-procedural-v3.py`
 
-For reconstruction quality, the cocktail should occupy roughly 70–85% of image height.
+Tooling:
 
-## Reference-generation workflow
+- Python;
+- NumPy;
+- trimesh;
+- glTF 2.0 / GLB;
+- Three.js for final browser rendering.
 
-Preferred reference editor: high-fidelity image-to-image model.
+CI reproduction:
 
-Canonical pass:
-1. Start from `assets/pina-colada.webp`.
-2. Produce a clean front reconstruction reference.
-3. Use BOTH the original product image and the accepted clean front view as references for every subsequent angle.
-4. Generate one view at a time and reject any view that changes garnish, glass silhouette, straw or liquid level.
-5. Only send a mutually consistent set to 3D generation.
+`.github/workflows/build-pina-true3d-v3.yml`
 
-Suggested editing prompt core:
+## Current model
 
-> Preserve the exact same LAVENDISH Piña Colada design shown in the references. Do not redesign the drink. Render one isolated cocktail from [VIEW], centered, fully visible, on a seamless neutral light-gray studio background, with soft even product lighting and minimal perspective distortion. Keep identical glass proportions, creamy liquid level, foam profile, straw style/angle, pineapple garnish geometry/placement and cherry placement. No environment, props, text or logo. This is a photogrammetry-style image-to-3D reference, so prioritize readable silhouette and stable geometry over dramatic lighting.
+`assets/3d/pina-colada-v3.glb`
 
-## Preferred 3D generation
+Measured build:
 
-Current preferred Fal endpoint:
-`fal-ai/hunyuan-3d/v3.1/pro/image-to-3d`
+- 478,876 bytes (~0.46 MB);
+- ~31,104 triangles;
+- 65 nodes;
+- 57 mesh definitions;
+- 11 materials;
+- 7 independent ice nodes.
 
-Why:
-- accepts dedicated front, left, right, left-front 45°, right-front 45°, top and optional back views;
-- exports GLB;
-- supports PBR generation;
-- supports high face-count reconstruction for the first quality pass.
+## Required semantic structure — satisfied by current build
 
-First-pass target:
-- `generate_type: Normal`
-- `enable_pbr: true`
-- `face_count: 300000–500000`
-
-Do not optimize aggressively before visual approval. First establish shape/material quality, then reduce.
-
-## Component / node contract
-
-Preferred final single-GLB node names:
 - `Glass`
-- `Ice_01...Ice_N`
+  - bowl
+  - stem
+  - foot
+  - knuckle
 - `Liquid`
+  - body
+  - meniscus
 - `Foam`
+- `Ice_01...Ice_07`
 - `Straw`
 - `Pineapple`
 - `Cherry`
-- optional `Condensation`
+- `Condensation`
 
-Hard requirement:
-- a single merged cocktail mesh is rejected for the assembly sequence.
+A single merged cocktail mesh remains unacceptable.
 
-Acceptable intermediate alternative:
-- several component GLBs loaded into one Three.js product root, provided they preserve the same coordinate system and are authored from the same master reference set.
-
-## Component authoring notes
+## Component requirements
 
 ### Glass
-- real wall thickness;
-- smooth silhouette;
-- clean lip;
-- no faceted low-poly contour at hero distance;
-- transparent/refraction-ready material;
-- target IOR near ordinary glass in runtime rather than baked fake reflections.
+
+- hurricane-style silhouette;
+- real separate bowl/stem/foot geometry;
+- smooth hero-distance outline;
+- low roughness;
+- physical transmission;
+- IOR near ordinary glass (~1.45);
+- enough wall/volume information for believable WebGL highlights.
 
 ### Ice
-- irregular, rounded, translucent pieces;
-- no identical cube repetition;
-- enough separation for individual assembly;
-- avoid noisy micro-geometry that inflates file size.
+
+- individually addressable;
+- irregular rather than repeated cubes;
+- translucent;
+- physically plausible IOR (~1.31);
+- limited geometry cost.
 
 ### Liquid
-- volumetric mesh fitted inside glass;
-- clean top surface;
-- pivot/origin at or near the bottom for fill animation;
-- creamy off-white/yellow tone without opaque-plastic appearance.
+
+- fitted within the glass;
+- creamy Piña Colada tone;
+- separate meniscus/top surface;
+- group/pivot authored at the physical fill base so runtime Y scaling fills bottom-to-top rather than from the centre.
 
 ### Foam
-- distinct mesh from liquid;
-- soft, slightly uneven crown;
-- believable thickness;
-- no whipped-cream caricature.
+
+- separate from liquid;
+- soft crown and small surface irregularity;
+- rougher than liquid.
 
 ### Straw
-- smooth circular section;
-- sufficient radial segments for close camera;
-- exact reference angle and depth.
+
+- smooth circular geometry;
+- restrained premium dark finish with subtle accent;
+- independently animatable.
 
 ### Pineapple
-- dimensional wedge;
-- readable fibrous flesh and rind;
-- no flat billboard.
+
+- volumetric wedge;
+- separate rind/flesh details;
+- refined scale that does not overpower the glass;
+- independently animatable.
 
 ### Cherry
-- dimensional, glossy but not plastic;
-- stable placement relative to pineapple/straw.
 
-## PBR/material expectations
+- dimensional fruit and stem;
+- glossy clearcoat without plastic appearance;
+- independently animatable.
 
-Do not bake lighting into albedo where avoidable.
+### Condensation
 
-Target maps/material data:
-- base color;
-- roughness;
-- normal;
-- transmission/refraction-ready glass where practical;
-- optional ambient occlusion;
-- metallic should remain near zero for drink components.
+- optional secondary detail;
+- separate group;
+- subtle transmissive droplets;
+- must never obscure the silhouette or create visual noise.
 
-Textures:
-- authoring pass may use up to 2K where detail requires it;
-- web-delivery target should prefer KTX2/Basis after approval;
-- avoid multiple redundant 4K maps.
+## Physical-material contract
 
-## Web delivery targets
+Current GLB declares:
 
-Initial approved-quality target:
-- final optimized GLB ideally <= 8 MB;
-- hard investigation threshold: 12 MB;
-- <= ~120k visible triangles preferred after optimization;
-- 1K–2K effective texture resolution;
-- avoid excessive draw calls;
-- no hidden duplicate geometry.
+- `KHR_materials_transmission`;
+- `KHR_materials_ior`;
+- `KHR_materials_volume`;
+- `KHR_materials_clearcoat`.
 
-These are delivery targets, not first-generation limits.
+The current model intentionally uses material factors/extensions instead of raster texture maps. This keeps the source asset compact and is acceptable as long as the browser render meets the visual target.
+
+If the actual Three.js hero render looks too synthetic, the next refinement should add only the texture detail that materially improves realism—for example subtle pineapple/rind variation or micro-surface detail—rather than adding heavy texture maps by default.
+
+## Multi-view geometry QA
+
+The exact current GLB has been reviewed from:
+
+- front;
+- left-front 45°;
+- left;
+- right-front 45°;
+- right;
+- back;
+- top.
+
+The views remain geometrically consistent because they are renders of the same authored model, not separately generated cocktail images.
+
+Early issues corrected during this review:
+
+- generic first-pass glass silhouette;
+- garnish too large;
+- straw proportions/placement;
+- model/table landing baseline.
+
+## Browser visual acceptance criteria
+
+Do not approve the asset solely from structural validation. In Three.js the final product must satisfy all of the following:
+
+- glass reads as actual clear glass rather than grey plastic;
+- glass rim/foot remain legible against dark sky;
+- ice remains visible and dimensional through the glass/liquid;
+- Piña Colada looks creamy rather than like a beige cylinder;
+- foam appears appetising but restrained;
+- pineapple and cherry are refined and correctly proportioned;
+- straw does not clip awkwardly;
+- condensation is subtle;
+- completed silhouette feels like a premium cocktail photograph at hero scale;
+- final foot contact with the table feels physical.
+
+## Web delivery budget
+
+Current asset is already well below the original limits:
+
+- current ~0.46 MB vs initial ideal <=8 MB;
+- current ~31k triangles vs initial preferred <=~120k visible triangles.
+
+Do not decimate further unless profiling shows a reason. Remaining work should prioritize visual quality.
 
 ## Current status — 2026-09-10
 
-Fal was available and the correct multi-view 3D endpoint was identified. The first reference-image generation request could not start because the connected Fal account returned HTTP 403: `Exhausted balance`.
+A real GLB now exists, is generated reproducibly at zero paid-API cost, and passes the repository structural/PBR validator in GitHub Actions.
 
-No GLB has been generated yet. Do not mark Phase 1 complete until a real model is inspected.
+The remaining approval gate is the actual Three.js/browser material and lighting review, followed by cross-browser/mobile QA. Until that is completed, the asset is technically viable but not production-approved.
