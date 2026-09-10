@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="robots" content="noindex,nofollow">
+  <meta name="theme-color" content="#060811">
+  <title>LAVENDISH · Piña Colada True 3D v3</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  <link rel="preconnect" href="https://images.unsplash.com" crossorigin>
+  <link rel="stylesheet" href="css/pina-true3d-v3.css?v=0.1.0">
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "https://cdn.jsdelivr.net/npm/three@0.186.0/build/three.module.js",
+      "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.186.0/examples/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <main>
+    <section class="p3d" data-p3d data-version="0.1.0">
+      <div class="p3d-sticky">
+        <div class="p3d-photo p3d-photo--sky" aria-hidden="true"></div>
+        <div class="p3d-photo p3d-photo--terrace" data-terrace aria-hidden="true"></div>
+        <div class="p3d-haze" data-haze aria-hidden="true"></div>
+
+        <canvas class="p3d-canvas" data-canvas aria-label="Animación 3D de una Piña Colada"></canvas>
+
+        <div class="p3d-brand" aria-hidden="true">
+          <img src="assets/lavendish-logo.webp?v=1.1.1" width="640" height="624" alt="">
+          <span>LAVENDISH · LLEIDA</span>
+        </div>
+
+        <div class="p3d-copy p3d-copy--intro" data-intro-copy>
+          <span>TRUE 3D PRODUCT EXPERIENCE</span>
+          <h1>Piña Colada,<br><strong>construida en la noche.</strong></h1>
+          <p>Desliza para ensamblar la copa.</p>
+        </div>
+
+        <div class="p3d-copy p3d-copy--final" data-final-copy>
+          <span>LAVENDISH SIGNATURE</span>
+          <h2>Piña Colada.</h2>
+          <p>La noche aterriza en la mesa.</p>
+          <a href="#p3d-after">Entrar en LAVENDISH <span aria-hidden="true">↓</span></a>
+        </div>
+
+        <div class="p3d-progress" aria-hidden="true"><span data-progress></span></div>
+        <div class="p3d-act" data-act aria-live="polite">ATMOSPHERE</div>
+
+        <aside class="p3d-status" data-status hidden>
+          <strong data-status-title>3D asset pending</strong>
+          <p data-status-copy></p>
+          <a href="preview-cinematic-v2.html">Abrir fallback cinematográfico v2</a>
+        </aside>
+      </div>
+    </section>
+
+    <section class="p3d-after" id="p3d-after">
+      <div>
+        <span>PROTOTIPO AISLADO · TRUE 3D V3</span>
+        <h2>Aquí empieza la web normal.</h2>
+        <p>Este archivo no está conectado a la home de producción.</p>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="js/pina-true3d-v3.js?v=0.1.0"></script>
+</body>
+</html>
