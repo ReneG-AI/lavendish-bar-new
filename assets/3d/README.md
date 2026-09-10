@@ -1,24 +1,30 @@
-# Piña Colada v3 3D asset slot
+# LAVENDISH True 3D v3 assets
 
-Expected approved asset path:
+This directory belongs only to the isolated `feature/pina-true3d-v3` experiment.
 
-`assets/3d/pina-colada-v3.glb`
+## Current product asset
 
-The preview deliberately does **not** synthesize a replacement cocktail if this file is missing.
+`pina-colada-v3.glb`
 
-Required semantic nodes:
-- `Glass`
-- `Ice_01...Ice_N`
-- `Liquid`
-- `Foam`
-- `Straw`
-- `Pineapple`
-- `Cherry`
+The model is generated reproducibly at zero paid-API cost by:
 
-Reference images belong in `assets/3d/reference-v3/` after they are generated and approved.
+`scripts/build-pina-procedural-v3.py`
 
-Before committing a GLB:
-1. run `node scripts/validate-pina-glb-v3.mjs assets/3d/pina-colada-v3.glb`;
-2. inspect hero-distance materials in the isolated preview;
-3. record source/generation settings and iteration notes;
-4. do not merge into production from this experimental branch.
+Current CI build:
+
+- ~0.46 MB;
+- ~31.1k triangles;
+- 65 nodes;
+- 57 mesh definitions;
+- 11 materials;
+- 7 separate `Ice_XX` nodes.
+
+Semantic groups include `Glass`, `Liquid`, `Foam`, `Straw`, `Pineapple`, `Cherry` and `Condensation`.
+
+The physical-material contract uses glTF transmission, IOR, volume and clearcoat extensions. The current model is deliberately material-only PBR rather than texture-heavy.
+
+Validation:
+
+`node scripts/validate-pina-glb-v3.mjs assets/3d/pina-colada-v3.glb`
+
+Do not treat this asset as production-approved until the actual Three.js hero render and mobile/browser matrix are visually reviewed.
