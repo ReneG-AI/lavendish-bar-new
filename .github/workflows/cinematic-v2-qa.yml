@@ -1,0 +1,55 @@
+name: cinematic-v2-qa
+
+on:
+  pull_request:
+    paths:
+      - 'preview-cinematic-v2.html'
+      - 'css/cinematic-v2.css'
+      - 'js/cinematic-v2.js'
+      - 'scripts/qa-cinematic-v2.mjs'
+      - '.github/workflows/cinematic-v2-qa.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  cinematic-v2:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Static checks
+        run: |
+          node --check js/cinematic-v2.js
+          python3 - <<'PY'
+          from html.parser import HTMLParser
+          from pathlib import Path
+          HTMLParser().feed(Path('preview-cinematic-v2.html').read_text())
+          css = Path('css/cinematic-v2.css').read_text()
+          assert css.count('{') == css.count('}'), 'Unbalanced CSS blocks'
+          print('Static checks passed')
+          PY
+
+      - name: Install Playwright
+        run: |
+          npm install --no-save playwright@1.55.0
+          npx playwright install --with-deps chromium
+
+      - name: Browser matrix
+        run: node scripts/qa-cinematic-v2.mjs
+
+      - name: Upload cinematic frames
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cinematic-v2-frames
+          path: artifacts/cinematic-v2
+          if-no-files-found: ignore
+          retention-days: 7
