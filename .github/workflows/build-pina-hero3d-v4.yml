@@ -36,11 +36,27 @@ jobs:
           LIBGL_ALWAYS_SOFTWARE: '1'
         run: blender -b --python-expr "import numpy; print('Blender NumPy', numpy.__version__)"
 
+      - name: Prepare clean generation workspace
+        run: |
+          rm -f assets/3d/pina-colada-hero-v4.glb
+          rm -f assets/3d/pina-colada-hero-v4.blend
+          rm -rf assets/3d/qa-v4
+          mkdir -p assets/3d/qa-v4
+          # Ubuntu 24.04 currently ships Blender 4.0, where the Eevee enum is BLENDER_EEVEE.
+          sed -i 's/BLENDER_EEVEE_NEXT/BLENDER_EEVEE/g' scripts/blender/create-pina-hero-v4.py
+
       - name: Author and render premium Piña Colada
         env:
           PYTHONPATH: /usr/lib/python3/dist-packages
           LIBGL_ALWAYS_SOFTWARE: '1'
         run: blender -b --python scripts/blender/create-pina-hero-v4.py
+
+      - name: Assert fresh outputs exist
+        run: |
+          test -s assets/3d/pina-colada-hero-v4.glb
+          test -s assets/3d/pina-colada-hero-v4.blend
+          test -s assets/3d/qa-v4/hero_front.png
+          test -s assets/3d/qa-v4/hero_right45.png
 
       - name: Validate GLB structure
         run: node scripts/validate-pina-hero-v4.mjs assets/3d/pina-colada-hero-v4.glb
@@ -65,9 +81,10 @@ jobs:
 
       - name: Commit generated hero asset
         run: |
+          git checkout -- scripts/blender/create-pina-hero-v4.py
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add assets/3d/pina-colada-hero-v4.glb
+          git add -f assets/3d/pina-colada-hero-v4.glb
           if git diff --cached --quiet; then
             echo "GLB unchanged."
             exit 0
