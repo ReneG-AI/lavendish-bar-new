@@ -26,11 +26,19 @@ jobs:
       - name: Install Blender and headless GL runtime
         run: |
           sudo apt-get update
-          sudo apt-get install -y blender libegl1 libgl1 libglx0 libgl1-mesa-dri libx11-6 libxi6 libxxf86vm1 libxfixes3 libxrender1 libxkbcommon0
+          sudo apt-get install -y blender python3-numpy libegl1 libgl1 libglx0 libgl1-mesa-dri libx11-6 libxi6 libxxf86vm1 libxfixes3 libxrender1 libxkbcommon0
           blender --version
+          python3 -c "import numpy; print('System NumPy', numpy.__version__)"
+
+      - name: Verify Blender can import NumPy
+        env:
+          PYTHONPATH: /usr/lib/python3/dist-packages
+          LIBGL_ALWAYS_SOFTWARE: '1'
+        run: blender -b --python-expr "import numpy; print('Blender NumPy', numpy.__version__)"
 
       - name: Author and render premium Piña Colada
         env:
+          PYTHONPATH: /usr/lib/python3/dist-packages
           LIBGL_ALWAYS_SOFTWARE: '1'
         run: blender -b --python scripts/blender/create-pina-hero-v4.py
 
