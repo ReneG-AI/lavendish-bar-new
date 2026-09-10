@@ -13,7 +13,7 @@ Create a premium cinematic opening sequence where the Piña Colada is the protag
 5. The Piña Colada settles naturally onto a terrace table.
 6. Only then does the normal LAVENDISH website begin.
 
-The stable production site on `main` must not be modified until the experiment is approved.
+Existing production homepage files must not be modified until the experiment is approved.
 
 ---
 
@@ -46,9 +46,11 @@ The experiment stays isolated in new files:
 
 Existing production files are not edited during Phases 0–4.
 
+For real-device visual review, an unlinked/noindex preview-only snapshot of the four runtime preview files is allowed on `main` after an explicit user request. Before publishing that snapshot we created `backup/pre-cinematic-v2-live-preview`. This does not load the cinematic intro from `index.html` and does not alter the production homepage.
+
 When approved, integration will happen in a separate final branch with a minimal loader/change set.
 
-The preview module also supports deterministic art-direction frames with `?frame=0.00` through `?frame=1.00`. This is preview-only and is used to inspect exact timeline moments without changing scroll behavior in the future production integration.
+The preview module supports deterministic art-direction frames with `?frame=0.00` through `?frame=1.00`. This is preview-only and is used to inspect exact timeline moments without changing scroll behavior in the future production integration.
 
 ---
 
@@ -84,15 +86,16 @@ Progress: `0.58 → 0.86`
 
 - Night sky rises and fades.
 - A real photographic outdoor hospitality environment appears behind the drink.
-- The current Phase 3A plate provides genuine warm lighting and real furniture/table material.
+- The current Phase 3 plate provides genuine warm lighting and real furniture/table material.
 - The previous CSS-drawn tabletop is disabled in the photoreal override.
-- Product landing is now evaluated against the photographed environment rather than a fake geometric table.
+- Product landing is evaluated against the photographed environment rather than a fake geometric table.
 
 ### ACT V — LANDING / WEBSITE START
 Progress: `0.75 → 1.00`
 
 - Product movement changes from floating camera motion to a calculated landing target.
 - Pointer movement is progressively removed during the landing.
+- A final settle phase adds a subtle compression and downward contact movement.
 - Contact shadow tightens as the glass reaches the photographed table zone.
 - Final copy appears only after the landing is almost complete.
 - User exits the sticky scene into the normal LAVENDISH page.
@@ -102,7 +105,7 @@ Progress: `0.75 → 1.00`
 ## Phase plan
 
 ### Phase 0 — Safety and planning ✅
-- [x] Create isolated branch from current stable `main`.
+- [x] Create isolated branch from stable `main`.
 - [x] Create this roadmap.
 - [x] Freeze production sections during experiment.
 
@@ -117,36 +120,38 @@ Progress: `0.75 → 1.00`
 - [x] Tune scale, camera movement and timing on desktop.
 - [x] Tune mobile composition separately.
 - [x] Improve cloud depth with three independent cloud planes and central haze.
-- [x] Improve table material, table rim, reflection and contact shadow.
-- [x] Replace generic vertical floating with a calculated landing target tied to viewport/table geometry.
+- [x] Replace generic vertical floating with a calculated landing target tied to viewport geometry.
 - [x] Remove pointer parallax progressively during landing so the drink stops feeling weightless.
 - [x] Remove fixed `min-height: 640px` behavior that could fight small iOS viewports.
 - [x] Re-measure after image decode, font readiness, resize, orientation, pageshow and VisualViewport changes.
 - [x] Add deterministic `?frame=` inspection mode for QA.
 
-### Phase 3 — Photoreal environment assets — IN PROGRESS
+### Phase 3 — Photoreal environment / contact pass — IN PROGRESS
 - [x] Replace the procedural-looking sky as the dominant layer with a real photographic starry-night/cloud plate.
-- [x] Replace the storefront placeholder with a real photographed outdoor hospitality/night-table plate for Phase 3A.
+- [x] Replace the storefront placeholder with a real photographed outdoor hospitality/night-table plate.
 - [x] Disable the temporary CSS-drawn tabletop in the photoreal override.
-- [x] Record Phase 3A source/licensing information in `ASSET-SOURCES-CINEMATIC-v2.md`.
+- [x] Record source/licensing information in `ASSET-SOURCES-CINEMATIC-v2.md`.
 - [x] Add `preconnect`/preload hints for the temporary photographic plates in the isolated preview.
-- [ ] Judge the Phase 3A composition at deterministic desktop/mobile frames and retune product landing against the real table zone.
-- [ ] Replace the remote reference plates with final local optimised assets before production integration.
+- [x] Retune product landing against the photographed table zone on desktop and mobile.
+- [x] Add a final physical settle/contact phase and tighter contact shadow.
+- [x] Keep the real Piña Colada asset unchanged as the hero product.
+- [x] Publish an isolated live preview snapshot after creating `backup/pre-cinematic-v2-live-preview`.
+- [ ] Replace remote reference plates with final local optimised assets before production integration.
 - [ ] Decide whether retained final plates are licensed references or dedicated LAVENDISH-specific generated/commissioned plates.
 - [ ] Optimise final environment assets to WebP/AVIF.
 - [ ] Preload only the first-frame-critical visual and lazy-load the terrace plate before Act IV.
-- [ ] Keep the real Piña Colada asset unchanged as the hero product.
 
-### Phase 4 — QA
-- [ ] Desktop: 1440×900, 1920×1080, ultrawide sanity check.
-- [ ] Tablet: landscape + portrait.
-- [ ] Mobile: 320, 375/390, 430 widths.
-- [ ] Safari/iOS sticky + VisualViewport validation.
-- [ ] Chrome/Edge/Firefox validation.
-- [ ] No horizontal overflow.
-- [ ] No layout jumps after images decode.
-- [ ] Reduced-motion validation.
-- [ ] Timeline screenshots at `frame=0`, `.20`, `.45`, `.68`, `.85`, `.97`, `1`.
+### Phase 4 — QA — PARTIAL ✅
+- [x] Chromium automated matrix: 1440×900, 1920×1080, 1024×768, 430×932, 390×844, 320×700.
+- [x] Seven deterministic timeline frames per viewport: `0`, `.20`, `.45`, `.68`, `.85`, `.97`, `1`.
+- [x] No horizontal overflow in automated matrix.
+- [x] Sticky viewport-height check.
+- [x] Product/final-copy/table-anchor visibility checks.
+- [x] Critical image preload probe.
+- [ ] Native Safari/iOS sticky + VisualViewport validation on a real device.
+- [ ] Firefox validation.
+- [ ] Edge sanity check.
+- [ ] Reduced-motion visual inspection on a real browser/device.
 
 ### Phase 5 — Controlled integration
 - [ ] Create `feature/pina-cinematic-intro-v2-integration` from approved `main`.
@@ -168,10 +173,20 @@ The intro is not considered finished until all of the following are true:
 - The landing on the table feels physical rather than like a CSS translation.
 - Mobile does not crop the drink, text or table.
 - The normal website starts cleanly after the cinematic sequence.
-- `main` remains unchanged until approval.
+- Existing production homepage files remain unchanged until approval.
+
+---
+
+## Live preview safety
+
+Current live preview URL:
+
+`https://reneg-ai.github.io/lavendish-bar-new/preview-cinematic-v2.html`
+
+The live preview snapshot on `main` consists only of the four isolated preview runtime files. `index.html` does not load them, so the normal homepage remains unchanged. Exact pre-preview `main` is preserved in `backup/pre-cinematic-v2-live-preview`.
 
 ---
 
 ## Rollback policy
 
-`main` is the stable production source. This branch is disposable until approved. No experimental code should be merged merely to make it easier to preview.
+The stable production homepage remains the reference. Experimental integration still lives on this branch and PR #15 remains Draft. The live preview snapshot can be removed or rolled back independently without touching the approved site structure.
