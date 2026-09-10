@@ -1,0 +1,56 @@
+name: Build Piña Colada True 3D v3
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - feature/pina-true3d-v3
+    paths:
+      - scripts/build-pina-procedural-v3.py
+      - scripts/validate-pina-glb-v3.mjs
+      - .github/workflows/build-pina-true3d-v3.yml
+
+permissions:
+  contents: write
+
+jobs:
+  build-glb:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout experimental branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: pip
+
+      - name: Install free local authoring dependencies
+        run: pip install "numpy==2.2.6" "trimesh==4.11.1"
+
+      - name: Build procedural PBR GLB
+        run: python scripts/build-pina-procedural-v3.py
+
+      - name: Validate semantic GLB contract
+        run: node scripts/validate-pina-glb-v3.mjs assets/3d/pina-colada-v3.glb
+
+      - name: Report asset budget
+        run: |
+          ls -lh assets/3d/pina-colada-v3.glb
+          sha256sum assets/3d/pina-colada-v3.glb
+
+      - name: Commit generated GLB back to experimental branch
+        run: |
+          if git diff --quiet -- assets/3d/pina-colada-v3.glb && git ls-files --error-unmatch assets/3d/pina-colada-v3.glb >/dev/null 2>&1; then
+            echo "GLB already up to date."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add assets/3d/pina-colada-v3.glb
+          git commit -m "build: generate procedural Piña Colada v3 GLB"
+          git push
