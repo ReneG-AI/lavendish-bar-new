@@ -10,6 +10,10 @@ on:
       - 'scripts/qa-cinematic-v2.mjs'
       - '.github/workflows/cinematic-v2-qa.yml'
 
+concurrency:
+  group: cinematic-v2-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
